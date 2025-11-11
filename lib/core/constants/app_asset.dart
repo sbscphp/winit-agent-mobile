@@ -1,5 +1,6 @@
 const _imageDirectory = 'assets/images';
 const _iconDirectory = 'assets/icons';
+const _bottomNavDirectory = 'assets/icons/bottom_nav_items';
 
 class AppAsset {
   AppAsset._();
@@ -28,6 +29,13 @@ class AppAsset {
   static const String bulletPoint3 = '$_iconDirectory/bullet_point_3.svg';
   static const String ninStack = '$_iconDirectory/nin_stack.svg';
   static const String bvnStack = '$_iconDirectory/bvn_stack.svg';
+
+  //bottom nav
+  static const String home = '$_bottomNavDirectory/home.svg';
+  static const String games = '$_bottomNavDirectory/games.svg';
+  static const String myWallet = '$_bottomNavDirectory/my_wallet.svg';
+  static const String notification = '$_bottomNavDirectory/notification.svg';
+  static const String profile = '$_bottomNavDirectory/profile.svg';
 
 
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
-import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/color_path.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
@@ -38,37 +37,14 @@ class CustomBottomNav extends StatelessWidget {
                 //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  navItem(context, 0, 'My Games', AppAsset.logo),
+                  navItem(context, 0, 'Games', AppAsset.games),
                   //navItem(context, 0, 'Games', AppAsset.games),
                   SizedBox(width: 4.w),
-                  navItem(context, 1, 'Reward', AppAsset.logo),
+                  navItem(context, 1, 'My Wallet', AppAsset.myWallet),
                   SizedBox(width: 78.w,),
-                  navItem(context, 2, 'Notification', AppAsset.logo),
+                  navItem(context, 2, 'Notification', AppAsset.notification),
                   SizedBox(width: 4.w),
-                  navItem(context, 3, 'More', AppAsset.logo),
-
-
-
-
-
-
-                  // Row(
-                  //   children: [
-                  //     navItem(context, 0, 'My Games', AppAsset.myGames),
-                  //     //navItem(context, 0, 'Games', AppAsset.games),
-                  //     SizedBox(width: 10.w),
-                  //     navItem(context, 1, 'Reward', AppAsset.reward),
-                  //     //navItem(context, 1, 'My Games', AppAsset.myGames),
-                  //   ],
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     //navItem(context, 2, 'Reward', AppAsset.reward),
-                  //     navItem(context, 2, 'Notification', AppAsset.notification),
-                  //     SizedBox(width: 10.w),
-                  //     navItem(context, 3, 'Settings', AppAsset.settings),
-                  //   ],
-                  // ),
+                  navItem(context, 3, 'Profile', AppAsset.profile),
                 ],
               ),
             ),
@@ -100,7 +76,7 @@ class CustomBottomNav extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const CustomSvg(asset: AppAsset.logo,
+                      const CustomSvg(asset: AppAsset.home,
                         colorFilter: ColorFilter.mode(
                           ColorPath.turquoiseGreen,
                           BlendMode.srcIn,
@@ -146,7 +122,7 @@ class CustomBottomNav extends StatelessWidget {
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                 color: isSelected
                     ? ColorPath.curiousBlue
-                    : Theme.of(context).colorScheme.textPrimary,
+                    : ColorPath.frenchGrey,
             )
           ),
         ],

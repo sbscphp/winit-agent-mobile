@@ -6,7 +6,10 @@ import 'package:winit_agent/core/constants/app_dimension.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/color_path.dart';
+import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/core/utilities/validator.dart';
+import 'package:winit_agent/ui/pages/bottom_nav.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_appbar.dart';
@@ -126,7 +129,8 @@ class _LoginState extends ConsumerState<Login> {
                              CustomButton(
                                  buttonText: 'Login',
                                  suffixIcon: AppAsset.login,
-                                 onPressed: () async{
+                                 onPressed: () {
+                                   pushNavigation(context: context, widget: const BottomNav(), routeName: NamedRoutes.bottomNav);
                                  }
                              ),
                              SizedBox(height: 13.h,),

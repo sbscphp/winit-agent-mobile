@@ -17,6 +17,9 @@ class NamedRoutes {
   static const login = '/login';
   static const otp = '/otp';
 
+  //bottom-nav
+  static const bottomNav = '/bottomNav';
+
 
   //payment
   static const selectPaymentMethod = '/selectPaymentMethod';

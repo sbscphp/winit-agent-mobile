@@ -19,7 +19,11 @@ class BottomNavViewModel extends ChangeNotifier{
 
   //children of the bottom Nav
   final List<Widget>  _children = [
-   Container()
+    Container(), //games
+    Container(), //my wallet
+    Container(), //notification
+    Container(), // profile
+    Container(), //home
   ];
   List<Widget> get children => _children;
 
