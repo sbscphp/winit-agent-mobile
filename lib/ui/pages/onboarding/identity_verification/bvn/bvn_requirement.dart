@@ -5,14 +5,12 @@ import 'package:winit_agent/core/constants/app_dimension.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/onboarding/identity_verification/bvn/bvn_verification.dart';
-import 'package:winit_agent/ui/pages/onboarding/identity_verification/nin/nin_verification.dart';
 import 'package:winit_agent/ui/widgets/onboarding/identity_details.dart';
 import 'package:winit_agent/ui/widgets/onboarding/identity_verification_notes.dart';
 import 'package:winit_agent/ui/widgets/onboarding/identity_verification_title.dart';
 import '../../../../../core/constants/color_path.dart';
 import '../../../../widgets/custom_appbar.dart';
 import '../../../../widgets/custom_button.dart';
-import '../../../../widgets/custom_expansion_tile.dart';
 
 class BvnRequirement extends StatefulWidget {
   const BvnRequirement({super.key});

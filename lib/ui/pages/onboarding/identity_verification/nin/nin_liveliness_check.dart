@@ -6,8 +6,6 @@ import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/onboarding/identity_verification/bvn/bvn_requirement.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
-import 'package:winit_agent/ui/widgets/lgbtq_container.dart';
-
 import '../../../../../core/constants/app_dimension.dart';
 import '../../../../../core/constants/color_path.dart';
 import '../../../../widgets/custom_appbar.dart';
