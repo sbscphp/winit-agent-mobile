@@ -6,16 +6,20 @@ class LgbtqContainer extends StatelessWidget {
   final bool showPadding;
   final Widget child;
   final double? borderRadius;
-  const LgbtqContainer({super.key, required this.child, this.showPadding = true, this.borderRadius});
+  final List<Color>? gradientColors;
+  final bool isCircle;
+  const LgbtqContainer({super.key, this.isCircle = false, this.gradientColors, required this.child, this.showPadding = true, this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: showPadding ? 2.h:0, horizontal: showPadding ? 2.w:0),
+      padding:
+      isCircle ? EdgeInsets.all(3):EdgeInsets.symmetric(vertical: showPadding ? 2.h:0, horizontal: showPadding ? 2.w:0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(borderRadius?.r ?? 8.r)),
-        gradient: const LinearGradient(
-          colors: [
+        shape: isCircle ? BoxShape.circle: BoxShape.rectangle,
+        borderRadius: isCircle ? null : BorderRadius.all(Radius.circular(borderRadius?.r ?? 8.r)),
+        gradient: LinearGradient(
+          colors: gradientColors ?? [
             ColorPath.lasGreen,
             ColorPath.ribbonRed,
             ColorPath.blueBlue,

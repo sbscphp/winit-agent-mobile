@@ -22,8 +22,8 @@ class ScreenTitle extends StatelessWidget {
               color: Theme.of(context).colorScheme.textPrimary
           ),
         ),
-        SizedBox(height: 4.h,),
-        Text(
+        if(subtitle.isNotEmpty)SizedBox(height: 4.h,),
+        if(subtitle.isNotEmpty)Text(
           subtitle,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w400,

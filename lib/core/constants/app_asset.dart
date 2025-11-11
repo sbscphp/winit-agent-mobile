@@ -19,11 +19,15 @@ class AppAsset {
   static const String logo = '$_iconDirectory/logo3.svg';
   static const String avatar = '$_iconDirectory/avatar.png';
   static const String internet = '$_iconDirectory/internet.png';
-  static const String building2 = '$_iconDirectory/building_2.svg';
+  static const String building2 = '$_iconDirectory/building_2.png';
   static const String checkMark = '$_iconDirectory/check_mark.svg';
   static const String requirementFailed = '$_iconDirectory/requirement_failed.svg';
   static const String requirementPassed = '$_iconDirectory/requirement_passed.svg';
   static const String bulletPoint = '$_iconDirectory/bullet_point.svg';
+  static const String bulletPoint2 = '$_iconDirectory/bullet_point_2.svg';
+  static const String bulletPoint3 = '$_iconDirectory/bullet_point_3.svg';
+  static const String ninStack = '$_iconDirectory/nin_stack.svg';
+  static const String bvnStack = '$_iconDirectory/bvn_stack.svg';
 
 
 
@@ -32,7 +36,9 @@ class AppAsset {
 
 
   //images
-  static const String landingImage = '$_iconDirectory/landing_image.svg';
+  static const String landingImage = '$_imageDirectory/landing_image.svg';
+  static const String ninSamplePics = '$_imageDirectory/nin_sample_pics.png';
+  static const String bvnSamplePics = '$_imageDirectory/bvn_sample_pics.png';
 
 
 }

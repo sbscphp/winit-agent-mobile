@@ -46,7 +46,7 @@ class _RegistrationRequirementsState extends State<RegistrationRequirements> {
             SizedBox(height: 30.h,),
             requirement(title: 'Device & Internet Readiness',
                 subtitle: 'Have a smartphone or laptop with a stable internet connection to operate effectively on the WinIT platform.',
-                asset: AppAsset.login,
+                asset: AppAsset.internet,
               assetHeight: 84.h,
               assetWidth: 85.55.w
             ),
@@ -56,7 +56,7 @@ class _RegistrationRequirementsState extends State<RegistrationRequirements> {
                 bgColor: ColorPath.chalkBlue,
                 subtitle: 'Keep your NIN handy for quick identity verification during onboarding.',
                 swapPositions: true,
-                asset: AppAsset.login,
+                asset: AppAsset.avatar,
                 assetHeight: 84.h,
                 assetWidth: 79.46.w
             ),
@@ -65,7 +65,7 @@ class _RegistrationRequirementsState extends State<RegistrationRequirements> {
                 titleColor: ColorPath.piperBrown,
                 bgColor: ColorPath.linenBrown,
                 subtitle: 'Your BVN is needed for Agent wallet setup and commission payments.',
-                asset: AppAsset.login,
+                asset: AppAsset.building2,
                 assetHeight: 84.h,
                 assetWidth: 93.41.w
             ),

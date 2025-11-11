@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/onboarding/identity_verification/nin/nin_requirement.dart';
 import '../../../../core/constants/app_asset.dart';
 import '../../../../core/constants/app_dimension.dart';
 import '../../../../core/constants/color_path.dart';
@@ -137,6 +140,11 @@ class _OnboardingSuccessfulState extends State<OnboardingSuccessful> {
                 CustomButton(
                     buttonText: widget.isTemporaryOnboarding ? 'Continue Onboarding':'Go to Dashboard',
                     onPressed: () async{
+
+                      if(widget.isTemporaryOnboarding){
+                        pushNavigation(context: context, widget: const NinRequirement(), routeName: NamedRoutes.ninRequirement);
+                        return;
+                      }
 
                     }
                 ),
