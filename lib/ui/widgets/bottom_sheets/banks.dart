@@ -8,7 +8,6 @@ import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/text_fields/search_field.dart';
 
 import '../../../core/constants/app_asset.dart';
-import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 
 class Banks extends StatelessWidget {
