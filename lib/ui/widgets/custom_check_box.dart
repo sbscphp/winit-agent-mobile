@@ -10,7 +10,8 @@ class CustomCheckBox extends StatefulWidget {
   final double? height;
   final double? width;
   final ValueChanged<bool> onchanged;
-  const CustomCheckBox({super.key, this.height, this.width, required this.onchanged});
+  final Color? color;
+  const CustomCheckBox({super.key, this.color, this.height, this.width, required this.onchanged});
 
   @override
   State<CustomCheckBox> createState() => _CustomCheckBoxState();
@@ -32,7 +33,7 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
         width: 20.w,
         padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 3.w),
         decoration: BoxDecoration(
-          border: Border.all(color: ColorPath.blueBlue, width: 1.w),
+          border: Border.all(color: widget.color ?? ColorPath.blueBlue, width: 1.w),
           borderRadius: BorderRadius.all(Radius.circular(6.r))
         ),
         child: Center(

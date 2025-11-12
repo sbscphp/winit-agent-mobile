@@ -17,10 +17,11 @@ class AppAsset {
   static const String pwdHidden = '$_iconDirectory/password_hidden.svg';
   static const String password = '$_iconDirectory/password.svg';
   static const String building = '$_iconDirectory/building.svg';
+  static const String building2 = '$_iconDirectory/building_2.png';
+  static const String building3 = '$_iconDirectory/building_3.svg';
   static const String logo = '$_iconDirectory/logo3.svg';
   static const String avatar = '$_iconDirectory/avatar.png';
   static const String internet = '$_iconDirectory/internet.png';
-  static const String building2 = '$_iconDirectory/building_2.png';
   static const String checkMark = '$_iconDirectory/check_mark.svg';
   static const String requirementFailed = '$_iconDirectory/requirement_failed.svg';
   static const String requirementPassed = '$_iconDirectory/requirement_passed.svg';
@@ -29,6 +30,11 @@ class AppAsset {
   static const String bulletPoint3 = '$_iconDirectory/bullet_point_3.svg';
   static const String ninStack = '$_iconDirectory/nin_stack.svg';
   static const String bvnStack = '$_iconDirectory/bvn_stack.svg';
+  static const String delete = '$_iconDirectory/delete.svg';
+  static const String close = '$_iconDirectory/close.svg';
+  static const String searchPrefixIcon = '$_iconDirectory/search_prefix_icon.svg';
+  static const String searchSuffixIcon = '$_iconDirectory/search_suffix_icon.svg';
+
 
   //bottom nav
   static const String home = '$_bottomNavDirectory/home.svg';

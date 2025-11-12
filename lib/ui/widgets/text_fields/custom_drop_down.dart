@@ -24,7 +24,8 @@ class CustomDropdown extends StatelessWidget {
         this.focusNode,
         this.maxLines = 1,
         this.isCompulsory = false,
-        required this.items, this.value, this.onChanged});
+        required this.items, this.value, this.onChanged
+      });
 
   @override
   Widget build(BuildContext context) {

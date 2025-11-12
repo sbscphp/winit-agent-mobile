@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/onboarding/add_bank_details.dart';
 
 import '../../../../core/constants/app_dimension.dart';
 import '../../../../core/constants/color_path.dart';
@@ -77,7 +80,7 @@ class _IdentityVerificationSummaryState extends State<IdentityVerificationSummar
               CustomButton(
                   buttonText: 'Continue Account Setup',
                   onPressed: () {
-
+                    pushNavigation(context: context, widget: const AddBankDetails(), routeName: NamedRoutes.addBankDetails);
                   }
               )
             ],

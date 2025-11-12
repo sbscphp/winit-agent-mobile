@@ -9,7 +9,7 @@ import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/authentication/otp.dart';
 import 'package:winit_agent/ui/widgets/authentication/password_requirement.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
-import 'package:winit_agent/ui/widgets/onboarding_text_field.dart';
+import 'package:winit_agent/ui/widgets/text_fields/onboarding_text_field.dart';
 
 import '../../../../core/constants/app_asset.dart';
 import '../../../../core/constants/app_dimension.dart';

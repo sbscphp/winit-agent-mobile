@@ -9,7 +9,7 @@ import '../../../../../core/constants/app_dimension.dart';
 import '../../../../../core/utilities/validator.dart';
 import '../../../../widgets/custom_appbar.dart';
 import '../../../../widgets/custom_button.dart';
-import '../../../../widgets/onboarding_text_field.dart';
+import '../../../../widgets/text_fields/onboarding_text_field.dart';
 import '../../../../widgets/screen_title.dart';
 
 class NinVerification extends StatefulWidget {

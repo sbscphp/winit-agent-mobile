@@ -7,4 +7,6 @@ class AppDimension{
   static double paddingRight = 24.w;
   static double paddingTop = 24.h;
   static double paddingBottom = 30.h;
+  static double bottomSheetPaddingRight = 24.h;
+  static double bottomSheetPaddingLeft = 24.h;
 }

@@ -12,6 +12,7 @@ class NamedRoutes {
   static const bvnVerification = '/bvnVerification';
   static const identityVerificationResult = '/identityVerificationResult';
   static const identityVerificationSummary= '/identityVerificationSummary';
+  static const addBankDetails = '/addBankDetails';
 
 
   //auth
@@ -20,6 +21,9 @@ class NamedRoutes {
 
   //bottom-nav
   static const bottomNav = '/bottomNav';
+
+  //profile
+  static const verifyBankDetails = '/verifyBankDetails';
 
 
   //payment

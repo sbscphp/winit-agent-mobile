@@ -15,7 +15,7 @@ import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_appbar.dart';
 import 'package:winit_agent/ui/widgets/custom_button.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
-import 'package:winit_agent/ui/widgets/custom_text_field.dart';
+import 'package:winit_agent/ui/widgets/text_fields/custom_text_field.dart';
 
 
 

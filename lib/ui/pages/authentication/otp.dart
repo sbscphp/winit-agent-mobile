@@ -14,7 +14,7 @@ import '../../widgets/clickable.dart';
 import '../../widgets/count_down_timer.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/custom_text_field.dart';
+import '../../widgets/text_fields/custom_text_field.dart';
 import '../../widgets/screen_title.dart';
 import '../onboarding/onboarding_successful.dart';
 
