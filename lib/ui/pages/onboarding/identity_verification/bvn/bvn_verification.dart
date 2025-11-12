@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/onboarding/identity_verification/identity_verification_result.dart';
+import 'package:winit_agent/ui/pages/onboarding/identity_verification/identity_verification_summary.dart';
 import '../../../../../core/constants/app_dimension.dart';
 import '../../../../../core/utilities/validator.dart';
 import '../../../../widgets/custom_appbar.dart';
@@ -66,7 +67,7 @@ class _BvnVerificationState extends State<BvnVerification> {
               CustomButton(
                   buttonText: 'Continue',
                   onPressed: (){
-                    pushNavigation(context: context, widget: const IdentityVerificationResult(), routeName: NamedRoutes.identityVerificationResult);
+                    pushNavigation(context: context, widget: const IdentityVerificationSummary(), routeName: NamedRoutes.identityVerificationSummary);
                   }
               )
             ],

@@ -11,6 +11,7 @@ class NamedRoutes {
   static const bvnRequirement = '/bnvRequirement';
   static const bvnVerification = '/bvnVerification';
   static const identityVerificationResult = '/identityVerificationResult';
+  static const identityVerificationSummary= '/identityVerificationSummary';
 
 
   //auth

@@ -17,25 +17,6 @@ class IdentityVerificationResult extends StatefulWidget {
 
 class _IdentityVerificationResultState extends State<IdentityVerificationResult> {
 
-  //final GlobalKey _tileKey = GlobalKey();
-
-
-  // void _updateHeight() {
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     final box = _tileKey.currentContext?.findRenderObject() as RenderBox?;
-  //     final height = box?.size.height;
-  //     if (height != null) {
-  //       print('Current: $height');
-  //     }
-  //   });
-  // }
-
-  @override
-  void initState() {
-    super.initState();
-   // _updateHeight();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
