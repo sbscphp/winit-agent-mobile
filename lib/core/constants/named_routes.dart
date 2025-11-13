@@ -13,6 +13,8 @@ class NamedRoutes {
   static const identityVerificationResult = '/identityVerificationResult';
   static const identityVerificationSummary= '/identityVerificationSummary';
   static const addBankDetails = '/addBankDetails';
+  static const addPersonalDetails = '/addPersonalDetails';
+  static const addBusinessDetails = '/addBusinessDetails';
 
 
   //auth

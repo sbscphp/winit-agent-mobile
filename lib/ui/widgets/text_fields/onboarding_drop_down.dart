@@ -170,7 +170,7 @@ class _OnboardingDropDownState extends State<OnboardingDropDown> {
                       value: widget.value,
                       decoration: InputDecoration(
                         isDense: true,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 0), // ✅ balanced vertically
+                        contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 0),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         enabledBorder: InputBorder.none,

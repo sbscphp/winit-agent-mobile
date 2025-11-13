@@ -11,7 +11,8 @@ class CustomCheckBox extends StatefulWidget {
   final double? width;
   final ValueChanged<bool> onchanged;
   final Color? color;
-  const CustomCheckBox({super.key, this.color, this.height, this.width, required this.onchanged});
+  final bool initialValue;
+  const CustomCheckBox({super.key, this.initialValue = false, this.color, this.height, this.width, required this.onchanged});
 
   @override
   State<CustomCheckBox> createState() => _CustomCheckBoxState();
@@ -19,6 +20,13 @@ class CustomCheckBox extends StatefulWidget {
 
 class _CustomCheckBoxState extends State<CustomCheckBox> {
   bool _active = false;
+
+  @override
+  void initState() {
+    _active = widget.initialValue;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Clickable(

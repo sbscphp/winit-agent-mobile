@@ -89,6 +89,7 @@ class ColorPath {
 
 
 
+
   static Color dynamicColor(String? hexString, Color? fallbackColor) {
     // Return default color if hexString is null or empty
     if (hexString == null || hexString.isEmpty) {
