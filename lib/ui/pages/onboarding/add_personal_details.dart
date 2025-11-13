@@ -4,11 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/onboarding/add_business_details.dart';
-
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/utilities/input_formatters/nigerian_phone_number_formatter.dart';
 import '../../../core/utilities/validator.dart';
-import '../../widgets/clickable.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/screen_title.dart';
