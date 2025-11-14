@@ -11,13 +11,11 @@ import 'package:winit_agent/ui/pages/games/search_games.dart';
 import 'package:winit_agent/ui/widgets/action_icon.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/profile/profile_image.dart';
-
 import '../../../core/constants/color_path.dart';
 import '../../../core/data/models/color_theme.dart';
 import '../../../core/utilities/date_utilitites.dart';
 import '../../widgets/clickable.dart';
 import '../../widgets/custom_appbar.dart';
-import '../../widgets/display_image.dart';
 import '../../widgets/empty_state.dart';
 
 class Games extends StatefulWidget {
