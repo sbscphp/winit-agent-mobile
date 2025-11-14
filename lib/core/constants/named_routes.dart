@@ -24,6 +24,9 @@ class NamedRoutes {
   //bottom-nav
   static const bottomNav = '/bottomNav';
 
+  //games
+  static const searchGames = '/searchGames';
+
   //profile
   static const verifyBankDetails = '/verifyBankDetails';
 

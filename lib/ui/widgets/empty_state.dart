@@ -14,7 +14,7 @@ class EmptyState extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CustomSvg(asset: asset, height: 100.h, width: 100.w,),
+        CustomAssetViewer(asset: asset, height: 100.h, width: 100.w,),
         SizedBox(height: 8.h,),
         Text(
           title,

@@ -20,9 +20,9 @@ class LgbtqContainer extends StatelessWidget {
         borderRadius: isCircle ? null : BorderRadius.all(Radius.circular(borderRadius?.r ?? 8.r)),
         gradient: LinearGradient(
           colors: gradientColors ?? [
-            ColorPath.lasGreen,
-            ColorPath.ribbonRed,
-            ColorPath.blueBlue,
+            ColorPath.wormGreen,
+            ColorPath.keppelGreen,
+            ColorPath.curiousBlue,
           ],
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,

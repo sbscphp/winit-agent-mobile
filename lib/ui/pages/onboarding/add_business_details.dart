@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/color_path.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
@@ -12,6 +13,7 @@ import '../../../core/utilities/input_formatters/nigerian_phone_number_formatter
 import '../../../core/utilities/validator.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_button.dart';
+import '../../widgets/custom_check_box.dart';
 import '../../widgets/screen_title.dart';
 import '../../widgets/text_fields/onboarding_drop_down.dart';
 import '../../widgets/text_fields/onboarding_text_field.dart';
@@ -41,6 +43,30 @@ class _AddBusinessDetailsState extends State<AddBusinessDetails> {
                   subtitle: 'Add business details to your WinIt Agent account setup.'
               ),
               SizedBox(height: 24.h,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CustomCheckBox(
+                      height: 24,
+                      width: 24,
+                      color: ColorPath.mischkaGrey,
+                      onchanged: (value){
+
+                      }
+                  ),
+                  SizedBox(width: 10.w,),
+                  Expanded(
+                    child: Text(
+                      'Personal Details is the same as Business Details',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Theme.of(context).colorScheme.textTertiary
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.h,),
               OnboardingTextField(
                 label: 'Tax Identification Number',
                 hintText: 'Enter Tax Identification Number',

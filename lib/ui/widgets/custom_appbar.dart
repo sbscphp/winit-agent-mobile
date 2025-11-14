@@ -35,7 +35,7 @@ customAppBar({
     title: useCustomTitleWidget ? titleWidget :
     title != null ?  Text(
         title,
-      style: textTheme.titleSmall?.copyWith(
+      style: textTheme.bodyLarge?.copyWith(
         fontSize: titleSize?.sp,
           fontWeight: titleFontWeight ?? FontWeight.w700,
           color: textColor ?? colorScheme.whiteText

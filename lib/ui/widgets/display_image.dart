@@ -68,22 +68,33 @@ class _DisplayImageState extends State<DisplayImage> {
   @override
   Widget build(BuildContext context) {
     return LgbtqContainer(
+      isCircle: true,
       child: Container(
         height: widget.size?.h ?? 80.h,
         width: widget.size?.w ?? 80.w,
-        color: _imageProvider != null
-            ? Theme.of(context).colorScheme.textPrimary
-            : Colors.white,
+        decoration: BoxDecoration(
+            color: _imageProvider != null
+                ? Theme.of(context).colorScheme.textPrimary
+                : Colors.white,
+          shape: BoxShape.circle
+        ),
         child: _imageProvider != null
-            ? Image(
-          image: _imageProvider!,
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) => _noImage(context),
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return const Center(child: MediaPlaceholder());
-          },
+            ?  CircleAvatar(
+          backgroundColor: Colors.transparent,
+          radius: widget.size?.r,
+          backgroundImage: _imageProvider,
         )
+
+
+        // Image(
+        //   image: _imageProvider!,
+        //   fit: BoxFit.cover,
+        //   errorBuilder: (context, error, stackTrace) => _noImage(context),
+        //   loadingBuilder: (context, child, loadingProgress) {
+        //     if (loadingProgress == null) return child;
+        //     return const Center(child: MediaPlaceholder());
+        //   },
+        // )
             : _noImage(context),
       ),
     );

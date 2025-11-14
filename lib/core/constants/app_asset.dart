@@ -34,6 +34,9 @@ class AppAsset {
   static const String close = '$_iconDirectory/close.svg';
   static const String searchPrefixIcon = '$_iconDirectory/search_prefix_icon.svg';
   static const String searchSuffixIcon = '$_iconDirectory/search_suffix_icon.svg';
+  static const String search = '$_iconDirectory/search.svg';
+  static const String calendar2 = '$_iconDirectory/calendar2.svg';
+  static const String clock = '$_iconDirectory/clock.svg';
 
 
   //bottom nav
@@ -53,6 +56,7 @@ class AppAsset {
   static const String landingImage = '$_imageDirectory/landing_image.svg';
   static const String ninSamplePics = '$_imageDirectory/nin_sample_pics.png';
   static const String bvnSamplePics = '$_imageDirectory/bvn_sample_pics.png';
+  static const String emptyState = '$_imageDirectory/empty_state.svg';
 
 
 }

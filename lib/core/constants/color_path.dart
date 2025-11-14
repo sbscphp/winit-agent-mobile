@@ -13,7 +13,6 @@ class ColorPath {
   //other colors
   static const ghostGrey = Color(0xffCCCCD6);
 
-  static const curiousBlue = Color(0xff23A3D6);
   static const hummingBirdBlue = Color(0xffE9F6FC);
   static const hummingBirdBlue2 = Color(0xffD3EDF8);
   static const silverGrey = Color(0xffCCCCCC);
@@ -71,6 +70,9 @@ class ColorPath {
   static const sundownPink = Color(0xffFEA3B4);
   static const pippinPink = Color(0xffFFE4E8);
   static const galleryGrey = Color(0xffEDEDED);
+  static const wormGreen = Color(0xffB6ED28);
+  static const keppelGreen = Color(0xff43B2AE);
+  static const curiousBlue = Color(0xff24A4D8);
 
 
 

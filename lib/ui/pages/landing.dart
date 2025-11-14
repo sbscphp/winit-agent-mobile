@@ -103,7 +103,7 @@ class Landing extends ConsumerWidget {
                           padding: EdgeInsets.only(left: AppDimension.paddingLeft),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: List.generate(
                                 vm.titles.length,
