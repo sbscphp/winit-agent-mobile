@@ -27,7 +27,7 @@ customAppBar({
   final textTheme = Theme.of(context).textTheme;
   final colorScheme = Theme.of(context).colorScheme;
   return AppBar(
-    leadingWidth: leadingWidth,
+    leadingWidth: leadingWidth ?? MediaQuery.of(context).size.width / 5,
     automaticallyImplyLeading: showLeadingIcon,
     scrolledUnderElevation: 0,
     centerTitle: centerTitle,
@@ -44,6 +44,7 @@ customAppBar({
     leading: showLeadingIcon ? leadingIcon ?? LeadingIcon(
       onPressed: leadingIconOnPressed,
     ):null,
+
     toolbarHeight: hideTooBarHeight ? 0 : 72.h,
     // bottom: PreferredSize(
     //   preferredSize: Size.fromHeight(preferredHeight.h),

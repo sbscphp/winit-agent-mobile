@@ -10,6 +10,7 @@ import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/games/search_games.dart';
 import 'package:winit_agent/ui/widgets/action_icon.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
+import 'package:winit_agent/ui/widgets/profile/profile_image.dart';
 
 import '../../../core/constants/color_path.dart';
 import '../../../core/data/models/color_theme.dart';
@@ -17,6 +18,7 @@ import '../../../core/utilities/date_utilitites.dart';
 import '../../widgets/clickable.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/display_image.dart';
+import '../../widgets/empty_state.dart';
 
 class Games extends StatefulWidget {
   const Games({super.key});
@@ -32,13 +34,7 @@ class _GamesState extends State<Games> {
       appBar: customAppBar(
         context: context,
         centerTitle: true,
-        leadingIcon: DisplayImage(
-          imageUrl: 'https://www.shutterstock.com/image-vector/portrait-handsome-man-confident-young-600nw-2616154679.jpg',
-          firstName: 'Ayodeji',
-          lastName: 'Ogundijo',
-          initialsSize: 16,
-          size: 32,
-        ),
+        leadingIcon: ProfileImage(),
         title: 'Explore',
         actions: [
           ActionIcon(label: 'Search', asset: AppAsset.search,
@@ -48,7 +44,8 @@ class _GamesState extends State<Games> {
           )
         ]
       ),
-      body: SingleChildScrollView(
+      body: 1 + 1 == 2
+          ? SingleChildScrollView(
         padding: EdgeInsets.only(left: AppDimension.paddingLeft, right: AppDimension.paddingRight, top: AppDimension.paddingTop),
         child: StaggeredGrid.count(
           crossAxisCount: 2,
@@ -277,7 +274,7 @@ class _GamesState extends State<Games> {
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          SizedBox(height: 16.h,),
+                          SizedBox(height: 8.h,),
                           Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: isBig ? 16.w:8.w,
@@ -311,6 +308,13 @@ class _GamesState extends State<Games> {
             );
           }),
         ),
+      )
+      : Center(
+          child: EmptyState(
+            asset: AppAsset.emptyState,
+            title: 'No Game Yet',
+            subtitle: 'There are currently no games yet to Purchase Raffle ticket for',
+          )
       ),
     );
   }

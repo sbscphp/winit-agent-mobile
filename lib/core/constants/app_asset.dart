@@ -37,6 +37,7 @@ class AppAsset {
   static const String search = '$_iconDirectory/search.svg';
   static const String calendar2 = '$_iconDirectory/calendar2.svg';
   static const String clock = '$_iconDirectory/clock.svg';
+  static const String walletActions = '$_iconDirectory/wallet_actions.svg';
 
 
   //bottom nav
