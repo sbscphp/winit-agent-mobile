@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
-
-import '../../core/constants/app_asset.dart';
 import '../../core/constants/app_dimension.dart';
 import '../../core/constants/color_path.dart';
 import 'custom_svg.dart';

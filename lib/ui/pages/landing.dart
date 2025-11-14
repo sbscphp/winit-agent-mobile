@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_dimension.dart';
-import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/view_models/landing_vm.dart';
 import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';

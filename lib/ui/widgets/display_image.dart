@@ -5,7 +5,7 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/color_path.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/ui/widgets/lgbtq_container.dart';
-import 'package:winit_agent/ui/widgets/media_placeholder.dart';
+
 
 class DisplayImage extends StatefulWidget {
   final String? imageUrl;
