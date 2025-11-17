@@ -2,6 +2,9 @@ import 'dart:ui';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
+
+import '../../../core/constants/app_dimension.dart';
 
 
 
@@ -30,23 +33,26 @@ Future<void> baseDialog({
     context: context,
     barrierDismissible: isDismissible,
     barrierLabel: "BaseDialog",
-    barrierColor: Colors.black.withOpacity(0.32), // optional dim background
-    transitionDuration: const Duration(milliseconds: 300),
+    barrierColor: Colors.black.withCustomOpacity(0.32),
+    transitionDuration: const Duration(milliseconds: 100),
     pageBuilder: (_, __, ___) {
       return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Center(
-          child: BounceInLeft(
+          child: SlideInDown(
+            from: MediaQuery.of(context).size.height,
             duration: const Duration(milliseconds: 800),
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: AlertDialog(
-                contentPadding: EdgeInsets.zero,
-                insetPadding: EdgeInsets.symmetric(horizontal: 17.w),
+              child: Dialog(
+                insetPadding: EdgeInsets.symmetric(horizontal: 32.w),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: BorderRadius.circular(24.r),
                 ),
-                content: content,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width, // now respected
+                  child: content,
+                ),
               ),
             ),
           ),
@@ -55,3 +61,41 @@ Future<void> baseDialog({
     },
   );
 }
+
+
+// Future<void> baseDialog({
+//   required BuildContext context,
+//   required Widget content,
+//   bool isDismissible = true
+// }) {
+//   return showGeneralDialog(
+//     context: context,
+//     barrierDismissible: isDismissible,
+//     barrierLabel: "BaseDialog",
+//     barrierColor: Colors.black.withCustomOpacity(0.32),
+//     transitionDuration: const Duration(milliseconds: 300),
+//     pageBuilder: (_, __, ___) {
+//       return BackdropFilter(
+//         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+//         child: Center(
+//           child: SlideInDown(
+//             duration: const Duration(milliseconds: 400),
+//             child: SizedBox(
+//               width: MediaQuery.of(context).size.width,
+//               child: AlertDialog(
+//                 contentPadding: EdgeInsets.zero,
+//                 insetPadding: EdgeInsets.symmetric(horizontal: 17.w),
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(24.r),
+//                 ),
+//                 content: SizedBox(
+//                   width: MediaQuery.of(context).size.width,
+//                     child: content),
+//               ),
+//             ),
+//           ),
+//         ),
+//       );
+//     },
+//   );
+// }

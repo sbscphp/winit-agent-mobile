@@ -1,5 +1,6 @@
 const _imageDirectory = 'assets/images';
 const _iconDirectory = 'assets/icons';
+const _gifDirectory = 'assets/gif';
 const _bottomNavDirectory = 'assets/icons/bottom_nav_items';
 
 class AppAsset {
@@ -38,6 +39,18 @@ class AppAsset {
   static const String calendar2 = '$_iconDirectory/calendar2.svg';
   static const String clock = '$_iconDirectory/clock.svg';
   static const String walletActions = '$_iconDirectory/wallet_actions.svg';
+  static const String copy = '$_iconDirectory/copy.svg';
+  static const String coloredTopRightChevron = '$_iconDirectory/colored_top_right_chevron.svg';
+  static const String calendar = '$_iconDirectory/calendar.svg';
+  static const String clockFilled = '$_iconDirectory/clock_filled.svg';
+  static const String ticketPurchase = '$_iconDirectory/ticket_purchase.svg';
+  static const String topUp = '$_iconDirectory/topup.svg';
+  static const String withdrawal = '$_iconDirectory/withdrawal.svg';
+  static const String filter = '$_iconDirectory/filter.svg';
+  static const String downloadReceipt = '$_iconDirectory/download_receipt.svg';
+  static const String building4 = '$_iconDirectory/building_4.svg';
+  static const String avatar2 = '$_iconDirectory/avatar_2.svg';
+  static const String accountNo = '$_iconDirectory/account_no.svg';
 
 
   //bottom nav
@@ -58,6 +71,10 @@ class AppAsset {
   static const String ninSamplePics = '$_imageDirectory/nin_sample_pics.png';
   static const String bvnSamplePics = '$_imageDirectory/bvn_sample_pics.png';
   static const String emptyState = '$_imageDirectory/empty_state.svg';
+
+
+  //gif
+  static const String warning = '$_gifDirectory/warning.gif';
 
 
 }

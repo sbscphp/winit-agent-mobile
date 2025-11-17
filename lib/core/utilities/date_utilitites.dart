@@ -196,6 +196,12 @@ ${DateFormat.yMMMd().format(date)} ${DateFormat.jms().format(date)}''';
     return DateFormat.yMMMMd().format(date);
   }
 
+  ///converts to month, day and year
+  static String dayMonthYear({DateTime? date}) {
+    if(date == null)return DateFormat('dd MMMM y').format(DateTime.now());
+    return DateFormat('dd MMMM y').format(date);
+  }
+
   static String monthOnly({DateTime? date}) {
     date ??= DateTime.now();
     return DateFormat.MMMM().format(date);

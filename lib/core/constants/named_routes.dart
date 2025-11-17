@@ -27,6 +27,10 @@ class NamedRoutes {
   //games
   static const searchGames = '/searchGames';
 
+  //wallet
+  static const viewAllTransactions = '/viewAllTransactions';
+  static const withdraw = '/withdraw';
+
   //profile
   static const verifyBankDetails = '/verifyBankDetails';
 

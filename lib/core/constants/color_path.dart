@@ -18,8 +18,6 @@ class ColorPath {
   static const silverGrey = Color(0xffCCCCCC);
   static const alizarinRed = Color(0xffD92D20);
   static const easternBlue = Color(0xff1C82AB);
-  static const turquoiseGreen = Color(0xff17F7B6);
-  static const turquoiseGreen2 = Color(0xff40E2D6);
   static const ribbonRed = Color(0xffF71355);
   static const ribbonRed2 = Color(0xffD90744);
   static const yukonGreen = Color(0xff647C0A);
@@ -65,7 +63,6 @@ class ColorPath {
   static const athensGrey2 = Color(0xffF7F7F9);
   static const athensGrey3 = Color(0xffE7E6EC);
   static const athensGrey4 = Color(0xffE4E7EC);
-  static const fogPurple = Color(0xffD7CDFE);
   static const scandalGreen = Color(0xffD1FADF);
   static const sundownPink = Color(0xffFEA3B4);
   static const pippinPink = Color(0xffFFE4E8);
@@ -73,6 +70,14 @@ class ColorPath {
   static const wormGreen = Color(0xffB6ED28);
   static const keppelGreen = Color(0xff43B2AE);
   static const curiousBlue = Color(0xff24A4D8);
+  static const turquoiseGreen = Color(0xff13F7B5);
+  static const titanPurple = Color(0xffF3F0FF);
+  static const fogPurple = Color(0xffD7CDFE);
+  static const funGreen = Color(0xff027A48);
+  static const barleyOrange = Color(0xffFFF1CC);
+  static const vesuBrown = Color(0xffB54708);
+
+
 
 
 

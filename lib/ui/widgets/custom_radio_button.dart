@@ -50,7 +50,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
           color: widget.value ? ColorPath.magnoliaPurple:Colors.transparent,
           shape: BoxShape.circle,
           border: Border.all(
-            color: widget.value ? ColorPath.ribbonRed
+            color: widget.value ? ColorPath.blueBlue
                 :ColorPath.mischkaGrey,
           )
         ),
@@ -61,7 +61,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
             width: innerSize.w,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: ColorPath.ribbonRed
+              color: ColorPath.blueBlue
 
             ),
           ):const SizedBox(),

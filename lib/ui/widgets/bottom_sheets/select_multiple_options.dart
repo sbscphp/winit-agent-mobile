@@ -7,6 +7,7 @@ import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/color_path.dart';
+import '../close_icon.dart';
 import '../custom_button.dart';
 
 class SelectMultipleOptions extends StatefulWidget {
@@ -81,9 +82,7 @@ class _SelectMultipleOptionsState extends State<SelectMultipleOptions> {
                           ],
                         ),
                       ),
-                      Clickable(
-                          onPressed: ()=>popNavigation(context: context),
-                          child: CustomAssetViewer(asset: AppAsset.close))
+                      CloseIcon()
 
                     ],
                   ),
