@@ -3,12 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/ui/widgets/custom_radio_button.dart';
 import 'package:winit_agent/ui/widgets/winit_container.dart';
-
-import '../../../core/constants/app_asset.dart';
 import '../../../core/utilities/navigator.dart';
 import '../clickable.dart';
 import '../close_icon.dart';
-import '../custom_svg.dart';
+
 
 class FilterOptions extends StatefulWidget {
   final String label;

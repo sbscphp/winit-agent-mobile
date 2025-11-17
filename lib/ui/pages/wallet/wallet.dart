@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_dimension.dart';
-import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/wallet/view_all_transactions.dart';
 import 'package:winit_agent/ui/widgets/balance_summary_card.dart';
 import 'package:winit_agent/ui/widgets/bottom_sheets/wallet_quick_actions.dart';
-import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/copy_details.dart';
-import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/empty_state.dart';
 import 'package:winit_agent/ui/widgets/list_header.dart';
 import 'package:winit_agent/ui/widgets/listview_items/transaction_item.dart';
-import 'package:winit_agent/ui/widgets/status_tag.dart';
-
 import '../../../core/constants/app_asset.dart';
-import '../../../core/constants/color_path.dart';
 import '../../widgets/action_icon.dart';
 import '../../widgets/bottom_sheets/base_bottom_sheet.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/naira_display.dart';
 import '../../widgets/profile/profile_image.dart';
 
 class Wallet extends StatefulWidget {

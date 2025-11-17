@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
-
 import '../../../core/constants/app_asset.dart';
-import '../../../core/constants/color_path.dart';
 import '../../../core/utilities/validator.dart';
 import '../custom_button.dart';
 import '../custom_svg.dart';

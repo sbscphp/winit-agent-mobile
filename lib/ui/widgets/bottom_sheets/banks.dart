@@ -4,10 +4,7 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_radio_button.dart';
-import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/text_fields/search_field.dart';
-
-import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/color_path.dart';
 import '../close_icon.dart';
 
