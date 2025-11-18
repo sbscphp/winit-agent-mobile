@@ -4,18 +4,13 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/action_completed.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/complete_withdrawal_request.dart';
-import 'package:winit_agent/ui/widgets/custom_radio_button.dart';
 import 'package:winit_agent/ui/widgets/list_header.dart';
 import 'package:winit_agent/ui/widgets/listview_items/bank_account_item.dart';
-import 'package:winit_agent/ui/widgets/winit_container.dart';
-
-import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../widgets/alert_dialogs/base_dialog.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/custom_svg.dart';
 import '../../widgets/naira_display.dart';
 import '../../widgets/text_fields/wallet_action_text_field.dart';
 
