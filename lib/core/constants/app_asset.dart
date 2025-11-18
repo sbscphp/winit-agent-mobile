@@ -60,6 +60,7 @@ class AppAsset {
   static const String pin = '$_iconDirectory/pin.svg';
   static const String serviceAgreement = '$_iconDirectory/service_agreement.svg';
   static const String support = '$_iconDirectory/support.svg';
+  static const String pin2 = '$_iconDirectory/pin_2.svg';
 
 
   //bottom nav
