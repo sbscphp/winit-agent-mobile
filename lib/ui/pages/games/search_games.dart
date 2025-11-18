@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
-
 import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/app_dimension.dart';
-import '../../../core/constants/color_path.dart';
-import '../../../core/data/models/color_theme.dart';
-import '../../../core/data/models/game.dart';
-import '../../../core/utilities/date_utilitites.dart';
 import '../../widgets/custom_appbar.dart';
-import '../../widgets/custom_svg.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/listview_items/game_item.dart';
 import '../../widgets/text_fields/search_field.dart';

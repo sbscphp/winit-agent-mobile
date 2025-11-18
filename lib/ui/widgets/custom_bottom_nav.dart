@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/color_path.dart';
+import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 
@@ -67,7 +68,7 @@ class CustomBottomNav extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: ColorPath.stratosBlue.withOpacity(0.32),
+                        color: ColorPath.stratosBlue.withCustomOpacity(0.32),
                         blurRadius: 32,
                         offset: const Offset(0, 0),
                       ),
