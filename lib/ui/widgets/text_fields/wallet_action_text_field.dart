@@ -1,5 +1,4 @@
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
-import 'package:winit_agent/core/constants/color_path.dart';
 import 'package:winit_agent/core/utilities/input_formatters/money_input_formatter.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:flutter/material.dart';

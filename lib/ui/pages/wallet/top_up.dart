@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/action_completed.dart';
-import 'package:winit_agent/ui/widgets/alert_dialogs/complete_withdrawal_request.dart';
 import 'package:winit_agent/ui/widgets/custom_radio_button.dart';
 import 'package:winit_agent/ui/widgets/list_header.dart';
 import 'package:winit_agent/ui/widgets/winit_container.dart';

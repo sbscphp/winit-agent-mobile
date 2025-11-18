@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
-import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/enter_transaction_pin.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 
