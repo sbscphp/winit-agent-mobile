@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/ui/widgets/listview_items/game_item.dart';
 
@@ -8,6 +9,8 @@ import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/data/view_models/bottom_nav_view_model.dart';
 import '../../../core/utilities/utilities.dart';
+import '../../widgets/alert_dialogs/action_completed.dart';
+import '../../widgets/alert_dialogs/base_dialog.dart';
 import '../../widgets/balance_summary_card.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/list_header.dart';
@@ -23,6 +26,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  @override
+  void initState() {
+    showTransactionPinPrompt();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -307,5 +317,24 @@ class _HomeState extends State<Home> {
            ),
          );
         });
+  }
+
+  showTransactionPinPrompt(){
+    Future.delayed(const Duration(milliseconds: 500), () {
+      baseDialog(
+        context: context,
+        content: ActionCompleted(
+          title: 'Transaction PIN',
+          asset: AppAsset.warning,
+          assetSize: 120,
+          subtitle:
+          'Create a transaction PIN to authorise account actions.',
+          buttonText: 'Set Transaction PIN',
+          onPressed: () {
+
+          },
+        ),
+      );
+    });
   }
 }

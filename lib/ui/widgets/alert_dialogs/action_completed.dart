@@ -11,7 +11,9 @@ class ActionCompleted extends StatelessWidget {
   final String subtitle;
   final VoidCallback onPressed;
   final double? assetSize;
-  const ActionCompleted({super.key, this.assetSize, required this.title, required this.subtitle, required this.onPressed});
+  final String? asset;
+  final String? buttonText;
+  const ActionCompleted({super.key, this.buttonText, this.asset, this.assetSize, required this.title, required this.subtitle, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class ActionCompleted extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CustomAssetViewer(asset: AppAsset.success, height: assetSize?.h ?? 48.h, width: assetSize?.w ?? 48.w,),
+          CustomAssetViewer(asset: asset ?? AppAsset.success, height: assetSize?.h ?? 48.h, width: assetSize?.w ?? 48.w,),
           SizedBox(height: 32.h,),
           FittedBox(
             child: Text(
@@ -47,7 +49,7 @@ class ActionCompleted extends StatelessWidget {
           ),
           SizedBox(height: 16.h,),
           CustomButton(
-              buttonText: 'Close',
+              buttonText: buttonText ?? 'Close',
               onPressed: onPressed
           )
 

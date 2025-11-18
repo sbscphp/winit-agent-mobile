@@ -52,6 +52,14 @@ class AppAsset {
   static const String avatar2 = '$_iconDirectory/avatar_2.svg';
   static const String accountNo = '$_iconDirectory/account_no.svg';
   static const String alert = '$_iconDirectory/alert.svg';
+  static const String avatar3 = '$_iconDirectory/avatar_3.svg';
+  static const String bankDetails = '$_iconDirectory/bank_details.svg';
+  static const String faq = '$_iconDirectory/faq.svg';
+  static const String legal = '$_iconDirectory/legal.svg';
+  static const String logout = '$_iconDirectory/logout.svg';
+  static const String pin = '$_iconDirectory/pin.svg';
+  static const String serviceAgreement = '$_iconDirectory/service_agreement.svg';
+  static const String support = '$_iconDirectory/support.svg';
 
 
   //bottom nav
