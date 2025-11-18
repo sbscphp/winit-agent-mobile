@@ -28,7 +28,7 @@ class WalletActionTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WinitContainer(
-      bgColor: ColorPath.remyPink,
+      bgColor: fillColor,
       padding: EdgeInsets.only(
           top: 16.h,
           bottom: 26.h,
@@ -36,11 +36,11 @@ class WalletActionTextField extends StatelessWidget {
           right: 16.w
       ),
       borderRadius: BorderRadius.all(Radius.circular(16.r)),
-      border: Border.all(color: ColorPath.pigPink, width: 2.w),
+      border: Border.all(color: borderColor, width: 2.w),
       child: Column(
         children: [
           Text(
-            'How much do you want to Withdraw ?',
+            label,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w400,
                 color: Theme.of(context).colorScheme.textSecondary

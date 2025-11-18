@@ -30,6 +30,7 @@ class NamedRoutes {
   //wallet
   static const viewAllTransactions = '/viewAllTransactions';
   static const withdraw = '/withdraw';
+  static const topUp = '/topUp';
 
   //profile
   static const verifyBankDetails = '/verifyBankDetails';

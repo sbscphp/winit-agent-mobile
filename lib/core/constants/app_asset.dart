@@ -51,6 +51,7 @@ class AppAsset {
   static const String building4 = '$_iconDirectory/building_4.svg';
   static const String avatar2 = '$_iconDirectory/avatar_2.svg';
   static const String accountNo = '$_iconDirectory/account_no.svg';
+  static const String alert = '$_iconDirectory/alert.svg';
 
 
   //bottom nav
@@ -75,6 +76,7 @@ class AppAsset {
 
   //gif
   static const String warning = '$_gifDirectory/warning.gif';
+  static const String success = '$_gifDirectory/success.gif';
 
 
 }

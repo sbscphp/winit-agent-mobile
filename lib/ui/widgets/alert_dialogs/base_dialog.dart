@@ -33,7 +33,7 @@ Future<void> baseDialog({
     barrierDismissible: isDismissible,
     barrierLabel: "BaseDialog",
     barrierColor: Colors.black.withCustomOpacity(0.32),
-    transitionDuration: const Duration(milliseconds: 100),
+    transitionDuration: const Duration(milliseconds: 50),
     pageBuilder: (_, __, ___) {
       return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),

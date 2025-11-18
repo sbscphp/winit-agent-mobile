@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/widgets/alert_dialogs/action_completed.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/complete_withdrawal_request.dart';
 import 'package:winit_agent/ui/widgets/custom_radio_button.dart';
 import 'package:winit_agent/ui/widgets/list_header.dart';
@@ -191,7 +193,26 @@ class _WithdrawState extends State<Withdraw> {
                   onPressed: () {
                     baseDialog(
                       context: context,
-                      content: CompleteWithdrawalRequest(),
+                      content: CompleteWithdrawalRequest(
+                        onDone: (value){
+
+                          Future.delayed(const Duration(milliseconds: 50), () {
+                            baseDialog(
+                              context: context,
+                              content: ActionCompleted(
+                                title: 'Request Completed',
+                                assetSize: 80,
+                                subtitle:
+                                'Congratulations, your withdrawal request has been successfully completed. A notification will be sent to you when fully processed.',
+                                onPressed: () {
+                                  popNavigation(context: context);
+                                },
+                              ),
+                            );
+                          });
+
+                        },
+                      ),
                     );
                   }
               )

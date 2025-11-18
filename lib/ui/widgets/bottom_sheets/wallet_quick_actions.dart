@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/ui/pages/wallet/top_up.dart';
 import 'package:winit_agent/ui/pages/wallet/withdraw.dart';
 import 'package:winit_agent/ui/widgets/winit_container.dart';
 
@@ -62,7 +63,9 @@ class WalletQuickActions extends StatelessWidget {
             walletQuickAction(
                 context,
                 'Wallet Top Up', 'Top Up your WinIT Wallet with ease', AppAsset.topUp,
-                    (){}
+                    (){
+                      replaceNavigation(context: context, widget: const TopUp(), routeName: NamedRoutes.topUp);
+                    }
             ),
             SizedBox(height: 21.h,),
             walletQuickAction(

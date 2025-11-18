@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/enter_transaction_pin.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 
@@ -9,7 +10,8 @@ import '../../../core/constants/color_path.dart';
 import '../custom_button.dart';
 
 class CompleteWithdrawalRequest extends StatefulWidget {
-  const CompleteWithdrawalRequest({super.key});
+  final ValueChanged<bool> onDone;
+  const CompleteWithdrawalRequest({super.key, required this.onDone});
 
   @override
   State<CompleteWithdrawalRequest> createState() => _CompleteWithdrawalRequestState();
@@ -23,12 +25,18 @@ class _CompleteWithdrawalRequestState extends State<CompleteWithdrawalRequest> {
   Widget build(BuildContext context) {
     return AnimatedCrossFade(
       firstChild: confirmation(context),
-      secondChild: EnterTransactionPin(),
+      secondChild: EnterTransactionPin(
+        onDone: (value){
+          if(value){
+            widget.onDone(value);
+          }
+        },
+      ),
       crossFadeState: _switch ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-      firstCurve: Curves.easeInOut,
-      secondCurve: Curves.easeInOut,
-      sizeCurve: Curves.easeInOut,
-      duration: const Duration(milliseconds: 300),
+      // firstCurve: Curves.easeInOut,
+      // secondCurve: Curves.easeInOut,
+      // sizeCurve: Curves.easeInOut,
+      duration: const Duration(milliseconds: 350),
     );
   }
 
