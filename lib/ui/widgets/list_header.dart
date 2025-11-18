@@ -13,7 +13,8 @@ class ListHeader extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool showAllVisible;
   final String? showAllLabel;
-  const ListHeader({super.key, this.showAllLabel, required this.label, required this.subtitle, this.showAllVisible = true, this.onPressed});
+  final Widget? titleWidget;
+  const ListHeader({super.key, this.titleWidget, this.showAllLabel, required this.label, required this.subtitle, this.showAllVisible = true, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class ListHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              titleWidget ?? Text(
                 label,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w800,
@@ -32,17 +33,19 @@ class ListHeader extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 2.h,),
-              Text(
-                subtitle,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: Theme.of(context).colorScheme.textTertiary
+              FittedBox(
+                child: Text(
+                  subtitle,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: Theme.of(context).colorScheme.textTertiary
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(width: 10.w,),
+        SizedBox(width: 40.w,),
         if(showAllVisible)Clickable(
           onPressed: onPressed,
           child: Row(

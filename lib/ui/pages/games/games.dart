@@ -17,6 +17,7 @@ import '../../../core/utilities/date_utilitites.dart';
 import '../../widgets/clickable.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/listview_items/game_item.dart';
 
 class Games extends StatefulWidget {
   const Games({super.key});
@@ -80,6 +81,11 @@ class _GamesState extends State<Games> {
                 colorTheme?.entryStateButtonTextColor,
                 Theme.of(context).colorScheme.whiteText
             );
+
+            return GameItem(
+              index: index,
+            );
+
             return StaggeredGridTile.fit(
               crossAxisCellCount: isBig ? 2 : 1,
               child: Clickable(

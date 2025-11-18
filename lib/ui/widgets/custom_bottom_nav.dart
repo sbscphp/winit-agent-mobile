@@ -48,7 +48,7 @@ class CustomBottomNav extends StatelessWidget {
                 ],
               ),
             ),
-            // Custom center button
+            //Custom center button
             Positioned(
               left: 0,
               right: 0,
@@ -115,7 +115,7 @@ class CustomBottomNav extends StatelessWidget {
                 ? const ColorFilter.mode(ColorPath.curiousBlue, BlendMode.srcIn)
                 : null,
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
