@@ -47,6 +47,7 @@ class ColorPath {
   static const grayGrey = Color(0xff8C8C8C);
   static const frenchGrey = Color(0xffB4B3C3);
   static const pigPink = Color(0xffFEE1EA);
+  static const pigPink2 = Color(0xffFDCEDB);
   static const charcoalBlack = Color(0xff01011B);
   static const blueBlue = Color(0xff4313F7);
   static const piperBrown = Color(0xffD65623);

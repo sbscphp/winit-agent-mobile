@@ -7,7 +7,8 @@ import '../custom_svg.dart';
 class IdentityVerificationNotes extends StatelessWidget {
   final List<Map<String, dynamic>> notes;
   final String asset;
-  const IdentityVerificationNotes({super.key, required this.asset, required this.notes});
+  final bool sizeBoxAsSeparator;
+  const IdentityVerificationNotes({super.key, this.sizeBoxAsSeparator = false, required this.asset, required this.notes});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,7 @@ class IdentityVerificationNotes extends StatelessWidget {
       separatorBuilder: (context, index) {
         final note = notes[index];
         final length = note.length;
-        if(length == 1){
+        if(length == 1 || sizeBoxAsSeparator){
           return SizedBox(height: 24.h,);
         }
         return CustomDivider(

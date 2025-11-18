@@ -29,6 +29,7 @@ class AppAsset {
   static const String bulletPoint = '$_iconDirectory/bullet_point.svg';
   static const String bulletPoint2 = '$_iconDirectory/bullet_point_2.svg';
   static const String bulletPoint3 = '$_iconDirectory/bullet_point_3.svg';
+  static const String bulletPoint4 = '$_iconDirectory/bullet_point_4.svg';
   static const String ninStack = '$_iconDirectory/nin_stack.svg';
   static const String bvnStack = '$_iconDirectory/bvn_stack.svg';
   static const String delete = '$_iconDirectory/delete.svg';
@@ -61,6 +62,9 @@ class AppAsset {
   static const String serviceAgreement = '$_iconDirectory/service_agreement.svg';
   static const String support = '$_iconDirectory/support.svg';
   static const String pin2 = '$_iconDirectory/pin_2.svg';
+  static const String warning2 = '$_iconDirectory/warning.svg';
+  static const String warning3 = '$_iconDirectory/warning_3.svg';
+  static const String delete2 = '$_iconDirectory/delete_2.svg';
 
 
   //bottom nav
@@ -86,6 +90,7 @@ class AppAsset {
   //gif
   static const String warning = '$_gifDirectory/warning.gif';
   static const String success = '$_gifDirectory/success.gif';
+  static const String email = '$_gifDirectory/email.gif';
 
 
 }

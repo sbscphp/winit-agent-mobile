@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/profile/transaction_pin/forgot_transaction_pin.dart';
 import 'package:winit_agent/ui/pages/profile/transaction_pin/set_transaction_pin.dart';
 
 import '../../../../core/constants/app_asset.dart';
@@ -30,7 +31,7 @@ class TransactionPin extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfileOption(
-                asset:AppAsset.avatar3,
+                asset:AppAsset.pin,
                 label:'${1 + 1 == 2 ? 'Change':'Setup'} Transaction PiN',
                 subtitle: 1 + 1 == 2 ? 'Change your current transaction with ease':'Setup your transaction pin with ease',
                 onPressed: (){
@@ -41,10 +42,12 @@ class TransactionPin extends StatelessWidget {
             ),
             SizedBox(height: 24.h,),
             if(1 + 1 == 2)ProfileOption(
-                asset:AppAsset.bankDetails,
+                asset:AppAsset.pin,
                 label:'Forget Transaction PiN?',
                 subtitle: 'Forget transaction PIN? Reset today',
-                onPressed: (){}
+                onPressed: (){
+                  pushNavigation(context: context, widget: const ForgotTransactionPin(), routeName: NamedRoutes.forgotTransactionPin);
+                }
             ),
           ],
         ),

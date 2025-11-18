@@ -6,6 +6,7 @@ import 'package:winit_agent/ui/widgets/alert_dialogs/action_completed.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/complete_withdrawal_request.dart';
 import 'package:winit_agent/ui/widgets/custom_radio_button.dart';
 import 'package:winit_agent/ui/widgets/list_header.dart';
+import 'package:winit_agent/ui/widgets/listview_items/bank_account_item.dart';
 import 'package:winit_agent/ui/widgets/winit_container.dart';
 
 import '../../../core/constants/app_asset.dart';
@@ -111,70 +112,7 @@ class _WithdrawState extends State<Withdraw> {
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext context, int index) {
-                          return WinitContainer(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomRadioButton(disableClick: true,),
-                                SizedBox(width: 8.w,),
-                                CustomAssetViewer(asset: AppAsset.building4, height: 32.h, width: 32.w,),
-                                SizedBox(width: 8.w,),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Access Bank PLC',
-                                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                            fontWeight: FontWeight.w800,
-                                            color: Theme.of(context).colorScheme.textPrimary
-                                        ),
-                                      ),
-                                      SizedBox(height: 4.h,),
-                                      FittedBox(
-                                        child: Row(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                CustomAssetViewer(asset: AppAsset.avatar2, height: 14.h, width: 14.w,),
-                                                SizedBox(width: 4.w,),
-                                                Text(
-                                                  'Adekunle',
-                                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                      fontWeight: FontWeight.w400,
-                                                      color: Theme.of(context).colorScheme.textSecondary
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Container(
-                                              height: 16.h,
-                                              width: 1.w,
-                                              color: ColorPath.athensGrey3,
-                                              margin: EdgeInsets.symmetric(horizontal: 11.w),
-                                            ),
-                                            Row(
-                                              children: [
-                                                CustomAssetViewer(asset: AppAsset.accountNo, height: 14.h, width: 14.w,),
-                                                SizedBox(width: 4.w,),
-                                                Text(
-                                                 '0069000592',
-                                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                      fontWeight: FontWeight.w400,
-                                                      color: Theme.of(context).colorScheme.textSecondary
-                                                  ),
-                                                ),
-                                        
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
+                          return BankAccountItem(
                           );
                         },
                         separatorBuilder: (context, index) {
