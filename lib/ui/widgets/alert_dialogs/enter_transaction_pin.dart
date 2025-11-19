@@ -14,7 +14,9 @@ import '../text_fields/custom_text_field.dart';
 class EnterTransactionPin extends StatefulWidget {
   final ValueChanged<bool> onDone;
   final String? buttonText;
-  const EnterTransactionPin({super.key, required this.onDone, this.buttonText});
+  final String? title;
+  final String? subtitle;
+  const EnterTransactionPin({super.key, required this.onDone, this.buttonText, this.title, this.subtitle});
 
   @override
   State<EnterTransactionPin> createState() => _EnterTransactionPinState();
@@ -37,19 +39,17 @@ class _EnterTransactionPinState extends State<EnterTransactionPin> {
         children: [
           CustomAssetViewer(asset: AppAsset.warning, height: 48.h, width: 48.w,),
           SizedBox(height: 32.h,),
-          FittedBox(
-            child: Text(
-              'Enter Transaction PIN',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: Theme.of(context).colorScheme.textPrimary
-              ),
-              textAlign: TextAlign.center,
+          Text(
+            widget.title ?? 'Enter Transaction PIN',
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w800,
+                color: Theme.of(context).colorScheme.textPrimary
             ),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: 16.h,),
           Text(
-            'Enter your four (4) Digit Transaction pin to complete this transaction',
+            widget.subtitle ?? 'Enter your four (4) Digit Transaction pin to complete this transaction',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w400,
                 color: Theme.of(context).colorScheme.textSecondary
@@ -95,6 +95,8 @@ class _EnterTransactionPinState extends State<EnterTransactionPin> {
           ),
           SizedBox(height: 16.h,),
           CustomButton(
+            buttonHeight: 40,
+              useSuffixIcon: false,
               buttonText: widget.buttonText ?? 'Complete Transaction',
               onPressed: () {
                 widget.onDone(true);

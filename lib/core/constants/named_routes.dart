@@ -41,6 +41,7 @@ class NamedRoutes {
   static const referralManagement = '/referralManagement';
   static const viewAllReferralTransactions = '/viewAllReferralTransactions';
   static const accountClosure = '/accountClosure';
+  static const reactivateAccount = '/reactivateAccount';
 
 
   //payment

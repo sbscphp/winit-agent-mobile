@@ -2,18 +2,32 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/ui/widgets/alert_dialogs/wallet_balance_dialog.dart';
 
 import '../../../../core/constants/app_asset.dart';
 import '../../../../core/constants/app_dimension.dart';
 import '../../../../core/constants/color_path.dart';
+import '../../../../core/utilities/navigator.dart';
+import '../../../widgets/alert_dialogs/action_completed.dart';
+import '../../../widgets/alert_dialogs/base_dialog.dart';
+import '../../../widgets/alert_dialogs/enter_transaction_pin.dart';
+import '../../../widgets/cross_fade_widget.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_svg.dart';
 import '../../../widgets/onboarding/identity_verification_notes.dart';
 import '../../../widgets/screen_title.dart';
 
-class AccountClosure extends StatelessWidget {
+class AccountClosure extends StatefulWidget {
   const AccountClosure({super.key});
+
+  @override
+  State<AccountClosure> createState() => _AccountClosureState();
+}
+
+class _AccountClosureState extends State<AccountClosure> {
+
+  final switchNotifier = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +36,14 @@ class AccountClosure extends StatelessWidget {
         context: context,
         title: 'Account Closure',
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(
-            left: AppDimension.paddingLeft,
-            right: AppDimension.paddingRight,
-            top: 32.h,
-            bottom: 50.h
-        ),
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(
+              left: AppDimension.paddingLeft,
+              right: AppDimension.paddingRight,
+              top: 32.h,
+              bottom: 50.h
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -88,7 +102,40 @@ class AccountClosure extends StatelessWidget {
                   buttonText: 'Initiate Account Closure',
                   suffixIcon: AppAsset.warning3,
                   onPressed: () {
-          
+                    baseDialog(
+                      context: context,
+                      content: CrossFadeWidget(
+                        switchNotifier: switchNotifier,
+                        firstChild: WalletBalanceDialog(
+                            onPressed: ()=>switchNotifier.value = true,
+                        ),
+                        secondChild: EnterTransactionPin(
+                          title: 'Enter Transaction PIN for Account Closure Validation. ',
+                            subtitle: 'Enter your four (4) Digit Transaction pin to complete this action',
+                            buttonText: 'Validate Code',
+                            onDone: (value){
+                              Future.delayed(const Duration(milliseconds: 50), () {
+                                baseDialog(
+                                  context: context,
+                                  content: ActionCompleted(
+                                    title: 'Request Completed',
+                                    assetSize: 80,
+                                    subtitle:
+                                    'Congratulations, your withdrawal request has been successfully completed. A notification will be sent to you when fully processed.',
+                                    onPressed: () {
+                                      popNavigation(context: context);
+                                    },
+                                  ),
+                                );
+                              });
+                            }
+                        ),
+                      ),
+                      onClosed: () {
+                        switchNotifier.value = false;
+                      },
+                    );
+
                   }
               ),
               SizedBox(height: 16.h,),
@@ -148,16 +195,16 @@ class AccountClosure extends StatelessWidget {
                                   // );
                                 },
                             ),
-          
+
                           ],
                         ),
                       ),
                     )
-          
+
                   ],
                 ),
               )
-          
+
             ],
           ),
         ),

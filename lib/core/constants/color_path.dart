@@ -17,7 +17,6 @@ class ColorPath {
   static const hummingBirdBlue2 = Color(0xffD3EDF8);
   static const silverGrey = Color(0xffCCCCCC);
   static const alizarinRed = Color(0xffD92D20);
-  static const easternBlue = Color(0xff1C82AB);
   static const ribbonRed = Color(0xffF71355);
   static const ribbonRed2 = Color(0xffD90744);
   static const yukonGreen = Color(0xff647C0A);
@@ -80,6 +79,7 @@ class ColorPath {
   static const hummingBlue = Color(0xffE9F6FC);
   static const foamGreen = Color(0xffECFDF3);
   static const beeBrown = Color(0xffFEF0C7);
+  static const easternBlue = Color(0xff1C82AB);
 
 
 
