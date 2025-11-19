@@ -38,6 +38,9 @@ class NamedRoutes {
   static const setTransactionPin = '/setTransactionPin';
   static const forgotTransactionPin = '/forgotTransactionPin';
   static const manageBankAccounts = '/manageBankAccounts';
+  static const referralManagement = '/referralManagement';
+  static const viewAllReferralTransactions = '/viewAllReferralTransactions';
+  static const accountClosure = '/accountClosure';
 
 
   //payment

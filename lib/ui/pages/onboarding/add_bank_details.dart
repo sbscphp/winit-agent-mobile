@@ -4,7 +4,7 @@ import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
-import 'package:winit_agent/ui/pages/profile/verify_bank_details.dart';
+import 'package:winit_agent/ui/pages/profile/manage_bank_accounts/verify_bank_details.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 

@@ -30,7 +30,7 @@ class TransactionReceipt extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Commission Transaction',
+                      'Referral Transaction',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w800,
                           color: Theme.of(context).colorScheme.textPrimary
@@ -53,7 +53,7 @@ class TransactionReceipt extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16.h,),
-          fundWithdrawal(context),
+          referral(context),
           SizedBox(height: 16.h,),
           CustomButton(
               buttonText: 'Download Receipt',
@@ -755,4 +755,193 @@ class TransactionReceipt extends StatelessWidget {
       ],
     );
   }
+
+  referral(BuildContext context){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Transaction Date',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).colorScheme.textTertiary
+              ),
+            ),
+            SizedBox(width: 20.w,),
+            Text(
+                'Jan 25 2025',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.textPrimary
+                )),
+          ],
+        ),
+        SizedBox(height: 10.h,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Transaction Time',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).colorScheme.textTertiary
+              ),
+            ),
+            SizedBox(width: 20.w,),
+            Text(
+                '11:00AM',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.textPrimary
+                )),
+          ],
+        ),
+        SizedBox(height: 10.h,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Transaction Reference ID',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).colorScheme.textTertiary
+              ),
+            ),
+            SizedBox(width: 20.w,),
+            Expanded(
+              child: Text(
+                '678393',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.textPrimary
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10.h,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                'Transaction Type',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: Theme.of(context).colorScheme.textTertiary
+                ),
+              ),
+            ),
+            SizedBox(width: 20.w,),
+            Flexible(
+              child: Text(
+                  'Referral Transaction',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.textPrimary
+                  ),
+                textAlign: TextAlign.right,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10.h,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Paid Via',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).colorScheme.textTertiary
+              ),
+            ),
+            SizedBox(width: 20.w,),
+            Flexible(
+              child: Text(
+                'PayStack',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.textPrimary
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10.h,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Transaction Value',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).colorScheme.textTertiary
+              ),
+            ),
+            SizedBox(width: 20.w,),
+            Flexible(
+              child: NairaDisplay(
+                amount: 202222,
+                fontSize: 14.sp,
+                color:Theme.of(context).colorScheme.textPrimary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10.h,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Paid to',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).colorScheme.textTertiary
+              ),
+            ),
+            SizedBox(width: 20.w,),
+            Expanded(
+              child: Text(
+                'Wallet ${Utilities.maskCharacters(subject: '203546677', startIndex: 2, endIndex: 6)}',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.textPrimary
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10.h,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                'Transaction Status',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: Theme.of(context).colorScheme.textTertiary
+                ),
+              ),
+            ),
+            SizedBox(width: 20.w,),
+            Expanded(
+              child: StatusTag(status: 'successful', returnOnlyText: true, useEndAlignment: true,),
+            ),
+          ],
+        ),
+
+      ],
+    );
+  }
+
+
 }

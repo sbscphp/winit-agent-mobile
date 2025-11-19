@@ -6,18 +6,18 @@ import 'package:winit_agent/ui/widgets/bottom_sheets/banks.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/text_fields/onboarding_drop_down.dart';
 
-import '../../../core/constants/app_asset.dart';
-import '../../../core/constants/app_dimension.dart';
-import '../../../core/constants/color_path.dart';
-import '../../../core/utilities/validator.dart';
-import '../../widgets/alert_dialogs/action_completed.dart';
-import '../../widgets/alert_dialogs/base_dialog.dart';
-import '../../widgets/bottom_sheets/base_bottom_sheet.dart';
-import '../../widgets/custom_appbar.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_check_box.dart';
-import '../../widgets/text_fields/onboarding_text_field.dart';
-import '../../widgets/screen_title.dart';
+import '../../../../core/constants/app_asset.dart';
+import '../../../../core/constants/app_dimension.dart';
+import '../../../../core/constants/color_path.dart';
+import '../../../../core/utilities/validator.dart';
+import '../../../widgets/alert_dialogs/action_completed.dart';
+import '../../../widgets/alert_dialogs/base_dialog.dart';
+import '../../../widgets/bottom_sheets/base_bottom_sheet.dart';
+import '../../../widgets/custom_appbar.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_check_box.dart';
+import '../../../widgets/text_fields/onboarding_text_field.dart';
+import '../../../widgets/screen_title.dart';
 
 class VerifyBankDetails extends StatefulWidget {
   const VerifyBankDetails({super.key});

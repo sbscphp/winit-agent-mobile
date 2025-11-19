@@ -3,11 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/profile/account_closure/account_closure.dart';
 import 'package:winit_agent/ui/pages/profile/manage_bank_accounts/manage_bank_accounts.dart';
+import 'package:winit_agent/ui/pages/profile/referral_management/referral_management.dart';
 import 'package:winit_agent/ui/pages/profile/transaction_pin/transaction_pin.dart';
+import 'package:winit_agent/ui/widgets/clickable.dart';
+import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/profile/profile_option.dart';
+import 'package:winit_agent/ui/widgets/winit_container.dart';
 import '../../../core/constants/app_dimension.dart';
+import '../../../core/constants/color_path.dart';
 import '../../widgets/custom_appbar.dart';
+import '../../widgets/custom_painter/dotted_border.dart';
 import '../../widgets/profile/profile_image.dart';
 
 class Profile extends StatefulWidget {
@@ -80,7 +87,9 @@ class _ProfileState extends State<Profile> {
                 asset:AppAsset.support,
                 label:'Referral Management',
                 subtitle: 'Refer other agent and Earn with ease today.',
-                onPressed: (){}
+                onPressed: (){
+                  pushNavigation(context: context, widget: const ReferralManagement(), routeName: NamedRoutes.referralManagement);
+                }
             ),
             SizedBox(height: 24.h,),
             ProfileOption(
@@ -101,8 +110,39 @@ class _ProfileState extends State<Profile> {
                 asset:AppAsset.logout,
                 label:'Account Closure',
                 subtitle: 'Initiate the process to close your account',
-                onPressed: (){}
+                onPressed: (){
+                  pushNavigation(context: context, widget: const AccountClosure(), routeName: NamedRoutes.accountClosure);
+                }
             ),
+            SizedBox(height: 24.h,),
+            Clickable(
+              onPressed: (){},
+              child: CustomPaint(
+                painter: DottedBorder(
+                    color: ColorPath.ribbonRed,
+                  borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                ),
+                child: WinitContainer(
+                  bgColor: ColorPath.remyPink,
+                  borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                  padding: EdgeInsets.symmetric(vertical: 18.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Delete my Account',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: ColorPath.ribbonRed
+                          ),
+                        ),
+                        SizedBox(width: 8.w,),
+                        CustomAssetViewer(asset: AppAsset.delete2)
+                      ],
+                    )
+                ),
+              ),
+            )
 
           ],
         ),

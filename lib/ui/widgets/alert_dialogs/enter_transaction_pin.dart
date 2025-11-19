@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import '../../../core/constants/app_asset.dart';
+import '../../../core/constants/color_path.dart';
 import '../../../core/utilities/validator.dart';
+import '../clickable.dart';
 import '../custom_button.dart';
 import '../custom_svg.dart';
 import '../text_fields/custom_text_field.dart';
@@ -63,6 +65,32 @@ class _EnterTransactionPinState extends State<EnterTransactionPin> {
             inputFormatters: [
               LengthLimitingTextInputFormatter(4),
               FilteringTextInputFormatter.digitsOnly,
+            ],
+          ),
+          SizedBox(height: 16.h,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Forgot Pin? ",
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: Theme.of(context).colorScheme.textTertiary
+                ),
+              ),
+              Clickable(
+                onPressed: (){
+                },
+                child: Text(
+                  "Reset",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: ColorPath.ribbonRed,
+                      decoration: TextDecoration.underline,
+                      decorationColor: ColorPath.ribbonRed
+                  ),
+                ),
+              ),
             ],
           ),
           SizedBox(height: 16.h,),
