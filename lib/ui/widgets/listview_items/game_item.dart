@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/games/select_quantity.dart';
 
 import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/color_path.dart';
@@ -57,7 +60,9 @@ class GameItem extends StatelessWidget {
 
     if (returnSmallCard) {
       return Clickable(
-        onPressed: () async {},
+        onPressed: (){
+          pushNavigation(context: context, widget: const SelectQuantity(), routeName: NamedRoutes.selectQuantity);
+        },
         child: Container(
           //height: 186,
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -86,7 +91,9 @@ class GameItem extends StatelessWidget {
     return StaggeredGridTile.fit(
       crossAxisCellCount: isBig ? 2 : 1,
       child: Clickable(
-        onPressed: () async {},
+        onPressed: () {
+          pushNavigation(context: context, widget: const SelectQuantity(), routeName: NamedRoutes.selectQuantity);
+        },
         child: Container(
           //height: 186,
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
