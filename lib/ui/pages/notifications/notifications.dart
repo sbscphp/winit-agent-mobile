@@ -32,6 +32,7 @@ class _NotificationsState extends State<Notifications> {
     return Scaffold(
       appBar: customAppBar(
           context: context,
+          showLeadingIcon: false,
           centerTitle: false,
           useCustomTitleWidget: true,
           titleWidget: FittedBox(
@@ -93,7 +94,7 @@ class _NotificationsState extends State<Notifications> {
             horizontal: AppDimension.paddingLeft,
             vertical: 32.h
         ),
-        child: 1 + 1 == 3 ? ListView.separated(
+        child: 1 + 1 == 2 ? ListView.separated(
           itemCount: 5,
           shrinkWrap: true,
           padding: EdgeInsets.zero,
