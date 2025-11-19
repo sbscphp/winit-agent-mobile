@@ -26,9 +26,10 @@ import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
 Future<void> baseDialog({
   required BuildContext context,
   required Widget content,
-  bool isDismissible = true
-}) {
-  return showGeneralDialog(
+  bool isDismissible = true,
+  VoidCallback? onClosed,
+}) async{
+  await showGeneralDialog(
     context: context,
     barrierDismissible: isDismissible,
     barrierLabel: "BaseDialog",
@@ -59,6 +60,7 @@ Future<void> baseDialog({
       );
     },
   );
+  if (onClosed != null) onClosed();
 }
 
 

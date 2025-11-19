@@ -4,6 +4,8 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/action_completed.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/complete_withdrawal_request.dart';
+import 'package:winit_agent/ui/widgets/alert_dialogs/enter_transaction_pin.dart';
+import 'package:winit_agent/ui/widgets/cross_fade_widget.dart';
 import 'package:winit_agent/ui/widgets/list_header.dart';
 import 'package:winit_agent/ui/widgets/listview_items/bank_account_item.dart';
 import '../../../core/constants/app_dimension.dart';
@@ -25,6 +27,7 @@ class _WithdrawState extends State<Withdraw> {
 
   final  _amount = TextEditingController();
   final _focusNode = FocusNode();
+  final switchNotifier = ValueNotifier(false);
 
   @override
   void initState() {
@@ -123,30 +126,63 @@ class _WithdrawState extends State<Withdraw> {
               SizedBox(height: 10.h,),
               CustomButton(
                   buttonText: 'Continue',
-                  onPressed: () {
+                  onPressed: (){
+                    // baseDialog(
+                    //   context: context,
+                    //   content: CompleteWithdrawalRequest(
+                    //     onDone: (value){
+                    //
+                    //       Future.delayed(const Duration(milliseconds: 50), () {
+                    //         baseDialog(
+                    //           context: context,
+                    //           content: ActionCompleted(
+                    //             title: 'Request Completed',
+                    //             assetSize: 80,
+                    //             subtitle:
+                    //             'Congratulations, your withdrawal request has been successfully completed. A notification will be sent to you when fully processed.',
+                    //             onPressed: () {
+                    //               popNavigation(context: context);
+                    //             },
+                    //           ),
+                    //         );
+                    //       });
+                    //
+                    //     },
+                    //   ),
+                    // );
+
                     baseDialog(
                       context: context,
-                      content: CompleteWithdrawalRequest(
-                        onDone: (value){
-
-                          Future.delayed(const Duration(milliseconds: 50), () {
-                            baseDialog(
-                              context: context,
-                              content: ActionCompleted(
-                                title: 'Request Completed',
-                                assetSize: 80,
-                                subtitle:
-                                'Congratulations, your withdrawal request has been successfully completed. A notification will be sent to you when fully processed.',
-                                onPressed: () {
-                                  popNavigation(context: context);
-                                },
-                              ),
-                            );
-                          });
-
-                        },
+                      content: CrossFadeWidget(
+                        switchNotifier: switchNotifier,
+                        firstChild: CompleteWithdrawalRequest(
+                            onDone: (value){},
+                            onPressed: () => switchNotifier.value = true,
+                        ),
+                        secondChild: EnterTransactionPin(
+                            onDone: (value){
+                              Future.delayed(const Duration(milliseconds: 50), () {
+                                baseDialog(
+                                  context: context,
+                                  content: ActionCompleted(
+                                    title: 'Request Completed',
+                                    assetSize: 80,
+                                    subtitle:
+                                    'Congratulations, your withdrawal request has been successfully completed. A notification will be sent to you when fully processed.',
+                                    onPressed: () {
+                                      popNavigation(context: context);
+                                    },
+                                  ),
+                                );
+                              });
+                            }
+                        ),
                       ),
+                      onClosed: () {
+                        switchNotifier.value = false;
+                      },
                     );
+
                   }
               )
             ],

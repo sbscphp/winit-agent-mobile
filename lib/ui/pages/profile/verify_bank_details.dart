@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/bottom_sheets/banks.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/text_fields/onboarding_drop_down.dart';
@@ -9,6 +10,8 @@ import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/utilities/validator.dart';
+import '../../widgets/alert_dialogs/action_completed.dart';
+import '../../widgets/alert_dialogs/base_dialog.dart';
 import '../../widgets/bottom_sheets/base_bottom_sheet.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_button.dart';
@@ -137,7 +140,20 @@ class _VerifyBankDetailsState extends State<VerifyBankDetails> {
                       buttonText: 'Add Bank Account Number',
                       suffixIcon: AppAsset.building3,
                       onPressed: () {
-
+                        baseDialog(
+                          context: context,
+                          content: ActionCompleted(
+                            asset: AppAsset.warning,
+                            title: 'Add Bank Account Details ?',
+                            assetSize: 80,
+                            subtitle:
+                            'Are you sure you want to add this bank account as a withdrawal option?',
+                            buttonText: 'Yes, Add Bank Account',
+                            onPressed: () {
+                              popNavigation(context: context);
+                            },
+                          ),
+                        );
                       }
                   ),
                   SizedBox(height: 12.h,),

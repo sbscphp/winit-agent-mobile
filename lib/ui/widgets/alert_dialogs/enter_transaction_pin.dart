@@ -11,7 +11,8 @@ import '../text_fields/custom_text_field.dart';
 
 class EnterTransactionPin extends StatefulWidget {
   final ValueChanged<bool> onDone;
-  const EnterTransactionPin({super.key, required this.onDone});
+  final String? buttonText;
+  const EnterTransactionPin({super.key, required this.onDone, this.buttonText});
 
   @override
   State<EnterTransactionPin> createState() => _EnterTransactionPinState();
@@ -66,10 +67,9 @@ class _EnterTransactionPinState extends State<EnterTransactionPin> {
           ),
           SizedBox(height: 16.h,),
           CustomButton(
-              buttonText: 'Complete Transaction',
+              buttonText: widget.buttonText ?? 'Complete Transaction',
               onPressed: () {
                 widget.onDone(true);
-
                 popNavigation(context: context);
               }
           )

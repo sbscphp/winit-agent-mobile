@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/profile/manage_bank_accounts/manage_bank_accounts.dart';
 import 'package:winit_agent/ui/pages/profile/transaction_pin/transaction_pin.dart';
 import 'package:winit_agent/ui/widgets/profile/profile_option.dart';
 import '../../../core/constants/app_dimension.dart';
@@ -47,7 +48,9 @@ class _ProfileState extends State<Profile> {
                 asset:AppAsset.bankDetails,
                 label:'Bank Account Details',
                 subtitle: 'Manage Account number for withdrawal',
-                onPressed: (){}
+                onPressed: (){
+                  pushNavigation(context: context, widget: const ManageBankAccounts(), routeName: NamedRoutes.manageBankAccounts);
+                }
             ),
             SizedBox(height: 24.h,),
             ProfileOption(

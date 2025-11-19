@@ -37,6 +37,7 @@ class NamedRoutes {
   static const transactionPin = '/transactionPin';
   static const setTransactionPin = '/setTransactionPin';
   static const forgotTransactionPin = '/forgotTransactionPin';
+  static const manageBankAccounts = '/manageBankAccounts';
 
 
   //payment
