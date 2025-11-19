@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winit_agent/ui/pages/games/games.dart';
 import 'package:winit_agent/ui/pages/home/home.dart';
+import 'package:winit_agent/ui/pages/notifications/notifications.dart';
 import 'package:winit_agent/ui/pages/profile/profile.dart';
 import 'package:winit_agent/ui/pages/wallet/wallet.dart';
 
@@ -25,7 +26,7 @@ class BottomNavViewModel extends ChangeNotifier{
   final List<Widget>  _children = [
     Games(), //games
     Wallet(), //my wallet
-    Container(), //notification
+    Notifications(), //notification
     Profile(), // profile
     Home(), //home
   ];

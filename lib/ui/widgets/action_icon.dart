@@ -9,12 +9,13 @@ class ActionIcon extends StatelessWidget {
   final String label;
   final String asset;
   final VoidCallback? onPressed;
-  const ActionIcon({super.key, required this.label, required this.asset, this.onPressed});
+  final double? paddingRight;
+  const ActionIcon({super.key, this.paddingRight, required this.label, required this.asset, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(right: AppDimension.paddingRight),
+      padding: EdgeInsets.only(right: paddingRight ?? AppDimension.paddingRight),
       child: Clickable(
         onPressed: onPressed,
         child: Row(

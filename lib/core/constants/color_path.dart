@@ -63,6 +63,7 @@ class ColorPath {
   static const athensGrey2 = Color(0xffF7F7F9);
   static const athensGrey3 = Color(0xffE7E6EC);
   static const athensGrey4 = Color(0xffE4E7EC);
+  static const athensGrey5 = Color(0xffF2F4F7);
   static const scandalGreen = Color(0xffD1FADF);
   static const sundownPink = Color(0xffFEA3B4);
   static const pippinPink = Color(0xffFFE4E8);

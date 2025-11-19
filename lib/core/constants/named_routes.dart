@@ -43,6 +43,9 @@ class NamedRoutes {
   static const accountClosure = '/accountClosure';
   static const reactivateAccount = '/reactivateAccount';
 
+  //notification
+  static const notificationSettings = '/notificationSettings';
+
 
   //payment
   static const selectPaymentMethod = '/selectPaymentMethod';
