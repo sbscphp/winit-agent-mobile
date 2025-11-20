@@ -3,22 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/ui/pages/games/enter_customer_details.dart';
-import 'package:winit_agent/ui/widgets/bottom_dock.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
-import 'package:winit_agent/ui/widgets/games/countdown_tile.dart';
 import 'package:winit_agent/ui/widgets/games/game_purchase_dock.dart';
 import 'package:winit_agent/ui/widgets/games/game_purchase_header.dart';
-import 'package:winit_agent/ui/widgets/step_counter.dart';
-
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/constants/named_routes.dart';
 import '../../../core/utilities/navigator.dart';
 import '../../widgets/custom_appbar.dart';
-import '../../widgets/custom_button.dart';
 import '../../widgets/naira_display.dart';
 import '../../widgets/quantity_counter.dart';
-import '../../widgets/screen_title.dart';
+
 
 class SelectQuantity extends StatefulWidget {
   const SelectQuantity({super.key});
