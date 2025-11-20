@@ -85,6 +85,7 @@ class ColorPath {
   static const meirosePurple = Color(0xffB09CFC);
   static const periwinklePurple = Color(0xffCDCDFE);
   static const magnoliaGrey = Color(0xffFCFAFF);
+  static const paduaGreen = Color(0xffAEEACB);
 
 
 

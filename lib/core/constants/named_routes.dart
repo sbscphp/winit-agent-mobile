@@ -28,6 +28,7 @@ class NamedRoutes {
   static const searchGames = '/searchGames';
   static const selectQuantity = '/selectQuantity';
   static const enterCustomerDetails = '/enterCustomerDetails';
+  static const ticketSalesReceipt = '/ticketSalesReceipt';
 
   //wallet
   static const viewAllTransactions = '/viewAllTransactions';

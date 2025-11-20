@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/games/ticket_sales_receipt.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/utilities/utilities.dart';
 import '../close_icon.dart';
@@ -137,7 +140,7 @@ class PaymentBreakdown extends StatelessWidget {
                   addDecimal: false
                 )}',
                 onPressed: () {
-
+                  replaceNavigation(context: context, widget: const TicketSalesReceipt(), routeName: NamedRoutes.ticketSalesReceipt);
                 }
             ),
 

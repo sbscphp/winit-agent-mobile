@@ -21,6 +21,7 @@ class AppAsset {
   static const String building2 = '$_iconDirectory/building_2.png';
   static const String building3 = '$_iconDirectory/building_3.svg';
   static const String logo = '$_iconDirectory/logo3.svg';
+  static const String logo2 = '$_iconDirectory/logo_2.svg';
   static const String avatar = '$_iconDirectory/avatar.png';
   static const String internet = '$_iconDirectory/internet.png';
   static const String checkMark = '$_iconDirectory/check_mark.svg';
@@ -71,6 +72,8 @@ class AppAsset {
   static const String add3 = '$_iconDirectory/add_3.svg';
   static const String alert4 = '$_iconDirectory/alert_4.svg';
   static const String edit = '$_iconDirectory/edit.svg';
+  static const String share = '$_iconDirectory/share.svg';
+  static const String print = '$_iconDirectory/print.svg';
 
 
   //bottom nav
@@ -91,6 +94,7 @@ class AppAsset {
   static const String ninSamplePics = '$_imageDirectory/nin_sample_pics.png';
   static const String bvnSamplePics = '$_imageDirectory/bvn_sample_pics.png';
   static const String emptyState = '$_imageDirectory/empty_state.svg';
+  static const String ticketBg = '$_imageDirectory/ticket_bg.png';
 
 
   //gif
