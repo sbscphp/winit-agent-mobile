@@ -5,9 +5,7 @@ import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/winit_container.dart';
-
 import '../../../../core/constants/app_dimension.dart';
-import '../../../../core/constants/color_path.dart';
 import '../../../../core/utilities/input_formatters/nigerian_phone_number_formatter.dart';
 import '../../../../core/utilities/navigator.dart';
 import '../../../../core/utilities/validator.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
-import 'package:winit_agent/core/constants/color_path.dart';
+
 
 class CountdownCircle extends StatelessWidget {
   final String label;

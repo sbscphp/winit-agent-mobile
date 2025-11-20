@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
-
 import '../../../../core/constants/app_dimension.dart';
 import '../../../../core/constants/color_path.dart';
 import '../../../../core/utilities/input_formatters/nigerian_phone_number_formatter.dart';
@@ -12,7 +10,6 @@ import '../../../widgets/alert_dialogs/action_completed.dart';
 import '../../../widgets/alert_dialogs/base_dialog.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/custom_button.dart';
-import '../../../widgets/custom_check_box.dart';
 import '../../../widgets/custom_divider.dart';
 import '../../../widgets/screen_title.dart';
 import '../../../widgets/text_fields/multi_select_dropdown.dart';
