@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/color_path.dart';
+import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/ui/widgets/lgbtq_container.dart';
 
@@ -13,6 +14,7 @@ class DisplayImage extends StatefulWidget {
   final String lastName;
   final double? size;
   final double? initialsSize;
+  final bool addOverlay;
 
   const DisplayImage({
     super.key,
@@ -20,7 +22,8 @@ class DisplayImage extends StatefulWidget {
     required this.firstName,
     required this.lastName,
     this.initialsSize,
-    this.size
+    this.size,
+    this.addOverlay = false
   });
 
   @override
@@ -79,10 +82,22 @@ class _DisplayImageState extends State<DisplayImage> {
           shape: BoxShape.circle
         ),
         child: _imageProvider != null
-            ?  CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: widget.size?.r,
-          backgroundImage: _imageProvider,
+            ?  Stack(
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.transparent,
+              radius: widget.size?.r,
+              backgroundImage: _imageProvider,
+            ),
+            if(widget.addOverlay)Container(
+              height: widget.size?.h ?? 80.h,
+              width: widget.size?.w ?? 80.w,
+              decoration: BoxDecoration(
+                color: Colors.black.withCustomOpacity(0.32),
+                shape: BoxShape.circle
+              ),
+            )
+          ],
         )
 
 

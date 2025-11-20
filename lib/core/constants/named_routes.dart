@@ -45,6 +45,9 @@ class NamedRoutes {
   static const viewAllReferralTransactions = '/viewAllReferralTransactions';
   static const accountClosure = '/accountClosure';
   static const reactivateAccount = '/reactivateAccount';
+  static const agentInformation = '/agentInformation';
+  static const personalDetails = '/personalDetails';
+  static const businessDetails = '/businessDetails';
 
   //notification
   static const notificationSettings = '/notificationSettings';

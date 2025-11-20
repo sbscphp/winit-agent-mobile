@@ -74,6 +74,9 @@ class AppAsset {
   static const String edit = '$_iconDirectory/edit.svg';
   static const String share = '$_iconDirectory/share.svg';
   static const String print = '$_iconDirectory/print.svg';
+  static const String personalDetails = '$_iconDirectory/personal_details.svg';
+  static const String businessDetails = '$_iconDirectory/business_details.svg';
+  static const String edit2 = '$_iconDirectory/edit_2.svg';
 
 
   //bottom nav

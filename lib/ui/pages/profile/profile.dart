@@ -4,6 +4,7 @@ import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/profile/account_closure/account_closure.dart';
+import 'package:winit_agent/ui/pages/profile/agent_information/agent_information.dart';
 import 'package:winit_agent/ui/pages/profile/manage_bank_accounts/manage_bank_accounts.dart';
 import 'package:winit_agent/ui/pages/profile/referral_management/referral_management.dart';
 import 'package:winit_agent/ui/pages/profile/transaction_pin/transaction_pin.dart';
@@ -48,7 +49,9 @@ class _ProfileState extends State<Profile> {
                 asset:AppAsset.avatar3,
                 label:'Personal Information',
                subtitle: 'Setup and Update your personal details',
-                onPressed: (){}
+                onPressed: (){
+                  pushNavigation(context: context, widget: const AgentInformation(), routeName: NamedRoutes.agentInformation);
+                }
             ),
             SizedBox(height: 24.h,),
             ProfileOption(
