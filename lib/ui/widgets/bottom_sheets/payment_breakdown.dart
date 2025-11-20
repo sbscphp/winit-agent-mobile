@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
-import 'package:winit_agent/core/constants/named_routes.dart';
-import 'package:winit_agent/ui/pages/wallet/top_up.dart';
-import 'package:winit_agent/ui/pages/wallet/withdraw.dart';
-import 'package:winit_agent/ui/widgets/winit_container.dart';
-
-import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/color_path.dart';
-import '../../../core/utilities/navigator.dart';
 import '../../../core/utilities/utilities.dart';
-import '../clickable.dart';
 import '../close_icon.dart';
 import '../custom_button.dart';
-import '../custom_svg.dart';
 import '../naira_display.dart';
 
 class PaymentBreakdown extends StatelessWidget {
