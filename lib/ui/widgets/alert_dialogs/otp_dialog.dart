@@ -18,7 +18,8 @@ import '../text_fields/custom_text_field.dart';
 class OtpDialog extends ConsumerStatefulWidget {
   final ValueChanged<bool> onDone;
   final String identifier;
-  const OtpDialog({super.key, required this.onDone, required this.identifier});
+  final String? title;
+  const OtpDialog({super.key, this.title, required this.onDone, required this.identifier});
 
   @override
   ConsumerState<OtpDialog> createState() => _OtpDialogState();
@@ -58,15 +59,13 @@ class _OtpDialogState extends ConsumerState<OtpDialog> {
         children: [
           CustomAssetViewer(asset: AppAsset.email, height: 48.h, width: 48.w,),
           SizedBox(height: 32.h,),
-          FittedBox(
-            child: Text(
-              'Enter OTP to Continue',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: Theme.of(context).colorScheme.textPrimary
-              ),
-              textAlign: TextAlign.center,
+          Text(
+            widget.title ?? 'Enter OTP to Continue',
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w800,
+                color: Theme.of(context).colorScheme.textPrimary
             ),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: 16.h,),
           Text(
@@ -84,7 +83,7 @@ class _OtpDialogState extends ConsumerState<OtpDialog> {
             controller: _otp,
             validator: FieldValidator.validate,
             inputFormatters: [
-              LengthLimitingTextInputFormatter(4),
+              LengthLimitingTextInputFormatter(6),
               FilteringTextInputFormatter.digitsOnly,
             ],
           ),
@@ -165,6 +164,7 @@ class _OtpDialogState extends ConsumerState<OtpDialog> {
           SizedBox(height: 32.h,),
           CustomButton(
               buttonText: 'Validate Code',
+              useSuffixIcon: false,
               onPressed: () {
                 popNavigation(context: context);
                 widget.onDone(true);

@@ -13,6 +13,8 @@ import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/constants/named_routes.dart';
 import '../../../core/utilities/input_formatters/nigerian_phone_number_formatter.dart';
+import '../../widgets/alert_dialogs/base_dialog.dart';
+import '../../widgets/alert_dialogs/otp_dialog.dart';
 import '../../widgets/bottom_sheets/base_bottom_sheet.dart';
 import '../../widgets/bottom_sheets/birth_date_selector_view.dart';
 import '../../widgets/custom_appbar.dart';
@@ -208,6 +210,25 @@ class _EnterCustomerDetailsState extends State<EnterCustomerDetails> with Ticker
           SizedBox(height: 20.h,),
           GamePurchaseDock(
               onPressed: (){
+
+                if(1 + 1 == 2){
+                  baseDialog(
+                    context: context,
+                    content: OtpDialog(
+                      title: 'Enter OTP from Customer to Validate and Purchase Ticket',
+                      identifier: 'dejbaba@gmail.com',
+                      onDone: (value){
+                        if(value){
+
+                        }
+                      },
+                    ),
+                  );
+                  return;
+                }
+
+
+
                 pushNavigation(context: context, widget: const SelectPaymentMethod(), routeName: NamedRoutes.selectPaymentMethod);
               }
           )
