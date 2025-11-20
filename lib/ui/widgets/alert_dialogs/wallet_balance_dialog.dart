@@ -40,7 +40,8 @@ class WalletBalanceDialog extends StatelessWidget {
           ),
           SizedBox(height: 16.h,),
           Text(
-            'You still have funds in your wallet. Please withdraw your remaining balance to ₦0.00 before proceeding with account closure.',
+            1 + 1 == 3 ? 'You still have funds in your wallet. Please withdraw your remaining balance to ₦0.00 before proceeding with account closure.':
+            'You can proceed to close your account.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w400,
                 color: Theme.of(context).colorScheme.textSecondary

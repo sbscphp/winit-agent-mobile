@@ -27,6 +27,7 @@ class NamedRoutes {
   //games
   static const searchGames = '/searchGames';
   static const selectQuantity = '/selectQuantity';
+  static const enterCustomerDetails = '/enterCustomerDetails';
 
   //wallet
   static const viewAllTransactions = '/viewAllTransactions';
@@ -50,6 +51,7 @@ class NamedRoutes {
 
   //payment
   static const selectPaymentMethod = '/selectPaymentMethod';
+  static const selectPaymentChannel = '/selectPaymentChannel';
   static const orderConfirmation = '/orderConfirmation';
   static const paymentCheckout = '/paymentCheckout';
 

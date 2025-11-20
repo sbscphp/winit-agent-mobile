@@ -13,11 +13,11 @@ class CountdownCircle extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
-      height: 42.74.h,
-      width: 42.74.w,
+      height: 46.08.h,
+      width: 54.91.w,
       decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.blackText.withAlpha((255 * 0.7).toInt()),
-          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+          color: Theme.of(context).colorScheme.textPrimary,
+          borderRadius: BorderRadius.all(Radius.circular(10.r)),
           //border: Border.all(color: ColorPath.ribbonRed2, width: 1.w)
       ),
       child: Center(
@@ -34,7 +34,7 @@ class CountdownCircle extends StatelessWidget {
                       .textTheme
                       .bodySmall
                       ?.copyWith(
-                      fontSize: 8.sp,
+                      fontSize: 10.sp,
                       fontWeight: FontWeight.w600,
                       color:textColor
                   ),
@@ -44,7 +44,7 @@ class CountdownCircle extends StatelessWidget {
                   value,
                   style: Theme.of(context)
                       .textTheme
-                      .bodySmall
+                      .bodyMedium
                       ?.copyWith(
                       fontWeight: FontWeight.w800,
                       color:textColor

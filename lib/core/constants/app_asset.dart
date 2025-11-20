@@ -68,6 +68,9 @@ class AppAsset {
   static const String add2 = '$_iconDirectory/add_2.svg';
   static const String alert2 = '$_iconDirectory/alert_2.svg';
   static const String settings = '$_iconDirectory/settings.svg';
+  static const String add3 = '$_iconDirectory/add_3.svg';
+  static const String alert4 = '$_iconDirectory/alert_4.svg';
+  static const String edit = '$_iconDirectory/edit.svg';
 
 
   //bottom nav

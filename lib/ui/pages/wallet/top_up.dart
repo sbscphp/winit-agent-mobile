@@ -6,6 +6,7 @@ import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/action_completed.dart';
 import 'package:winit_agent/ui/widgets/custom_radio_button.dart';
 import 'package:winit_agent/ui/widgets/list_header.dart';
+import 'package:winit_agent/ui/widgets/listview_items/payment_method_item.dart';
 import 'package:winit_agent/ui/widgets/winit_container.dart';
 
 import '../../../core/constants/app_asset.dart';
@@ -133,49 +134,7 @@ class _TopUpState extends State<TopUp> {
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext context, int index) {
-                          return Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomRadioButton(disableClick: true,),
-                              SizedBox(width: 8.w,),
-                              SizedBox(
-                                height: 24.h,
-                                width: 24.w,
-                                child: CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  height: double.infinity,
-                                  width: double.infinity,
-                                  imageUrl: '',
-                                  placeholder: (context, url) => const MediaPlaceholder(),
-                                  errorWidget: (context, url, error) => const MediaPlaceholder(),
-                                ),
-                              ),
-                              SizedBox(width: 8.w,),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'PayStack',
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          fontWeight: FontWeight.w600,
-                                          color: Theme.of(context).colorScheme.textPrimary
-                                      ),
-                                    ),
-                                    SizedBox(height: 2.h,),
-                                    Text(
-                                      'Pay with paystack',
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                          fontWeight: FontWeight.w400,
-                                          color: Theme.of(context).colorScheme.textTertiary
-                                      ),
-                                    ),
-
-                                  ],
-                                ),
-                              )
-                            ],
-                          );
+                          return PaymentMethodItem();
                         },
                         separatorBuilder: (context, index) {
                           return SizedBox(height: 24.h,);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
+import 'package:winit_agent/ui/widgets/step_counter.dart';
 
 import '../../../../core/constants/app_asset.dart';
 import '../../../../core/constants/app_dimension.dart';
@@ -99,24 +100,7 @@ class ReactivateAccount extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        padding:EdgeInsets.symmetric(
-                            vertical: 4.h,
-                            horizontal: 8.w
-                        ),
-                        decoration: BoxDecoration(
-                            color: ColorPath.hummingBirdBlue,
-                            border: Border.all(color: ColorPath.easternBlue.withCustomOpacity(0.16), width: 1.w),
-                            borderRadius: BorderRadius.all(Radius.circular(8.r))
-                        ),
-                        child: Text(
-                          'Step ${index + 1}',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: ColorPath.charcoalBlack
-                          ),
-                        ),
-                      ),
+                      StepCounter(value: index + 1),
                       SizedBox(width: 16.w,),
                       Expanded(
                         child: Column(

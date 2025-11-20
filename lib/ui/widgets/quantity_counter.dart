@@ -70,13 +70,14 @@ class _QuantityCounterState extends State<QuantityCounter> {
               width: 20.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Theme.of(context).colorScheme.textPrimary, width: 1.w)
+                border: Border.all(color: Theme.of(context).colorScheme.textTertiary, width: 1.w)
               ),
               child: Center(
-                child: CustomSvg(
+                child: CustomAssetViewer(
                   asset:AppAsset.subtract,
                   height: 1.67.h,
                   width: 11.67.w,
+                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.textTertiary, BlendMode.srcIn)
                 ),
               ),
             ),
@@ -160,13 +161,14 @@ class _QuantityCounterState extends State<QuantityCounter> {
               width: 20.w,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: Theme.of(context).colorScheme.textPrimary, width: 1.w)
+                  border: Border.all(color: Theme.of(context).colorScheme.textTertiary, width: 1.w)
               ),
               child: Center(
-                child: CustomSvg(
-                  asset:AppAsset.add,
+                child: CustomAssetViewer(
+                  asset:AppAsset.add3,
                   height: 11.67.h,
                   width: 11.67.w,
+                    colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.textTertiary, BlendMode.srcIn)
                 ),
               ),
             ),

@@ -9,7 +9,8 @@ class CustomRadioButton extends StatefulWidget {
   final Color? borderColor;
   final double? size;
   final bool? disableClick;
-  CustomRadioButton({super.key, this.size = 16, this.disableClick = false, this.onchanged, this.value = false, this.borderColor});
+  final Color? inactiveColor;
+  CustomRadioButton({super.key, this.size = 16, this.inactiveColor, this.disableClick = false, this.onchanged, this.value = false, this.borderColor});
 
   @override
   State<CustomRadioButton> createState() => _CustomRadioButtonState();
@@ -46,7 +47,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
         height: widget.size?.h ?? 15.h,
         width: widget.size?.w ?? 15.w,
         decoration: BoxDecoration(
-          color: widget.value ? ColorPath.magnoliaPurple:Colors.transparent,
+          color: widget.value ? ColorPath.magnoliaPurple:(widget.inactiveColor ?? Colors.transparent),
           shape: BoxShape.circle,
           border: Border.all(
             color: widget.value ? ColorPath.blueBlue
