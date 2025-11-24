@@ -52,8 +52,6 @@ class PasswordValidator {
         return emptyPasswordField;
       }
 
-      final v = value.trim() ?? '';
-
       if (value.trim() != source.trim()) {
         return passwordMatchError;
       }

@@ -13,7 +13,6 @@ import 'package:winit_agent/ui/widgets/error_state.dart';
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/data/enum/view_state.dart';
-import '../../../core/data/view_models/onboarding/onboarding_vm.dart';
 import '../../../core/utilities/utilities.dart';
 import '../../../core/utilities/validator.dart';
 import '../../widgets/clickable.dart';

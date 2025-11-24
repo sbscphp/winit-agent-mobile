@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/enum/otp_type.dart';
 import 'package:winit_agent/core/data/view_models/authentication/password_vm.dart';
-import 'package:winit_agent/core/data/view_models/onboarding/onboarding_vm.dart';
 import 'package:winit_agent/core/data/view_models/onboarding/registration_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/authentication/otp.dart';
