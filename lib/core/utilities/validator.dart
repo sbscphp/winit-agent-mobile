@@ -95,6 +95,21 @@ class FieldValidator {
     return null;
   }
 
+  static String? compareAndConfirm(String? value, {required String source, required String errorMessage}) {
+    if (value != null) {
+      if (value.isEmpty) {
+        return emptyTextField;
+      }
+
+      if (value.trim() != source.trim()) {
+        return errorMessage;
+      }
+    } else {
+      return null;
+    }
+    return null;
+  }
+
 }
 
 class PasscodeFieldValidator {

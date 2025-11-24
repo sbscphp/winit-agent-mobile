@@ -1,7 +1,21 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiRoutes {
+
+  //onboarding
+  static var register =
+      "${dotenv.env['AUTH']}/signup";
+
+
+
   //auth
+  static var sendRegistrationOtp =
+      "${dotenv.env['AUTH']}/send-otp-registration";
+  static var resendRegistrationOtp =
+      "${dotenv.env['AUTH']}/resend-otp-registration";
+  static var verifyRegistrationOtp =
+      "${dotenv.env['AUTH']}/verify-otp-registration";
+
   static var sendOtpVerifyEmail =
   "${dotenv.env['AUTH']}/send-otp-email";
   static var sendOtpVerifyPhone =
@@ -16,8 +30,6 @@ class ApiRoutes {
       "${dotenv.env['AUTH']}/confirm-otp-email";
   static verifyForgotPasswordOtp({required String? userId}) =>
       "${dotenv.env['AUTH']}/forgot-password/confirm-code/$userId";
-  static var register =
-      "${dotenv.env['AUTH']}/signup";
   static createPassword({required String? userId}) =>
       "${dotenv.env['AUTH']}/forgot-password/create-password/$userId";
   static var login =

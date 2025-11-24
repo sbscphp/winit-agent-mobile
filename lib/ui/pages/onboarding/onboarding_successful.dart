@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/data/view_models/authentication/otp_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/onboarding/identity_verification/nin/nin_requirement.dart';
 import '../../../../core/constants/app_asset.dart';
@@ -76,13 +78,18 @@ class _OnboardingSuccessfulState extends State<OnboardingSuccessful> {
                                   ),
                                 ),
                                 SizedBox(height: 6.h,),
-                                Text(
-                                  widget.isTemporaryOnboarding ? '9047472791':'KSF - 0001',
-                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontSize: 30.sp,
-                                      fontWeight: FontWeight.w800,
-                                      color: ColorPath.blueBlue
-                                  ),
+                                Consumer(
+                                  builder: (context, ref, child){
+                                    final otpVm = ref.read(otpViewModel);
+                                    return Text(
+                                      widget.isTemporaryOnboarding ? otpVm.otpData?.temporaryId ?? '':'KSF - 0001',
+                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                          fontSize: 30.sp,
+                                          fontWeight: FontWeight.w800,
+                                          color: ColorPath.blueBlue
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -142,7 +149,7 @@ class _OnboardingSuccessfulState extends State<OnboardingSuccessful> {
                     onPressed: () async{
 
                       if(widget.isTemporaryOnboarding){
-                        pushNavigation(context: context, widget: const NinRequirement(), routeName: NamedRoutes.ninRequirement);
+                        replaceNavigation(context: context, widget: const NinRequirement(), routeName: NamedRoutes.ninRequirement);
                         return;
                       }
 

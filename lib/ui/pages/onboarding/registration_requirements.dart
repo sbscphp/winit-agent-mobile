@@ -8,6 +8,7 @@ import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/screen_title.dart';
+import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 
 import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/color_path.dart';
@@ -24,6 +25,9 @@ class RegistrationRequirements extends StatefulWidget {
 }
 
 class _RegistrationRequirementsState extends State<RegistrationRequirements> {
+
+  bool _accept = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +82,7 @@ class _RegistrationRequirementsState extends State<RegistrationRequirements> {
                       height: 24,
                       width: 24,
                       onchanged: (value){
-
+                        _accept = value;
                       }
                   ),
                   SizedBox(width: 10.w,),
@@ -98,7 +102,15 @@ class _RegistrationRequirementsState extends State<RegistrationRequirements> {
                   buttonText: 'Start Now',
                   suffixIcon: AppAsset.chevronTopRight,
                   onPressed: () async{
-                    pushNavigation(context: context, widget: const CreateAccount(), routeName: NamedRoutes.createAccount);
+                    if(!_accept){
+                      showFlushBar(
+                          context: context,
+                          message: 'Kindly accept the terms to proceed',
+                        success: false
+                      );
+                      return;
+                    }
+                    replaceNavigation(context: context, widget: const CreateAccount(), routeName: NamedRoutes.createAccount);
                   }
               ),
 
