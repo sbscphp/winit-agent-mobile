@@ -230,7 +230,9 @@ class _OtpState extends ConsumerState<Otp> {
 
                               if(widget.otpType == OtpType.createAccount){
                                 //temporary onboarding done
-                                replaceNavigation(context: context, widget: const OnboardingSuccessful(), routeName: NamedRoutes.onboardingSuccessful);
+                                replaceNavigation(context: context, widget: OnboardingSuccessful(
+                                  agentId: vm.otpData?.temporaryId ?? '',
+                                ), routeName: NamedRoutes.onboardingSuccessful);
                                 return;
 
                               }

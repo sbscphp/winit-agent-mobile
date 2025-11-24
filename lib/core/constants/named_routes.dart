@@ -15,6 +15,7 @@ class NamedRoutes {
   static const addBankDetails = '/addBankDetails';
   static const addPersonalDetails = '/addPersonalDetails';
   static const addBusinessDetails = '/addBusinessDetails';
+  static const terms = '/terms';
 
 
   //auth

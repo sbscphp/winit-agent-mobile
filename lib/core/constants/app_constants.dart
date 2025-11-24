@@ -38,6 +38,8 @@ const String instagram = 'https://www.instagram.com/winitngn1/';
 const String facebook = 'https://www.facebook.com/profile.php?id=61572241784521';
 const String youtube = 'https://www.youtube.com/@WinIT-v8q';
 
+const String samplePics = 'https://mir-s3-cdn-cf.behance.net/user/276/888fd91082619909.61d2827bbd7a2.jpg';
+
 const double phoneWidth = 500;
 ///design height, draft(responsiveness)
 const double draftHeight = 852;

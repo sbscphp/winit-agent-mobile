@@ -5,6 +5,10 @@ class ApiRoutes {
   //onboarding
   static var register =
       "${dotenv.env['AUTH']}/signup";
+  static var completeNinLivenessCheck =
+      "${dotenv.env['AGENT']}/onboarding/nin-verify";
+  static var bvnVerification =
+      "${dotenv.env['AGENT']}/onboarding/bvn-verify";
 
 
 
@@ -15,6 +19,10 @@ class ApiRoutes {
       "${dotenv.env['AUTH']}/resend-otp-registration";
   static var verifyRegistrationOtp =
       "${dotenv.env['AUTH']}/verify-otp-registration";
+  static var login =
+      "${dotenv.env['AUTH']}/login";
+
+  
 
   static var sendOtpVerifyEmail =
   "${dotenv.env['AUTH']}/send-otp-email";
@@ -32,8 +40,7 @@ class ApiRoutes {
       "${dotenv.env['AUTH']}/forgot-password/confirm-code/$userId";
   static createPassword({required String? userId}) =>
       "${dotenv.env['AUTH']}/forgot-password/create-password/$userId";
-  static var login =
-      "${dotenv.env['AUTH']}/login";
+
 
   //profile/settings
   static var fetchProfile =

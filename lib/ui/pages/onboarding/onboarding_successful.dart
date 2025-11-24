@@ -17,7 +17,8 @@ import '../../widgets/screen_title.dart';
 
 class OnboardingSuccessful extends StatefulWidget {
   final bool isTemporaryOnboarding;
-  const OnboardingSuccessful({super.key, this.isTemporaryOnboarding = true});
+  final String agentId;
+  const OnboardingSuccessful({super.key, this.isTemporaryOnboarding = true, required this.agentId});
 
   @override
   State<OnboardingSuccessful> createState() => _OnboardingSuccessfulState();
@@ -78,18 +79,13 @@ class _OnboardingSuccessfulState extends State<OnboardingSuccessful> {
                                   ),
                                 ),
                                 SizedBox(height: 6.h,),
-                                Consumer(
-                                  builder: (context, ref, child){
-                                    final otpVm = ref.read(otpViewModel);
-                                    return Text(
-                                      widget.isTemporaryOnboarding ? otpVm.otpData?.temporaryId ?? '':'KSF - 0001',
-                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                          fontSize: 30.sp,
-                                          fontWeight: FontWeight.w800,
-                                          color: ColorPath.blueBlue
-                                      ),
-                                    );
-                                  },
+                                Text(
+                                  widget.agentId,
+                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                      fontSize: 30.sp,
+                                      fontWeight: FontWeight.w800,
+                                      color: ColorPath.blueBlue
+                                  ),
                                 ),
                               ],
                             ),

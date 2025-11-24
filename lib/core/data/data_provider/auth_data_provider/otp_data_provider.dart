@@ -5,7 +5,7 @@ import 'package:winit_agent/core/data/enum/otp_type.dart';
 import 'package:winit_agent/core/data/enum/request_type.dart';
 import 'package:winit_agent/core/data/models/data/otp_data.dart';
 import 'package:winit_agent/core/data/network_manager/network_manager.dart';
-import '../models/api_response.dart';
+import '../../models/api_response.dart';
 
 
 class OtpDataProvider{

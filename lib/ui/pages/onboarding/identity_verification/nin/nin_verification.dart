@@ -20,6 +20,12 @@ class NinVerification extends StatefulWidget {
 }
 
 class _NinVerificationState extends State<NinVerification> {
+
+  final _nin = TextEditingController();
+  final _confirmNin = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,47 +36,62 @@ class _NinVerificationState extends State<NinVerification> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: AppDimension.paddingTop, horizontal: AppDimension.paddingLeft),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ScreenTitle(title: 'Enter National Identification Number (NIN)',
-                          subtitle: 'Enter your 11-digit NIN'
-                      ),
-                      SizedBox(height: 16.h,),
-                      OnboardingTextField(
-                        label: 'NIN',
-                        hintText: 'Enter 11-digit NIN',
-                        //controller: _loginChoice,
-                        validator: FieldValidator.validate,
-                        keyboardType: TextInputType.text,
-                        bottomHintText: 'Dial *346# on your mobile phone and select "NIN Retrieval',
-                      ),
-                      SizedBox(height: 24.h,),
-                      OnboardingTextField(
-                        label: 'Confirm NIN',
-                        hintText: 'Enter 11-digit NIN',
-                        //controller: _loginChoice,
-                        validator: FieldValidator.validate,
-                        keyboardType: TextInputType.text,
-                      ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ScreenTitle(title: 'Enter National Identification Number (NIN)',
+                            subtitle: 'Enter your 11-digit NIN'
+                        ),
+                        SizedBox(height: 16.h,),
+                        OnboardingTextField(
+                          label: 'NIN',
+                          hintText: 'Enter 11-digit NIN',
+                          controller: _nin,
+                          keyboardType: TextInputType.number,
+                          bottomHintText: 'Dial *346# on your mobile phone and select "NIN Retrieval',
+                          validator: (value) => FieldValidator.validateLength(value, requiredLength: 11, errorMessage: 'NIN must be 11 digits.'),
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(11),
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                        ),
+                        SizedBox(height: 24.h,),
+                        OnboardingTextField(
+                          label: 'Confirm NIN',
+                          hintText: 'Enter 11-digit NIN',
+                          controller: _confirmNin,
+                          validator: (value) => FieldValidator.compareAndConfirm(value, source: _nin.text, errorMessage: 'Your NINs don’t match.'),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(11),
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                        ),
 
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              CustomButton(
-                  buttonText: 'Continue',
-                  onPressed: (){
-                    pushNavigation(context: context, widget: const NinLivelinessCheck(), routeName: NamedRoutes.ninLivelinessCheck);
-                  }
-              )
-            ],
+                CustomButton(
+                    buttonText: 'Continue',
+                    onPressed: (){
+                      final _validate = _formKey.currentState!.validate();
+                      print('validate:::$_validate>>');
+                      if(_validate){
+                        pushNavigation(context: context, widget: NinLivelinessCheck(nin: _nin.text,), routeName: NamedRoutes.ninLivelinessCheck);
+                      }
+                    }
+                )
+              ],
+            ),
           ),
         ),
       ),

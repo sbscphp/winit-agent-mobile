@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qoreidsdk/qoreidsdk.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_dimension.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
@@ -11,8 +12,14 @@ import '../../../../../core/constants/color_path.dart';
 import '../../../../widgets/custom_appbar.dart';
 import '../../../../widgets/custom_button.dart';
 
-class NinRequirement extends StatelessWidget {
+class NinRequirement extends StatefulWidget {
   const NinRequirement({super.key});
+
+  @override
+  State<NinRequirement> createState() => _NinRequirementState();
+}
+
+class _NinRequirementState extends State<NinRequirement> {
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +66,7 @@ class NinRequirement extends StatelessWidget {
                             }
                           ]
                       )
-        
+
                     ],
                   ),
                 ),

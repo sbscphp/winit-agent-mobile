@@ -7,7 +7,7 @@ import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/locator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data_provider/otp_data_provider.dart';
+import '../../data_provider/auth_data_provider/otp_data_provider.dart';
 
 class OtpVm extends BaseState {
 

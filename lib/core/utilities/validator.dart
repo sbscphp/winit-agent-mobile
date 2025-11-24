@@ -1,6 +1,7 @@
 
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 
@@ -80,6 +81,8 @@ class UsernameValidator {
   }
 }
 
+
+
 class FieldValidator {
   static String? validate(String? value) {
     if (value != null) {
@@ -94,17 +97,27 @@ class FieldValidator {
   }
 
   static String? compareAndConfirm(String? value, {required String source, required String errorMessage}) {
-    if (value != null) {
-      if (value.isEmpty) {
-        return emptyTextField;
-      }
 
-      if (value.trim() != source.trim()) {
-        return errorMessage;
-      }
-    } else {
-      return null;
+    if (value == null || value.isEmpty) {
+      return emptyTextField;
     }
+
+    if (value.trim() != source.trim()) {
+      return errorMessage;
+    }
+
+    return null;
+  }
+
+  static String? validateLength(String? value, {required int requiredLength, required String errorMessage}) {
+    if (value == null || value.isEmpty) {
+      return emptyTextField;
+    }
+
+    if (value.length != requiredLength) {
+      return errorMessage;
+    }
+
     return null;
   }
 

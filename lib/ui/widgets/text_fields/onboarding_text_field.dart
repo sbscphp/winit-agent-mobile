@@ -136,7 +136,7 @@ class _OnboardingTextFieldState extends State<OnboardingTextField> {
         if (widget.showLabel) SizedBox(height: 8.h),
         AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          height: widget.useDefaultHeight ? widget.height?.h ?? 36.h : null,
+          //height: widget.useDefaultHeight ? widget.height?.h ?? 36.h : null,
           width: double.infinity,
           decoration: BoxDecoration(
             color: colorScheme.onboardingTextFieldFillColor,
@@ -154,22 +154,6 @@ class _OnboardingTextFieldState extends State<OnboardingTextField> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               enabled: widget.enabled,
               readOnly: widget.readOnly,
-              validator: (value) {
-                if (widget.validator != null) {
-                  final error = widget.validator!(value);
-
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                    if (mounted) {
-                      setState(() {
-                        _errorText = error;
-                      });
-                    }
-                  });
-
-                  return null;
-                }
-                return null;
-              },
               // validator: (value) {
               //   if (widget.validator != null) {
               //     final error = widget.validator!(value);
@@ -182,10 +166,26 @@ class _OnboardingTextFieldState extends State<OnboardingTextField> {
               //       }
               //     });
               //
-              //     return error == null ? null : '';
+              //     return null;
               //   }
               //   return null;
               // },
+              validator: (value) {
+                if (widget.validator != null) {
+                  final error = widget.validator!(value);
+
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    if (mounted) {
+                      setState(() {
+                        _errorText = error;
+                      });
+                    }
+                  });
+
+                  return error == null ? null : ''.trim();
+                }
+                return null;
+              },
               controller: widget.controller,
               obscureText: widget.obscure,
               autocorrect: false,

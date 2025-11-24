@@ -31,4 +31,41 @@ class OnboardingDataProvider{
     return completer.future;
   }
 
+  //Complete NIN liveness check
+  Future<ApiResponse> completeNinLiveness({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.post, ApiRoutes.completeNinLivenessCheck,
+        body: jsonEncode(details)
+      );
+      var result = ApiResponse.fromJson(
+          response,
+          null);
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
+  //bvn verification
+
+  Future<ApiResponse> bvnVerification({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.post, ApiRoutes.bvnVerification,
+          body: jsonEncode(details)
+      );
+      var result = ApiResponse.fromJson(
+          response,
+          null);
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
 }
