@@ -21,7 +21,6 @@ import 'package:winit_agent/ui/widgets/custom_button.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 import 'package:winit_agent/ui/widgets/text_fields/custom_text_field.dart';
-
 import '../../../core/data/enum/view_state.dart';
 import '../../../core/utilities/utilities.dart';
 import '../onboarding/add_bank_details.dart';
@@ -29,7 +28,6 @@ import '../onboarding/add_business_details.dart';
 import '../onboarding/add_personal_details.dart';
 import '../onboarding/identity_verification/bvn/bvn_requirement.dart';
 import '../onboarding/identity_verification/nin/nin_requirement.dart';
-import '../onboarding/onboarding_successful.dart';
 import '../onboarding/terms.dart';
 
 
