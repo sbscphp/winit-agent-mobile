@@ -46,7 +46,7 @@ class _PersonalDetailsState extends ConsumerState<PersonalDetails> {
   final _address = TextEditingController();
   final _landmark = TextEditingController();
 
-  String? _selectedLga, _selectedArea;
+  String? _selectedLga;
 
   @override
   void initState() {
