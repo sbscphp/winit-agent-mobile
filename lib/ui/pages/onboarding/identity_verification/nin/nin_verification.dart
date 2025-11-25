@@ -6,6 +6,7 @@ import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/onboarding/identity_verification/nin/nin_liveliness_check.dart';
 
 import '../../../../../core/constants/app_dimension.dart';
+import '../../../../../core/utilities/utilities.dart';
 import '../../../../../core/utilities/validator.dart';
 import '../../../../widgets/custom_appbar.dart';
 import '../../../../widgets/custom_button.dart';
@@ -83,9 +84,9 @@ class _NinVerificationState extends State<NinVerification> {
                 CustomButton(
                     buttonText: 'Continue',
                     onPressed: (){
-                      final _validate = _formKey.currentState!.validate();
-                      print('validate:::$_validate>>');
-                      if(_validate){
+                      Utilities.hideKeyboard(context);
+                      final validate = _formKey.currentState!.validate();
+                      if(validate){
                         pushNavigation(context: context, widget: NinLivelinessCheck(nin: _nin.text,), routeName: NamedRoutes.ninLivelinessCheck);
                       }
                     }

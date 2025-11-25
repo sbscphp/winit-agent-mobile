@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/data/enum/view_state.dart';
+import 'package:winit_agent/core/data/models/business_information.dart';
 import 'package:winit_agent/core/data/states/base_state.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/locator.dart';
@@ -24,16 +25,25 @@ class ProfileVm extends BaseState{
     notifyListeners();
   }
 
+  //business information
+  BusinessInformation? _businessInformation;
+  BusinessInformation? get businessInformation => _businessInformation;
+
 
 
   //values
   String get onboardingStep => _user?.registrationStep ?? '';
-  String get phone => _user?.phoneNumber ?? '';
+  String get phone => Utilities.formatSavedUserPhoneNumber(phoneNumber: _user?.phoneNumber ?? '');
+  String get phone2 => Utilities.formatSavedUserPhoneNumber(phoneNumber: _user?.otherPhoneNumber ?? '');
   String get firstname => _user?.firstname ?? 'N/A';
   String get lastname => _user?.lastname ?? 'N/A';
   String get email => _user?.email ?? 'N/A';
+  String get email2 => _user?.otherEmail ?? 'N/A';
   String get userId => _user?.uuid ?? 'N/A';
   String get avatar => _user?.avatar ?? '';
+  String get address => _user?.address ?? '';
+  String get landmark => _user?.landmark ?? '';
+
 
 
   //update personal info
@@ -64,7 +74,7 @@ class ProfileVm extends BaseState{
         .updateInformation(details: details)
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
-      //todo: update personal info variable
+      _user = response.data?.personalInformation;
       setState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);

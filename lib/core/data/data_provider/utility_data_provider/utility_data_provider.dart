@@ -1,0 +1,51 @@
+
+import 'dart:async';
+import 'package:winit_agent/core/data/models/data/service_agent_data.dart';
+import 'package:winit_agent/core/data/models/lga_details.dart';
+import '../../../constants/api_routes.dart';
+import '../../enum/request_type.dart';
+import '../../models/api_response.dart';
+import '../../network_manager/network_manager.dart';
+
+class UtilityDataProvider{
+
+  //fetch lga details
+  Future<ApiResponse<List<LgaDetails>>> fetchLgaDetails() async {
+    var completer = Completer<ApiResponse<List<LgaDetails>>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.get, ApiRoutes.fetchLgaDetails,
+      );
+      var result = ApiResponse<List<LgaDetails>>.fromJson(
+        response,
+            (data) => (data as List<dynamic>)
+            .map((e) => LgaDetails.fromJson(
+          e as Map<String, dynamic>,
+        ))
+            .toList(),
+      );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
+  //fetch service agent providers
+  Future<ApiResponse<ServiceAgentData>> fetchAgentProviders() async {
+    var completer = Completer<ApiResponse<ServiceAgentData>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.get, ApiRoutes.fetchServiceAgents,
+      );
+      var result = ApiResponse<ServiceAgentData>.fromJson(
+        response,
+            (data) => ServiceAgentData.fromJson(data as Map<String, dynamic>),
+      );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+}

@@ -108,6 +108,12 @@ class ApiRoutes {
   //utility
   static var fetchLgaDetails =
       "${dotenv.env['GUEST']}/lagos-lgas";
+  static var fetchServiceAgents =
+      "${dotenv.env['AGENT']}/others/agent-service-providers";
+
+
+
+
   static var fetchHearAboutUs =
       "${dotenv.env['GUEST']}/hear_about_us";
   static var fetchConfig =

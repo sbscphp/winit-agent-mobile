@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:winit_agent/core/data/data_provider/auth_data_provider/auth_data_provider.dart';
 import 'package:winit_agent/core/data/data_provider/onboarding_data_provider/onboarding_data_provider.dart';
 import 'package:winit_agent/core/data/data_provider/profile_data_provider/profile_data_provider.dart';
+import 'package:winit_agent/core/data/data_provider/utility_data_provider/utility_data_provider.dart';
 import 'core/data/data_provider/auth_data_provider/otp_data_provider.dart';
 import 'core/data/services/geolocator_service.dart';
 import 'core/data/services/navigation_service.dart';
@@ -15,6 +16,7 @@ void setupLocator() {
   locator.registerLazySingleton<OnboardingDataProvider>(() => OnboardingDataProvider());
   locator.registerLazySingleton<AuthDataProvider>(() => AuthDataProvider());
   locator.registerLazySingleton<ProfileDataProvider>(() => ProfileDataProvider());
+  locator.registerLazySingleton<UtilityDataProvider>(() => UtilityDataProvider());
 
 
 

@@ -139,6 +139,8 @@ class _LoginState extends ConsumerState<Login> {
                                  suffixIcon: AppAsset.login,
                                  onPressed: () async{
 
+                                   Utilities.hideKeyboard(context);
+
                                    await vm.login(
                                        loginChoice: _loginChoice.text,
                                        pwd: _pwd.text

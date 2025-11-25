@@ -10,6 +10,7 @@ import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 import '../../../../../core/constants/app_dimension.dart';
 import '../../../../../core/data/enum/view_state.dart';
+import '../../../../../core/utilities/utilities.dart';
 import '../../../../../core/utilities/validator.dart';
 import '../../../../widgets/custom_appbar.dart';
 import '../../../../widgets/custom_button.dart';
@@ -90,6 +91,7 @@ class _BvnVerificationState extends ConsumerState<BvnVerification> {
                 CustomButton(
                     buttonText: 'Continue',
                     onPressed: ()async{
+                      Utilities.hideKeyboard(context);
                       final validate = _formKey.currentState!.validate();
                       if(validate){
                         await vm.bvnVerification(bvn: _bvn.text);

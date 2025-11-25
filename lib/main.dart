@@ -9,12 +9,14 @@ import 'package:winit_agent/core/constants/app_theme/app_theme.dart';
 import 'package:winit_agent/core/data/enum/environment.dart';
 import 'package:winit_agent/core/data/services/navigation_service.dart';
 import 'package:winit_agent/core/data/view_models/theme_selection_view_model.dart';
+import 'package:winit_agent/core/data/view_models/utility/service_agents_vm.dart';
 import 'package:winit_agent/core/utilities/secure_storage/secure_storage_init.dart';
 import 'package:winit_agent/locator.dart';
 import 'package:winit_agent/ui/pages/splash.dart';
 import 'package:winit_agent/router.dart' as router;
 
 import 'core/constants/app_constants.dart';
+import 'core/data/view_models/utility/lga_details_vm.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +43,11 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   void initState() {
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(lgaDetailsViewModel).fetchLgaDetails();
+      ref.read(serviceAgentsViewModel).fetchServiceAgents();
+    });
 
     //push notification initial set up
     //FirebaseMessagingUtils.requestPushNotificationPermission();
