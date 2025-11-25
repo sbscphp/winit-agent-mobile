@@ -187,10 +187,11 @@ class _OnboardingDropDownState extends State<OnboardingDropDown> {
                           value: dropDownStringItem,
                           child: Text(
                             dropDownStringItem,
-                            style: textTheme.bodyMedium?.copyWith(
+                            style: textTheme.bodySmall?.copyWith(
                               fontSize: widget.textSize?.sp,
-                              fontWeight: FontWeight.w500,
-                              color: colorScheme.brandColor,
+                              fontWeight: FontWeight.w400,
+                              color: colorScheme.blackText
+                                  .withCustomOpacity(0.85),
                             ),
                           ),
                         );

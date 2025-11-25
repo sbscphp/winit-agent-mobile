@@ -22,6 +22,7 @@ class ProfileVm extends BaseState{
   User? get user => _user;
   set user(User? val){
     _user = val;
+    print("user:::${_user.toString()}>>>phone:::$phone");
     notifyListeners();
   }
 
@@ -37,9 +38,9 @@ class ProfileVm extends BaseState{
   String get phone2 => Utilities.formatSavedUserPhoneNumber(phoneNumber: _user?.otherPhoneNumber ?? '');
   String get firstname => _user?.firstname ?? 'N/A';
   String get lastname => _user?.lastname ?? 'N/A';
-  String get email => _user?.email ?? 'N/A';
-  String get email2 => _user?.otherEmail ?? 'N/A';
-  String get userId => _user?.uuid ?? 'N/A';
+  String get email => _user?.email ?? '';
+  String get email2 => _user?.otherEmail ?? '';
+  String get userId => _user?.uuid ?? '';
   String get avatar => _user?.avatar ?? '';
   String get address => _user?.address ?? '';
   String get landmark => _user?.landmark ?? '';
@@ -54,6 +55,12 @@ class ProfileVm extends BaseState{
     required String address,
     required String landmark
   }) async {
+
+    if(lga == null){
+      _message = 'Kindly select a local government area to proceed';
+      setState(ViewState.error);
+      return;
+    }
 
     setState(ViewState.busy);
     final details = {
@@ -88,6 +95,6 @@ class ProfileVm extends BaseState{
 
 }
 
-final profileViewModel = ChangeNotifierProvider.autoDispose<ProfileVm>((ref){
+final profileViewModel = ChangeNotifierProvider<ProfileVm>((ref){
   return ProfileVm();
 });

@@ -21,7 +21,7 @@ class LoginVm extends BaseState{
   LoginData? loginData;
 
   //values
-  String get onboardingStep => loginData?.user?.registrationStep ?? '';
+  String get onboardingStep => 'bvn_verification';         //loginData?.user?.registrationStep ?? '';
   String get phone => loginData?.user?.phoneNumber ?? '';
   String get firstname => loginData?.user?.firstname ?? 'N/A';
   String get lastname => loginData?.user?.lastname ?? 'N/A';
