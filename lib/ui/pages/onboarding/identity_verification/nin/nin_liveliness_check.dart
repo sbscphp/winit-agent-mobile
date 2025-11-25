@@ -7,7 +7,6 @@ import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
-import 'package:winit_agent/core/data/view_models/authentication/login_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/onboarding/identity_verification/bvn/bvn_requirement.dart';

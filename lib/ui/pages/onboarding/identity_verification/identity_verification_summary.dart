@@ -5,7 +5,6 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/view_models/onboarding/identity_verification_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
-import 'package:winit_agent/ui/pages/onboarding/add_personal_details.dart';
 import 'package:winit_agent/ui/pages/profile/agent_information/personal_details.dart';
 import '../../../../core/constants/app_dimension.dart';
 import '../../../../core/constants/color_path.dart';
