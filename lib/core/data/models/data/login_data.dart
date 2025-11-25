@@ -1,10 +1,10 @@
-import '../user.dart';
+import 'information_data.dart';
 
 class LoginData {
   final String? accessToken;
   final String? tokenType;
   final int? expiresIn;
-  final User? user;
+  final InformationData? user;
 
   LoginData({
     this.accessToken,
@@ -17,7 +17,7 @@ class LoginData {
     accessToken: json["access_token"],
     tokenType: json["token_type"],
     expiresIn: json["expires_in"],
-    user: json["user"] == null ? null : User.fromJson(json["user"]),
+    user: json["user"] == null ? null : InformationData.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {

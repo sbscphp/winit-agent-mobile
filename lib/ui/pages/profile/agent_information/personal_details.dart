@@ -227,7 +227,7 @@ class _PersonalDetailsState extends ConsumerState<PersonalDetails> {
                               Utilities.hideKeyboard(context);
                               final validate = _formKey.currentState!.validate();
                               if(validate){
-
+                                Utilities.hideKeyboard(context);
                                await vm.updatePersonalInfo(
                                    otherEmail: _email2.text,
                                    otherPhone: _phone2.text,

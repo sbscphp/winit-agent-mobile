@@ -12,10 +12,11 @@ class MultiSelectDropdown extends StatefulWidget {
   final String hintText;
   final bool isCompulsory;
   final List<String> options;
+  final List<String>? initialValues;
   final String dropdownTitle;
   final String dropdownSubtitle;
   final ValueChanged<List<String>> selectedItemsReturned;
-  const MultiSelectDropdown({super.key, required this.label, required this.hintText, this.isCompulsory = false, required this.options, required this.dropdownTitle, required this.dropdownSubtitle, required this.selectedItemsReturned});
+  const MultiSelectDropdown({super.key, this.initialValues, required this.label, required this.hintText, this.isCompulsory = false, required this.options, required this.dropdownTitle, required this.dropdownSubtitle, required this.selectedItemsReturned});
 
   @override
   State<MultiSelectDropdown> createState() => _MultiSelectDropdownState();
@@ -24,6 +25,14 @@ class MultiSelectDropdown extends StatefulWidget {
 class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
 
   List<String> selectedValues = [];
+
+  @override
+  void initState() {
+    if(widget.initialValues != null){
+      selectedValues = List.from(widget.initialValues!);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

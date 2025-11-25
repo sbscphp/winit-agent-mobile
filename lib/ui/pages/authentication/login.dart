@@ -148,8 +148,8 @@ class _LoginState extends ConsumerState<Login> {
 
                                    if(vm.state == ViewState.retrieved){
 
-                                     //init user in profile vm
-                                     ref.read(profileViewModel).user = vm.loginData?.user;
+                                     //init login data in profile vm
+                                     ref.read(profileViewModel).loginData = vm.loginData;
 
                                      //check onboarding step
                                      handleRouting(vm: vm);

@@ -21,12 +21,12 @@ class LoginVm extends BaseState{
   LoginData? loginData;
 
   //values
-  String get onboardingStep => 'bvn_verification';         //loginData?.user?.registrationStep ?? '';
-  String get phone => loginData?.user?.phoneNumber ?? '';
-  String get firstname => loginData?.user?.firstname ?? 'N/A';
-  String get lastname => loginData?.user?.lastname ?? 'N/A';
-  String get email => loginData?.user?.email ?? 'N/A';
-  String get userId => loginData?.user?.uuid ?? 'N/A';
+  String get onboardingStep => 'personal_information';         //loginData?.user?.registrationStep ?? '';
+  String get phone => loginData?.user?.personalInformation?.phoneNumber ?? '';
+  String get firstname => loginData?.user?.personalInformation?.firstname ?? 'N/A';
+  String get lastname => loginData?.user?.personalInformation?.lastname ?? 'N/A';
+  String get email => loginData?.user?.personalInformation?.email ?? 'N/A';
+  String get userId => loginData?.user?.personalInformation?.uuid ?? 'N/A';
 
 
   //login

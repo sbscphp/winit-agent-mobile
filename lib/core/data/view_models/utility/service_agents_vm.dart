@@ -34,7 +34,6 @@ class ServiceAgentsVm extends BaseState{
       _message = response.message ?? defaultSuccessMessage;
       _posAgents = response.data?.posAgent ?? [];
       _financialAgents = response.data?.financialAgent ?? [];
-      print('pos:::${_posAgents.length} .....  financial:${_financialAgents.length}>>>');
       setState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);
