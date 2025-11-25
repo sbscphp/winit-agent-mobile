@@ -193,7 +193,7 @@ class Utilities {
     // remaining characters
     String part3 = phoneNumber.length > 6 ? phoneNumber.substring(6) : '';
 
-    return '$part1 $part2 $part3'.trim();
+    return '+234 $part1 $part2 $part3'.trim();
   }
 
   //capitalize and return first letter of a string

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qoreidsdk/qoreidsdk.dart';
@@ -7,6 +8,7 @@ import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/view_models/authentication/login_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/onboarding/identity_verification/bvn/bvn_requirement.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
@@ -55,12 +57,12 @@ class _NinLivelinessCheckState extends ConsumerState<NinLivelinessCheck> {
 
   void _startLivenessCheck() async {
     // Launch Qoreid app
-    final loginVm = ref.read(loginViewModel);
+    final profileVm = ref.read(profileViewModel);
     QoreidData data = QoreidData(
-        clientId: "O2TNWM21KE7S53TX3GLY", //required
+        clientId: "${dotenv.env['CLIENT_ID']}", //required
         flowId: 0,
-        customerReference: loginVm.userId, //required
-        productCode: "liveness_nin", //required required for collection
+        customerReference: profileVm.userId, //required
+        productCode: "${dotenv.env['PRODUCT_CODE']}", //required required for collection
         addressData: {
           "state": "",
           "lga": "",
@@ -69,15 +71,15 @@ class _NinLivelinessCheckState extends ConsumerState<NinLivelinessCheck> {
           "address": "",
         },
         applicantData: {
-          "email": loginVm.email,
-          "firstName": loginVm.firstname,
+          "email": profileVm.email,
+          "firstName": profileVm.firstname,
           "gender": "",
-          "lastName": loginVm.lastname,
+          "lastName": profileVm.lastname,
           "middleName": "",
-          "phoneNumber":'+${loginVm.phone}',
+          "phoneNumber":'+${profileVm.phone}',
         },
         ocrAcceptedDocuments:
-        "DRIVERS_LICENSE_NGA", // comma separated doc types
+        "", // comma separated doc types
         identityData: {"idNumber": widget.nin, "idType": "nin"});
     await Qoreidsdk.launchQoreid(data);
   }

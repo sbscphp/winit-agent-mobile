@@ -43,6 +43,12 @@ class ApiRoutes {
 
 
   //profile/settings
+  static var updatePersonalInformation =
+      "${dotenv.env['AGENT']}/onboarding/update-personal-details";
+  static var updateBusinessInformation =
+      "${dotenv.env['AGENT']}/onboarding/update-business-details";
+
+
   static var fetchProfile =
       "${dotenv.env['SETTINGS']}/profile/check_profile";
   static var updateProfile =

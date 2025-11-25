@@ -9,11 +9,14 @@ import 'package:winit_agent/core/constants/color_path.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/enum/otp_type.dart';
 import 'package:winit_agent/core/data/view_models/authentication/login_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/core/utilities/validator.dart';
 import 'package:winit_agent/ui/pages/authentication/otp.dart';
 import 'package:winit_agent/ui/pages/bottom_nav.dart';
 import 'package:winit_agent/ui/pages/onboarding/create_account.dart';
+import 'package:winit_agent/ui/pages/profile/agent_information/business_details.dart';
+import 'package:winit_agent/ui/pages/profile/agent_information/personal_details.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_appbar.dart';
@@ -317,6 +320,9 @@ class _LoginState extends ConsumerState<Login> {
 
   handleRouting({required LoginVm vm}){
 
+    //init user in profile vm
+    ref.read(profileViewModel).user = vm.loginData?.user;
+
     switch(vm.onboardingStep){
       case 'registration':
         pushNavigation(context: context, widget: Otp(
@@ -332,10 +338,10 @@ class _LoginState extends ConsumerState<Login> {
         pushNavigation(context: context, widget: const BvnRequirement(), routeName: NamedRoutes.bvnRequirement);
         break;
       case 'bvn_verification':
-        pushNavigation(context: context, widget: const AddPersonalDetails(), routeName: NamedRoutes.addPersonalDetails);
+        pushNavigation(context: context, widget: const PersonalDetails(), routeName: NamedRoutes.personalDetails);
         break;
       case 'personal_information':
-        pushNavigation(context: context, widget: const AddBusinessDetails(), routeName: NamedRoutes.addBusinessDetails);
+        pushNavigation(context: context, widget: const BusinessDetails(), routeName: NamedRoutes.businessDetails);
         break;
       case 'business_information':
         pushNavigation(context: context, widget: const AddBankDetails(), routeName: NamedRoutes.addBankDetails);
