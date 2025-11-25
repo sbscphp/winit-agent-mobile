@@ -40,7 +40,7 @@ class ProfileVm extends BaseState{
 
 
   //personal info
-  String get onboardingStep => _user?.registrationStep ?? '';
+  //String get onboardingStep => _user?.registrationStep ?? '';
   String get phone => Utilities.formatSavedUserPhoneNumber(phoneNumber: _user?.phoneNumber ?? '');
   String get phone2 => Utilities.formatSavedUserPhoneNumber(phoneNumber: _user?.otherPhoneNumber ?? '');
   String get firstname => _user?.firstname ?? 'N/A';
