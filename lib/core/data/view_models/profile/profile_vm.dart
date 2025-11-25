@@ -61,6 +61,7 @@ class ProfileVm extends BaseState{
   String get bizEmail2 => _businessInformation?.businessEmail2 ?? '';
   String get bizAddress => _businessInformation?.businessAddress ?? '';
   String get bizLandmark => _businessInformation?.businessLandmark ?? '';
+  String get bizLga => _businessInformation?.businessLgaOfResidence ?? '';
   List<String> get selectedPosAgents => _businessInformation?.posAgents ?? [];
   List<String> get selectedFinancialAgents => _businessInformation?.lotteryAgents ?? [];
 

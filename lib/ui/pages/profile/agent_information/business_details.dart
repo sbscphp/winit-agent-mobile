@@ -93,6 +93,9 @@ class _BusinessDetailsState extends ConsumerState<BusinessDetails> {
     _email2.text = vm.bizEmail2;
     _address.text = vm.bizAddress;
     _landmark.text = vm.bizLandmark;
+    _selectedLga = vm.bizLga;
+    _posAgents = List.from(vm.selectedPosAgents);
+    _lotteryAgents = List.from(vm.selectedFinancialAgents);
   }
 
 
