@@ -1,11 +1,8 @@
-
 import 'dart:async';
 import 'package:winit_agent/core/data/models/bank.dart';
-import 'package:winit_agent/core/data/models/bank_account.dart';
 import 'package:winit_agent/core/data/models/data/service_agent_data.dart';
 import 'package:winit_agent/core/data/models/lga_details.dart';
 import '../../../constants/api_routes.dart';
-import '../../../utilities/utilities.dart';
 import '../../enum/request_type.dart';
 import '../../models/api_response.dart';
 import '../../network_manager/network_manager.dart';

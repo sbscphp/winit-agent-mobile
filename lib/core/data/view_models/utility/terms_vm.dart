@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/data/data_provider/utility_data_provider/utility_data_provider.dart';
 import 'package:winit_agent/core/data/enum/view_state.dart';
-import 'package:winit_agent/core/data/models/bank.dart';
 import 'package:winit_agent/core/data/states/base_state.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/locator.dart';

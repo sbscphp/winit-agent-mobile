@@ -1,17 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/data/enum/view_state.dart';
 import 'package:winit_agent/core/data/models/account_information.dart';
 import 'package:winit_agent/core/data/models/bank_account.dart';
-import 'package:winit_agent/core/data/models/business_information.dart';
 import 'package:winit_agent/core/data/states/base_state.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/locator.dart';
 import '../../data_provider/profile_data_provider/profile_data_provider.dart';
-import '../../models/data/login_data.dart';
-import '../../models/user.dart';
+
 
 class BankAccountDetailsVm extends BaseState{
 

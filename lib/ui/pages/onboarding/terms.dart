@@ -12,7 +12,6 @@ import 'package:winit_agent/ui/widgets/app_loader.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/error_state.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
-
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/constants/named_routes.dart';
@@ -20,7 +19,6 @@ import '../../../core/data/enum/view_state.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_check_box.dart';
-import '../../widgets/screen_title.dart';
 import 'onboarding_successful.dart';
 
 class Terms extends ConsumerStatefulWidget {

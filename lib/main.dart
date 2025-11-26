@@ -8,7 +8,6 @@ import 'package:winit_agent/core/constants/app_theme/app_theme.dart';
 import 'package:winit_agent/core/data/enum/environment.dart';
 import 'package:winit_agent/core/data/services/navigation_service.dart';
 import 'package:winit_agent/core/data/view_models/theme_selection_view_model.dart';
-import 'package:winit_agent/core/data/view_models/utility/banks_vm.dart';
 import 'package:winit_agent/core/data/view_models/utility/service_agents_vm.dart';
 import 'package:winit_agent/core/utilities/secure_storage/secure_storage_init.dart';
 import 'package:winit_agent/locator.dart';
