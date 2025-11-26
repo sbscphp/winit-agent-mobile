@@ -47,6 +47,7 @@ class _GamesState extends State<Games> {
 
             return GameItem(
               index: index,
+              fromExploreScreen: true,
             );
 
           }),

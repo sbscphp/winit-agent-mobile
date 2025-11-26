@@ -18,11 +18,13 @@ class GameItem extends StatelessWidget {
   final int index;
   final bool returnSmallCard;
   final double? cardWidth;
+  final bool fromExploreScreen;
   const GameItem({
     super.key,
     this.cardWidth,
     required this.index,
     this.returnSmallCard = false,
+    this.fromExploreScreen = false
   });
 
   @override
@@ -215,7 +217,7 @@ class GameItem extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 32.h),
+        if(fromExploreScreen)SizedBox(height: 32.h),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -510,4 +510,24 @@ class Utilities {
     return value;
   }
 
+  //returns a query string
+  static String? returnQueryString({
+    required Map<String, dynamic> params,
+    Set<String>? omitKeys,
+  }) {
+    if (params.isEmpty) return null;
+
+    try {
+      final queryString = params.entries
+          .where((e) => omitKeys == null || !omitKeys.contains(e.key))
+          .map((e) =>
+      "${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value.toString())}")
+          .join("&");
+
+      return queryString.isEmpty ? null : queryString;
+    } catch (e) {
+      return null;
+    }
+  }
+
 }

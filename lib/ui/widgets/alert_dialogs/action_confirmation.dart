@@ -56,7 +56,10 @@ class ActionConfirmation extends StatelessWidget {
                   useSuffixIcon: false,
                   bgColor: ColorPath.ribbonRed,
                     buttonText: buttonText ?? 'Yes, Proceed',
-                    onPressed: onPressed
+                    onPressed: (){
+                    popNavigation(context: context);
+                    onPressed();
+                    }
                 ),
               ),
               SizedBox(width: 8.w,),

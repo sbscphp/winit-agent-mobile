@@ -9,6 +9,7 @@ import 'package:winit_agent/core/constants/color_path.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/enum/otp_type.dart';
 import 'package:winit_agent/core/data/view_models/authentication/login_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/bank_account_details_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/core/utilities/validator.dart';
@@ -150,6 +151,9 @@ class _LoginState extends ConsumerState<Login> {
 
                                      //init login data in profile vm
                                      ref.read(profileViewModel).loginData = vm.loginData;
+
+                                     //init bank account details
+                                     ref.read(bankAccountDetailsViewModel).accountInformation = vm.loginData?.user?.accountInformation;
 
                                      //check onboarding step
                                      handleRouting(vm: vm);

@@ -9,6 +9,8 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/onboarding/nin-verify";
   static var bvnVerification =
       "${dotenv.env['AGENT']}/onboarding/bvn-verify";
+  static var completeOnboarding =
+      "${dotenv.env['AGENT']}/onboarding/complete-account";
 
 
 
@@ -47,6 +49,10 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/onboarding/update-personal-details";
   static var updateBusinessInformation =
       "${dotenv.env['AGENT']}/onboarding/update-business-details";
+  static addAccountDetails({required String? filterParams}) =>
+      "${dotenv.env['AGENT']}/account/resolve-bank-account?$filterParams";
+  static deleteAccountDetails({required String? id, bool fromOnboarding = false}) =>
+      fromOnboarding ? "${dotenv.env['AGENT']}/onboarding/delete-bank-account/$id": "${dotenv.env['AGENT']}/account/bank-account/$id";
 
 
   static var fetchProfile =
@@ -110,6 +116,11 @@ class ApiRoutes {
       "${dotenv.env['GUEST']}/lagos-lgas";
   static var fetchServiceAgents =
       "${dotenv.env['AGENT']}/others/agent-service-providers";
+  static var fetchBanks =
+      "${dotenv.env['AGENT']}/account/list-banks";
+  static var fetchTerms =
+      "${dotenv.env['AGENT']}/others/terms-and-conditions";
+
 
 
 

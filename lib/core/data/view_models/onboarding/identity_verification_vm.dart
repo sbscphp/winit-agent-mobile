@@ -54,7 +54,7 @@ class IdentityVerificationVm extends BaseState{
         .bvnVerification(details: details)
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
-      _isBvnVerified = 1 + 1 == 2; //todo: update
+      _isBvnVerified = response.data?.isMatch ?? false; //todo: update
       setSecondState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);

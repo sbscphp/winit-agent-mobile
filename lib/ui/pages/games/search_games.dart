@@ -46,7 +46,7 @@ class _SearchGamesState extends State<SearchGames> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 15.h,
                   crossAxisSpacing: 16.w,
-                  mainAxisExtent: 186.h,
+                  mainAxisExtent: 190.h,
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   return GameItem(

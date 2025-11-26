@@ -65,6 +65,8 @@ class ProfileVm extends BaseState{
   List<String> get selectedPosAgents => _businessInformation?.posAgents ?? [];
   List<String> get selectedFinancialAgents => _businessInformation?.lotteryAgents ?? [];
 
+  bool get hasTransactionPin => _user?.hasTransactionPin ?? false;
+
 
 
 

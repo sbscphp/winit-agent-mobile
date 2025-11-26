@@ -44,14 +44,17 @@ Future<void> baseDialog({
             duration: const Duration(milliseconds: 800),
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: Dialog(
-                insetPadding: EdgeInsets.symmetric(horizontal: 32.w),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24.r),
-                ),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width, // now respected
-                  child: content,
+              child: PopScope(
+                canPop: isDismissible,
+                child: Dialog(
+                  insetPadding: EdgeInsets.symmetric(horizontal: 32.w),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24.r),
+                  ),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width, // now respected
+                    child: content,
+                  ),
                 ),
               ),
             ),

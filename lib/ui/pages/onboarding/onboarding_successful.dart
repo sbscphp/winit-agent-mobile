@@ -12,6 +12,7 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/custom_painter/dotted_border.dart';
 import '../../widgets/custom_svg.dart';
 import '../../widgets/screen_title.dart';
+import '../bottom_nav.dart';
 
 class OnboardingSuccessful extends StatefulWidget {
   final bool isTemporaryOnboarding;
@@ -146,6 +147,11 @@ class _OnboardingSuccessfulState extends State<OnboardingSuccessful> {
                         replaceNavigation(context: context, widget: const NinRequirement(), routeName: NamedRoutes.ninRequirement);
                         return;
                       }
+
+                      //completed onboarding ... route user into the app
+                      pushAndClearNavigation(context: context, widget: BottomNav(), routeName: NamedRoutes.bottomNav, clearRoute: NamedRoutes.login);
+
+
 
                     }
                 ),

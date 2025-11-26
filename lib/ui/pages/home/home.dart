@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
+import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/listview_items/game_item.dart';
 
 import '../../../core/constants/app_dimension.dart';
@@ -18,14 +20,14 @@ import '../../widgets/listview_items/transaction_item.dart';
 import '../../widgets/naira_display.dart';
 import '../../widgets/profile/profile_image.dart';
 
-class Home extends StatefulWidget {
+class Home extends ConsumerStatefulWidget {
   const Home({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  ConsumerState<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends ConsumerState<Home> {
 
   @override
   void initState() {
@@ -73,7 +75,7 @@ class _HomeState extends State<Home> {
             ),
             SizedBox(height: 16.h,),
             SizedBox(
-              height: 186.h,
+              height: 190.h,
               child: ListView.separated(
                 itemCount: 5,
                 scrollDirection: Axis.horizontal,
@@ -320,21 +322,25 @@ class _HomeState extends State<Home> {
   }
 
   showTransactionPinPrompt(){
-    Future.delayed(const Duration(milliseconds: 500), () {
-      baseDialog(
-        context: context,
-        content: ActionCompleted(
-          title: 'Transaction PIN',
-          asset: AppAsset.warning,
-          assetSize: 120,
-          subtitle:
-          'Create a transaction PIN to authorise account actions.',
-          buttonText: 'Set Transaction PIN',
-          onPressed: () {
-
-          },
-        ),
-      );
-    });
+    final profileVm = ref.read(profileViewModel);
+    if(!profileVm.hasTransactionPin){
+      Future.delayed(const Duration(milliseconds: 800), () {
+        baseDialog(
+          isDismissible: false,
+          context: context,
+          content: ActionCompleted(
+            title: 'Transaction PIN',
+            asset: AppAsset.warning,
+            assetSize: 120,
+            subtitle:
+            'Create a transaction PIN to authorise account actions.',
+            buttonText: 'Set Transaction PIN',
+            onPressed: () {
+              popNavigation(context: context);
+            },
+          ),
+        );
+      });
+    }
   }
 }
