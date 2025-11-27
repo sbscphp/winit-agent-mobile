@@ -16,7 +16,8 @@ class ActionConfirmation extends StatelessWidget {
   final String? asset;
   final String? buttonText;
   final Color? buttonColor;
-  const ActionConfirmation({super.key, this.buttonColor, this.buttonText, this.asset, this.assetSize, required this.title, required this.subtitle, required this.onPressed});
+  final bool popInternally;
+  const ActionConfirmation({super.key, this.popInternally = true, this.buttonColor, this.buttonText, this.asset, this.assetSize, required this.title, required this.subtitle, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +58,10 @@ class ActionConfirmation extends StatelessWidget {
                   useSuffixIcon: false,
                   bgColor: buttonColor ?? ColorPath.ribbonRed,
                     buttonText: buttonText ?? 'Yes, Proceed',
-                    onPressed: (){
+                    onPressed: popInternally ? (){
                     popNavigation(context: context);
                     onPressed();
-                    }
+                    }:onPressed
                 ),
               ),
               SizedBox(width: 8.w,),

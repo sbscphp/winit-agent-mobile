@@ -72,6 +72,28 @@ class ProfileVm extends BaseState{
 
 
 
+  //update avatar
+  updateAvatar({
+    required String base64String,
+  }) async {
+
+    setState(ViewState.busy);
+
+    final details = {
+      'avatar': base64String
+    };
+
+    await _profileDp
+        .updateAvatar(details: details)
+        .then((response) {
+      _message = response.message ?? defaultSuccessMessage;
+      _user = response.data;
+      setState(ViewState.retrieved);
+    }).catchError((e) {
+      _message = Utilities.formatMessage(e.toString(), isSuccess: false);
+      setState(ViewState.error);
+    });
+  }
 
   //update personal info
   updatePersonalInfo({

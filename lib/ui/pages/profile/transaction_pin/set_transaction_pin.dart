@@ -25,7 +25,8 @@ import '../../../widgets/text_fields/custom_text_field.dart';
 
 class SetTransactionPin extends ConsumerStatefulWidget {
   final bool isChangePin;
-  const SetTransactionPin({super.key, this.isChangePin = false});
+  final bool isEnterNewPin;
+  const SetTransactionPin({super.key, this.isChangePin = false, this.isEnterNewPin = false});
 
   @override
   ConsumerState<SetTransactionPin> createState() => _SetTransactionPinState();
@@ -95,7 +96,10 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                               titleSize: 18.sp,
                               subtitleSize: 14.sp,
                               subtitleColor: Theme.of(context).colorScheme.textSecondary,
-                              subtitle: widget.isChangePin ?"Enter your current Transaction PIN to set up a new one and keep your account secure.":'Set up your four (4)-digit transaction PIN easily. This PIN will be used to secure transactions and authorise actions on your WinIt Agent account.'
+                              subtitle: widget.isChangePin
+                                  ?   widget.isEnterNewPin ? "Enter your new Transaction pin to keep your account secure."
+                                      :"Enter your current Transaction PIN to set up a new one and keep your account secure."
+                                  :'Set up your four (4)-digit transaction PIN easily. This PIN will be used to secure transactions and authorise actions on your WinIt Agent account.'
                           ),
                           SizedBox(height: 65.h,),
                           Align(
@@ -112,7 +116,7 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                                     text: 'Enter',
                                   ),
                                   TextSpan(
-                                    text: ' OLD Transaction PIN ',
+                                    text: widget.isEnterNewPin ? ' NEW Transaction PIN ':' OLD Transaction PIN ',
                                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                         fontWeight: FontWeight.w700,
                                         color: ColorPath.blueBlue
@@ -172,7 +176,9 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                 ),
                 SizedBox(height: 10.h,),
                 CustomButton(
-                    buttonText: widget.isChangePin ? 'Continue':'Setup PIN',
+                    buttonText: widget.isChangePin ?
+                    widget.isEnterNewPin ? 'Update Pin':'Continue'
+                        :'Setup PIN',
                     suffixIcon: AppAsset.pin2,
                     onPressed: () async{
                       
@@ -182,9 +188,48 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                         Utilities.hideKeyboard(context);
                         
                         if(widget.isChangePin){
-                          //todo: change pin flow
-                          pushNavigation(context: context, widget: const SetTransactionPin(), routeName: NamedRoutes.setTransactionPin);
-                        }else{
+                          if(widget.isEnterNewPin){
+                            //update pin
+                            await vm.updateTransactionPin(newPin: _pin.text);
+                            if(vm.state == ViewState.retrieved){
+                              baseDialog(
+                                context: context,
+                                content: ActionCompleted(
+                                  title: 'PIN update successful',
+                                  assetSize: 80,
+                                  subtitle:
+                                  'Transaction PIN updated successfully!',
+                                  buttonText: 'Close',
+                                  onPressed: () {
+                                    popUntilNavigation(context: context, route: NamedRoutes.transactionPin);
+                                  },
+                                ),
+                              );
+                            }else{
+                              showFlushBar(
+                                  context: context,
+                                  message: vm.message,
+                                  success: false
+                              );
+                            }
+                          }
+                          else{
+                            //validate current pin
+                            await vm.validateTransactionPin(pin: _pin.text);
+                            if(vm.state == ViewState.retrieved){
+                              //route user to enter new pin
+                              pushNavigation(context: context, widget: const SetTransactionPin(
+                                isChangePin: true,
+                                isEnterNewPin: true,
+                              ), routeName: NamedRoutes.setTransactionPin);
+                            }
+                            showFlushBar(
+                                context: context,
+                                message: vm.message,
+                                success: vm.state == ViewState.retrieved
+                            );
+                          }
+                        } else{
                           //set up transaction pin flow
                           await vm.setTransactionPin(pin: _pin.text);
                           if(vm.state == ViewState.retrieved){
@@ -204,7 +249,8 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                                 },
                               ),
                             );
-                          }else{
+                          }
+                          else{
                             showFlushBar(
                                 context: context,
                                 message: vm.message,

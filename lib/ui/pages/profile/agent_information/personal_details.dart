@@ -17,6 +17,7 @@ import 'package:winit_agent/ui/widgets/winit_container.dart';
 import '../../../../core/constants/app_dimension.dart';
 import '../../../../core/constants/named_routes.dart';
 import '../../../../core/data/enum/view_state.dart';
+import '../../../../core/utilities/image_and_doc_utils.dart';
 import '../../../../core/utilities/input_formatters/nigerian_phone_number_formatter.dart';
 import '../../../../core/utilities/navigator.dart';
 import '../../../../core/utilities/utilities.dart';
@@ -106,7 +107,20 @@ class _PersonalDetailsState extends ConsumerState<PersonalDetails> {
                             child: Row(
                               children: [
                                 Clickable(
-                                  onPressed:(){},
+                                  onPressed:()async{
+                                    final base64String = await ImageAndDocUtils.pickAndCropImage(context: context);
+                                    if(base64String != null){
+                                      await vm.updateAvatar(
+                                        base64String: base64String
+                                      );
+                                      showFlushBar(
+                                          context: context,
+                                          message: vm.message,
+                                          success: vm.state == ViewState.retrieved
+
+                                      );
+                                    }
+                                  },
                                   child: Stack(
                                     clipBehavior: Clip.none,
                                     children: [

@@ -7,22 +7,6 @@ import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
 
 
 
-// baseDialog({required BuildContext context,
-//   required Widget content
-// }){
-//   return BounceInLeft(
-//     duration: const Duration(milliseconds: 800),
-//     child: AlertDialog(
-//       contentPadding: EdgeInsets.zero,
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(12.r),
-//       ),
-//       content: content,
-//     ),
-//   );
-// }
-
-
 Future<void> baseDialog({
   required BuildContext context,
   required Widget content,
@@ -67,6 +51,83 @@ Future<void> baseDialog({
 }
 
 
+
+Future<void> controllableBaseDialog({
+  required BuildContext context,
+  Widget Function(BuildContext, void Function(bool))? builder,
+  bool isDismissible = true,
+  VoidCallback? onClosed,
+}) async {
+  final ValueNotifier<bool> dismissibleNotifier = ValueNotifier(isDismissible);
+  await showGeneralDialog(
+    context: context,
+    barrierLabel: "BaseDialog",
+    barrierColor: Colors.black.withCustomOpacity(0.32),
+    transitionDuration: const Duration(milliseconds: 50),
+    barrierDismissible: dismissibleNotifier.value,
+    pageBuilder: (_, __, ___) {
+      return ValueListenableBuilder<bool>(
+        valueListenable: dismissibleNotifier,
+        builder: (_, canDismiss, __) {
+          return PopScope(
+            canPop: canDismiss,
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+              child: Center(
+                child: SlideInDown(
+                  from: MediaQuery.of(context).size.height,
+                  duration: const Duration(milliseconds: 800),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Dialog(
+                      insetPadding:
+                      EdgeInsets.symmetric(horizontal: 32.w),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.r),
+                      ),
+                      child: builder != null ? builder(context, (bool value) {
+                        dismissibleNotifier.value = value;
+                      }):null,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
+
+  if (onClosed != null) onClosed();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Future<void> baseDialog({
 //   required BuildContext context,
 //   required Widget content,
@@ -103,3 +164,4 @@ Future<void> baseDialog({
 //     },
 //   );
 // }
+

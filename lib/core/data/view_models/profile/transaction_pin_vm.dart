@@ -16,6 +16,9 @@ class TransactionPinVm extends BaseState{
   String _message = '';
   String get message => _message;
 
+  //current pin
+  String? currentPin;
+
 
 
 
@@ -35,6 +38,52 @@ class TransactionPinVm extends BaseState{
 
     await _profileDp
         .setTransactionPin(details: details)
+        .then((response) {
+      _message = response.message ?? defaultSuccessMessage;
+      setState(ViewState.retrieved);
+    }).catchError((e) {
+      _message = Utilities.formatMessage(e.toString(), isSuccess: false);
+      setState(ViewState.error);
+    });
+  }
+
+  //validate transaction pin
+  validateTransactionPin({
+    required String pin,
+  }) async {
+
+    setState(ViewState.busy);
+
+    final details = {
+      "transaction_pin": pin,
+    };
+
+    await _profileDp
+        .validateTransactionPin(details: details)
+        .then((response) {
+      _message = response.message ?? defaultSuccessMessage;
+      currentPin = pin;
+      setState(ViewState.retrieved);
+    }).catchError((e) {
+      _message = Utilities.formatMessage(e.toString(), isSuccess: false);
+      setState(ViewState.error);
+    });
+  }
+
+  //update transaction pin
+  updateTransactionPin({
+    required String newPin,
+  }) async {
+
+    setState(ViewState.busy);
+
+    final details = {
+      "old_transaction_pin": currentPin,
+      "transaction_pin": newPin
+    };
+
+    await _profileDp
+        .updateTransactionPin(details: details)
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
       setState(ViewState.retrieved);

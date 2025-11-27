@@ -71,11 +71,11 @@ class _NinLivelinessCheckState extends ConsumerState<NinLivelinessCheck> {
         },
         applicantData: {
           "email": profileVm.email,
-          "firstName": profileVm.firstname,
+          "firstName": '',
           "gender": "",
-          "lastName": profileVm.lastname,
+          "lastName":'',
           "middleName": "",
-          "phoneNumber":'+${profileVm.phone}',
+          "phoneNumber":'',
         },
         ocrAcceptedDocuments:
         "", // comma separated doc types

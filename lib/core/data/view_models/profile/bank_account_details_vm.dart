@@ -75,10 +75,17 @@ class BankAccountDetailsVm extends BaseState{
 
   deleteBankAccount({
     required int index,
+    String? pin,
     bool fromOnboarding = false
   }) async {
     setSecondState(ViewState.busy);
-    await _profileDp.deleteBankAccount(id: _bankAccounts[index].uuid, fromOnboarding: fromOnboarding).then((response) async{
+    Map<String, dynamic>? details;
+    if(!fromOnboarding){
+      details = {
+        'transaction_pin': pin
+      };
+    }
+    await _profileDp.deleteBankAccount(id: _bankAccounts[index].uuid, fromOnboarding: fromOnboarding, details: details).then((response) async{
       _message = response.message ?? defaultSuccessMessage;
       //remove from list
       _bankAccounts.removeAt(index);

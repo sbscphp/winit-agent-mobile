@@ -47,6 +47,8 @@ class ApiRoutes {
 
 
   //profile/settings
+  static var updateAvatar =
+      "${dotenv.env['AGENT']}/settings/update-avatar";
   static var updatePersonalInformation =
       "${dotenv.env['AGENT']}/onboarding/update-personal-details";
   static var updateBusinessInformation =
@@ -55,6 +57,10 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/account/resolve-bank-account?$filterParams";
   static deleteAccountDetails({required String? id, bool fromOnboarding = false}) =>
       fromOnboarding ? "${dotenv.env['AGENT']}/onboarding/delete-bank-account/$id": "${dotenv.env['AGENT']}/account/bank-account/$id";
+  static var validateTransactionPin =
+      "${dotenv.env['AGENT']}/settings/validate-transaction-pin";
+  static var updateTransactionPin =
+      "${dotenv.env['AGENT']}/settings/update-transaction-pin";
 
 
   static var fetchProfile =

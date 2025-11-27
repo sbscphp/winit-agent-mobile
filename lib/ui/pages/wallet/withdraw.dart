@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/data/models/bank_account.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/action_completed.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/complete_withdrawal_request.dart';
@@ -111,6 +112,8 @@ class _WithdrawState extends State<Withdraw> {
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext context, int index) {
                           return BankAccountItem(
+                            index: index,
+                             bankAccount: BankAccount(),
                           );
                         },
                         separatorBuilder: (context, index) {
