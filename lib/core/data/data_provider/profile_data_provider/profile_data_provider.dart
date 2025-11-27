@@ -31,7 +31,6 @@ class ProfileDataProvider{
     return completer.future;
   }
 
-
   //resolve/add bank details
   Future<ApiResponse<BankAccount>> addBankAccount({required Map<String, dynamic> filterParams}) async {
     var completer = Completer<ApiResponse<BankAccount>>();
@@ -57,6 +56,25 @@ class ProfileDataProvider{
       Map<String, dynamic> response = await NetworkManager()
           .networkRequestManager(RequestType.delete, ApiRoutes.deleteAccountDetails(id: id, fromOnboarding: fromOnboarding),
         useAuth: true,
+      );
+      var result = ApiResponse.fromJson(
+          response,
+          null);
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+  
+  //set transaction pin
+  Future<ApiResponse> setTransactionPin({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.post, ApiRoutes.setTransactionPin,
+        useAuth: true,
+        body: jsonEncode(details)
       );
       var result = ApiResponse.fromJson(
           response,

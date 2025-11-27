@@ -11,6 +11,8 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/onboarding/bvn-verify";
   static var completeOnboarding =
       "${dotenv.env['AGENT']}/onboarding/complete-account";
+  static var setTransactionPin =
+      "${dotenv.env['AGENT']}/onboarding/set-transaction-pin";
 
 
 

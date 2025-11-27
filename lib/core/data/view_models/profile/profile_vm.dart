@@ -52,6 +52,7 @@ class ProfileVm extends BaseState{
   String get address => _user?.address ?? '';
   String get landmark => _user?.landmark ?? '';
   String? get lga => _user?.lgaOfResidence;
+  String get agentId => _user?.uniqueID ?? '';
 
   //business info
   String get tinNumber => _businessInformation?.tinNumber ?? '';
@@ -64,6 +65,8 @@ class ProfileVm extends BaseState{
   String get bizLga => _businessInformation?.businessLgaOfResidence ?? '';
   List<String> get selectedPosAgents => _businessInformation?.posAgents ?? [];
   List<String> get selectedFinancialAgents => _businessInformation?.lotteryAgents ?? [];
+  List<String> get otherAgents => _businessInformation?.otherAgents ?? [];
+
 
   bool get hasTransactionPin => _user?.hasTransactionPin ?? false;
 
@@ -176,12 +179,18 @@ class ProfileVm extends BaseState{
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
       _businessInformation = response.data?.businessInformation;
+      print('number returned::::${_businessInformation?.tinNumber}>>>>');
       setState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);
       log('full error:::$_message');
       setState(ViewState.error);
     });
+  }
+
+  updatePinProperty(){
+    _user?.hasTransactionPin = true;
+    notifyListeners();
   }
 
 

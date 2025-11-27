@@ -35,7 +35,7 @@ class AgentInformation extends StatelessWidget {
                 label:'Personal Details',
                 subtitle: 'Update personal details with ease',
                 onPressed: (){
-                  pushNavigation(context: context, widget: const PersonalDetails(), routeName: NamedRoutes.personalDetails);
+                  pushNavigation(context: context, widget: const PersonalDetails(isFromOnboarding: false,), routeName: NamedRoutes.personalDetails);
                 }
             ),
             SizedBox(height: 24.h,),
@@ -44,7 +44,7 @@ class AgentInformation extends StatelessWidget {
                 label:'Business Details',
                 subtitle: 'Update business details with ease',
                 onPressed: (){
-                  pushNavigation(context: context, widget: const BusinessDetails(), routeName: NamedRoutes.businessDetails);
+                  pushNavigation(context: context, widget: const BusinessDetails(fromOnboarding: false,), routeName: NamedRoutes.businessDetails);
                 }
             ),
           ],

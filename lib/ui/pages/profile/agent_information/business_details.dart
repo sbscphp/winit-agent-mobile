@@ -87,6 +87,7 @@ class _BusinessDetailsState extends ConsumerState<BusinessDetails> {
   }
 
   _initTextControllers(ProfileVm vm){
+    _tin.text = vm.tinNumber;
     _phone1.text = vm.bizPhone;
     _phone2.text = vm.bizPhone2;
     _email1.text = vm.bizEmail;
@@ -96,6 +97,9 @@ class _BusinessDetailsState extends ConsumerState<BusinessDetails> {
     _selectedLga = vm.bizLga;
     _posAgents = List.from(vm.selectedPosAgents);
     _lotteryAgents = List.from(vm.selectedFinancialAgents);
+    if(vm.otherAgents.isNotEmpty){
+      _otherAgents.text = vm.otherAgents[0];
+    }
   }
 
 

@@ -1,6 +1,7 @@
 class User {
   final String? uuid;
   final String? email;
+  final String? uniqueID;
   final String? temporaryId;
   final String? phoneNumber;
   final dynamic avatar;
@@ -11,7 +12,7 @@ class User {
   final dynamic address;
   final dynamic landmark;
   final dynamic lgaOfResidence;
-  final bool? hasTransactionPin;
+  bool? hasTransactionPin;
   final String? referralCode;
   final String? referralLink;
   final dynamic referralBalance;
@@ -29,6 +30,7 @@ class User {
   User({
     this.uuid,
     this.email,
+    this.uniqueID,
     this.temporaryId,
     this.phoneNumber,
     this.avatar,
@@ -58,6 +60,7 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) => User(
     uuid: json["uuid"],
     email: json["email"],
+    uniqueID: json["uniqueID"],
     temporaryId: json["temporary_id"],
     phoneNumber: json["phone_number"],
     avatar: json["avatar"],
@@ -87,6 +90,7 @@ class User {
   Map<String, dynamic> toJson() => {
     "uuid": uuid,
     "email": email,
+    "uniqueID": uniqueID,
     "temporary_id": temporaryId,
     "phone_number": phoneNumber,
     "avatar": avatar,

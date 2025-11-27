@@ -15,7 +15,8 @@ class ActionConfirmation extends StatelessWidget {
   final double? assetSize;
   final String? asset;
   final String? buttonText;
-  const ActionConfirmation({super.key, this.buttonText, this.asset, this.assetSize, required this.title, required this.subtitle, required this.onPressed});
+  final Color? buttonColor;
+  const ActionConfirmation({super.key, this.buttonColor, this.buttonText, this.asset, this.assetSize, required this.title, required this.subtitle, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class ActionConfirmation extends StatelessWidget {
               Expanded(
                 child:  CustomButton(
                   useSuffixIcon: false,
-                  bgColor: ColorPath.ribbonRed,
+                  bgColor: buttonColor ?? ColorPath.ribbonRed,
                     buttonText: buttonText ?? 'Yes, Proceed',
                     onPressed: (){
                     popNavigation(context: context);

@@ -9,6 +9,7 @@ import 'package:winit_agent/core/data/view_models/utility/lga_details_vm.dart';
 import 'package:winit_agent/ui/pages/profile/agent_information/business_details.dart';
 import 'package:winit_agent/ui/widgets/app_loader.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
+import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/error_state.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
@@ -60,6 +61,7 @@ class _PersonalDetailsState extends ConsumerState<PersonalDetails> {
       _phone2.text = vm.phone2;
       _address.text = vm.address;
       _landmark.text = vm.landmark;
+      _selectedLga = vm.lga;
     }
     super.initState();
   }
@@ -103,24 +105,27 @@ class _PersonalDetailsState extends ConsumerState<PersonalDetails> {
                             ),
                             child: Row(
                               children: [
-                                Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    DisplayImage(
-                                      addOverlay: true,
-                                      imageUrl: vm.avatar,
-                                      firstName: vm.firstname,
-                                      lastName: vm.lastname,
-                                      initialsSize: 16,
-                                      size: 43,
-                                    ),
-                                    Positioned(
-                                        left: 0,
-                                        right: 0,
-                                        bottom: 0,
-                                        top: 0,
-                                        child: Center(child: CustomAssetViewer(asset: AppAsset.edit2, height: 16.h, width: 16.w,)))
-                                  ],
+                                Clickable(
+                                  onPressed:(){},
+                                  child: Stack(
+                                    clipBehavior: Clip.none,
+                                    children: [
+                                      DisplayImage(
+                                        addOverlay: true,
+                                        imageUrl: vm.avatar,
+                                        firstName: vm.firstname,
+                                        lastName: vm.lastname,
+                                        initialsSize: 16,
+                                        size: 43,
+                                      ),
+                                      Positioned(
+                                          left: 0,
+                                          right: 0,
+                                          bottom: 0,
+                                          top: 0,
+                                          child: Center(child: CustomAssetViewer(asset: AppAsset.edit2, height: 16.h, width: 16.w,)))
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(width: 8.w,),
                                 Expanded(
@@ -128,7 +133,7 @@ class _PersonalDetailsState extends ConsumerState<PersonalDetails> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Dairo Agent LLC',
+                                        '${vm.firstname} ${vm.lastname}',
                                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                             fontWeight: FontWeight.w700,
                                             color: Theme.of(context).colorScheme.textSecondary
@@ -136,7 +141,7 @@ class _PersonalDetailsState extends ConsumerState<PersonalDetails> {
                                       ),
                                       SizedBox(height: 4.h,),
                                       Text(
-                                        'KSF - 002390',
+                                        vm.agentId,
                                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                             fontWeight: FontWeight.w400,
                                             color: Theme.of(context).colorScheme.textTertiary

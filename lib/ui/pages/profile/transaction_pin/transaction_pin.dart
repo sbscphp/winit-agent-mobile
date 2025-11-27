@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/profile/transaction_pin/forgot_transaction_pin.dart';
 import 'package:winit_agent/ui/pages/profile/transaction_pin/set_transaction_pin.dart';
@@ -10,11 +12,12 @@ import '../../../../core/constants/app_dimension.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/profile/profile_option.dart';
 
-class TransactionPin extends StatelessWidget {
+class TransactionPin extends ConsumerWidget {
   const TransactionPin({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final vm = ref.watch(profileViewModel);
     return Scaffold(
       appBar: customAppBar(
         context: context,
@@ -32,16 +35,16 @@ class TransactionPin extends StatelessWidget {
           children: [
             ProfileOption(
                 asset:AppAsset.pin,
-                label:'${1 + 1 == 2 ? 'Change':'Setup'} Transaction PiN',
-                subtitle: 1 + 1 == 2 ? 'Change your current transaction with ease':'Setup your transaction pin with ease',
+                label:'${vm.hasTransactionPin ? 'Change':'Setup'} Transaction PiN',
+                subtitle: vm.hasTransactionPin ? 'Change your current transaction with ease':'Setup your transaction pin with ease',
                 onPressed: (){
-                  pushNavigation(context: context, widget: const SetTransactionPin(
-                    isChangePin: true,
+                  pushNavigation(context: context, widget: SetTransactionPin(
+                    isChangePin: vm.hasTransactionPin,
                   ), routeName: NamedRoutes.setTransactionPin);
                 }
             ),
             SizedBox(height: 24.h,),
-            if(1 + 1 == 2)ProfileOption(
+            if(vm.hasTransactionPin)ProfileOption(
                 asset:AppAsset.pin,
                 label:'Forget Transaction PiN?',
                 subtitle: 'Forget transaction PIN? Reset today',

@@ -9,6 +9,7 @@ import 'package:winit_agent/ui/widgets/listview_items/game_item.dart';
 
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
+import '../../../core/constants/named_routes.dart';
 import '../../../core/data/view_models/bottom_nav_view_model.dart';
 import '../../../core/utilities/utilities.dart';
 import '../../widgets/alert_dialogs/action_completed.dart';
@@ -19,6 +20,7 @@ import '../../widgets/list_header.dart';
 import '../../widgets/listview_items/transaction_item.dart';
 import '../../widgets/naira_display.dart';
 import '../../widgets/profile/profile_image.dart';
+import '../profile/transaction_pin/set_transaction_pin.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});
@@ -336,7 +338,9 @@ class _HomeState extends ConsumerState<Home> {
             'Create a transaction PIN to authorise account actions.',
             buttonText: 'Set Transaction PIN',
             onPressed: () {
-              popNavigation(context: context);
+              pushNavigation(context: context, widget: SetTransactionPin(
+                isChangePin: false,
+              ), routeName: NamedRoutes.setTransactionPin);
             },
           ),
         );
