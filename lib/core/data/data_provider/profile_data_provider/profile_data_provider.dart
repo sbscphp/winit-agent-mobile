@@ -145,4 +145,23 @@ class ProfileDataProvider{
     }
     return completer.future;
   }
+
+  //reset transaction pin
+  Future<ApiResponse> resetTransactionPin({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.put, ApiRoutes.resetTransactionPin,
+          useAuth: true,
+          body: jsonEncode(details)
+      );
+      var result = ApiResponse.fromJson(
+          response,
+          null);
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
 }

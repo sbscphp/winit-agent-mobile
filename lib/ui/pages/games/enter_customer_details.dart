@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/data/enum/otp_type.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/core/utilities/validator.dart';
 import 'package:winit_agent/ui/pages/games/select_payment_method.dart';
@@ -217,6 +218,7 @@ class _EnterCustomerDetailsState extends State<EnterCustomerDetails> with Ticker
                     content: OtpDialog(
                       title: 'Enter OTP from Customer to Validate and Purchase Ticket',
                       identifier: 'dejbaba@gmail.com',
+                      otpType: OtpType.createAccount, //todo: update
                       onDone: (value){
                         if(value){
 

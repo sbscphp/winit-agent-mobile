@@ -23,8 +23,15 @@ class ApiRoutes {
       "${dotenv.env['AUTH']}/resend-otp-registration";
   static var verifyRegistrationOtp =
       "${dotenv.env['AUTH']}/verify-otp-registration";
+  static var sendForgotPinOtp =
+      "${dotenv.env['AGENT']}/settings/forgot-transaction-pin/send-otp";
+  static var resendForgotPinOtp =
+      "${dotenv.env['AGENT']}/settings/forgot-transaction-pin/resend-otp";
+  static var verifyForgotPinOtp =
+      "${dotenv.env['AGENT']}/settings/forgot-transaction-pin/verify-otp";
   static var login =
       "${dotenv.env['AUTH']}/login";
+
 
   
 
@@ -61,7 +68,8 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/settings/validate-transaction-pin";
   static var updateTransactionPin =
       "${dotenv.env['AGENT']}/settings/update-transaction-pin";
-
+  static var resetTransactionPin =
+      "${dotenv.env['AGENT']}/settings/forgot-transaction-pin/update-pin";
 
   static var fetchProfile =
       "${dotenv.env['SETTINGS']}/profile/check_profile";

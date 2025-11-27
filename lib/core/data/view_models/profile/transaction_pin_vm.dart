@@ -93,6 +93,28 @@ class TransactionPinVm extends BaseState{
     });
   }
 
+  //reset transaction pin
+  resetTransactionPin({
+    required String pin,
+  }) async {
+
+    setState(ViewState.busy);
+
+    final details = {
+      "transaction_pin": pin,
+    };
+
+    await _profileDp
+        .resetTransactionPin(details: details)
+        .then((response) {
+      _message = response.message ?? defaultSuccessMessage;
+      setState(ViewState.retrieved);
+    }).catchError((e) {
+      _message = Utilities.formatMessage(e.toString(), isSuccess: false);
+      setState(ViewState.error);
+    });
+  }
+
 
 
 

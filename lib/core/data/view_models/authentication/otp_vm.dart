@@ -27,7 +27,7 @@ class OtpVm extends BaseState {
   sendOtp({
     required OtpType otpType,
     String type = 'phone',
-    required String identifier,
+    String identifier = '',
     bool updateUi = true
   }) async {
 
@@ -35,8 +35,12 @@ class OtpVm extends BaseState {
 
     final details = {
       "type": type, //email, phone
-      "identifier": identifier //mainagent@yopmail.com, 2348126264973
+      //"identifier": identifier //mainagent@yopmail.com, 2348126264973
     };
+
+   if(otpType != OtpType.forgotTransactionPin){
+     details['identifier'] = identifier;
+   }
 
     await _otpDataProvider
         .sendOtp(otpType: otpType, details: details)
@@ -54,15 +58,21 @@ class OtpVm extends BaseState {
   resendOtp({
     required OtpType otpType,
     String type = 'phone',
-    required String identifier
+    String identifier = ''
   }) async {
 
     setSecondState(ViewState.busy);
 
     final details = {
       "type": type, //email, phone
-      "identifier": identifier //mainagent@yopmail.com, 2348126264973
+      //"identifier": identifier //mainagent@yopmail.com, 2348126264973
     };
+
+    if(otpType != OtpType.forgotTransactionPin){
+      details['identifier'] = identifier;
+    }
+
+
 
     await _otpDataProvider
         .resendOtp(otpType: otpType, details: details)
@@ -80,17 +90,23 @@ class OtpVm extends BaseState {
   verifyOtp({
     required OtpType otpType,
     String type = 'phone',
-    required String identifier,
+    String identifier = '',
     required String otp
   }) async {
 
     setThirdState(ViewState.busy);
 
     final details = {
-      "type": type, //email, phone
-      "identifier": identifier, //mainagent@yopmail.com, 2348126264973
+      //"type": type, //email, phone
+      //"identifier": identifier, //mainagent@yopmail.com, 2348126264973
       "otp": otp
     };
+
+    if(otpType != OtpType.forgotTransactionPin){
+      details['type'] = type;
+      details['identifier'] = identifier;
+    }
+
 
     await _otpDataProvider
         .verifyOtp(otpType: otpType, details: details)

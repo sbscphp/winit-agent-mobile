@@ -26,7 +26,8 @@ import '../../../widgets/text_fields/custom_text_field.dart';
 class SetTransactionPin extends ConsumerStatefulWidget {
   final bool isChangePin;
   final bool isEnterNewPin;
-  const SetTransactionPin({super.key, this.isChangePin = false, this.isEnterNewPin = false});
+  final bool fromResetPin;
+  const SetTransactionPin({super.key, this.fromResetPin = false, this.isChangePin = false, this.isEnterNewPin = false});
 
   @override
   ConsumerState<SetTransactionPin> createState() => _SetTransactionPinState();
@@ -178,7 +179,7 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                 CustomButton(
                     buttonText: widget.isChangePin ?
                     widget.isEnterNewPin ? 'Update Pin':'Continue'
-                        :'Setup PIN',
+                        :widget.fromResetPin ? 'Reset Pin':'Setup PIN',
                     suffixIcon: AppAsset.pin2,
                     onPressed: () async{
                       
@@ -229,34 +230,63 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                                 success: vm.state == ViewState.retrieved
                             );
                           }
-                        } else{
-                          //set up transaction pin flow
-                          await vm.setTransactionPin(pin: _pin.text);
-                          if(vm.state == ViewState.retrieved){
-                            //update transaction pin field
-                            ref.read(profileViewModel).updatePinProperty();
-                            baseDialog(
-                              context: context,
-                              content: ActionCompleted(
-                                title: 'PIN setup successful',
-                                assetSize: 80,
-                                subtitle:
-                                'Transaction PIN set successfully! You can now use your PIN to authorise and secure all transactions on your WinIt Agent account.',
-                                buttonText: 'Explore Games',
-                                onPressed: () {
-                                  ref.read(bottomNavViewModel).updateIndex(0);
-                                  popUntilNavigation(context: context, route: NamedRoutes.bottomNav);
-                                },
-                              ),
-                            );
-                          }
-                          else{
-                            showFlushBar(
+                        }
+                        else{
+                          if(widget.fromResetPin){
+                            //reset transaction pin flow
+                            await vm.resetTransactionPin(pin: _pin.text);
+                            if(vm.state == ViewState.retrieved){
+                              baseDialog(
                                 context: context,
-                                message: vm.message,
-                                success: false
-                            );
+                                content: ActionCompleted(
+                                  title: 'PIN reset successful',
+                                  assetSize: 80,
+                                  subtitle:
+                                  'Transaction PIN set successfully!',
+                                  buttonText:'Close',
+                                  onPressed: () {
+                                    popUntilNavigation(context: context, route: NamedRoutes.bottomNav);
+                                  },
+                                ),
+                              );
+                            }
+                            else{
+                              showFlushBar(
+                                  context: context,
+                                  message: vm.message,
+                                  success: false
+                              );
+                            }
+                          }else{
+                            //set up transaction pin flow
+                            await vm.setTransactionPin(pin: _pin.text);
+                            if(vm.state == ViewState.retrieved){
+                                //update transaction pin field
+                                ref.read(profileViewModel).updatePinProperty();
+                              baseDialog(
+                                context: context,
+                                content: ActionCompleted(
+                                  title: 'PIN setup successful',
+                                  assetSize: 80,
+                                  subtitle:
+                                  'Transaction PIN set successfully! You can now use your PIN to authorise and secure all transactions on your WinIt Agent account.',
+                                  buttonText: 'Explore Games',
+                                  onPressed: () {
+                                    ref.read(bottomNavViewModel).updateIndex(0);
+                                    popUntilNavigation(context: context, route: NamedRoutes.bottomNav);
+                                  },
+                                ),
+                              );
+                            }
+                            else{
+                              showFlushBar(
+                                  context: context,
+                                  message: vm.message,
+                                  success: false
+                              );
+                            }
                           }
+
                         }
                       }
                       

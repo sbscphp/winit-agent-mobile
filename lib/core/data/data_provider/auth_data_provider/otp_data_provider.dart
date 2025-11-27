@@ -19,6 +19,14 @@ class OtpDataProvider{
         //send otp for create account
         apiRoute = ApiRoutes.sendRegistrationOtp;
       }
+      if(otpType == OtpType.forgotTransactionPin){
+        //send otp for forgot transaction pin
+        apiRoute = ApiRoutes.sendForgotPinOtp;
+      }
+
+
+
+
       if(otpType == OtpType.forgotPassword){
         //send otp for forgot password
         apiRoute = ApiRoutes.sendForgotPasswordOtp;
@@ -56,6 +64,17 @@ class OtpDataProvider{
         //resend otp for create account
         apiRoute = ApiRoutes.resendRegistrationOtp;
       }
+
+      if(otpType == OtpType.forgotTransactionPin){
+        //resend otp for forgot transaction pin
+        apiRoute = ApiRoutes.resendForgotPinOtp;
+      }
+
+
+
+
+
+
       if(otpType == OtpType.forgotPassword){
         //send otp for forgot password
         apiRoute = ApiRoutes.sendForgotPasswordOtp;
@@ -92,6 +111,16 @@ class OtpDataProvider{
         //send otp for create account
         apiRoute = ApiRoutes.verifyRegistrationOtp;
       }
+
+      if(otpType == OtpType.forgotTransactionPin){
+        //verify otp for forgot transaction pin
+        apiRoute = ApiRoutes.verifyForgotPinOtp;
+      }
+
+
+
+
+
       if(otpType == OtpType.forgotPassword){
         //send otp for forgot password
         apiRoute = ApiRoutes.sendForgotPasswordOtp;
