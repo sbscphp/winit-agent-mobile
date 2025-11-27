@@ -9,7 +9,6 @@ import 'package:winit_agent/core/data/view_models/profile/transaction_pin_vm.dar
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
-
 import '../../../../core/constants/app_asset.dart';
 import '../../../../core/constants/app_dimension.dart';
 import '../../../../core/constants/color_path.dart';
@@ -18,7 +17,6 @@ import '../../../../core/data/enum/view_state.dart';
 import '../../../../core/utilities/navigator.dart';
 import '../../../../core/utilities/validator.dart';
 import '../../../widgets/alert_dialogs/action_completed.dart';
-import '../../../widgets/alert_dialogs/action_confirmation.dart';
 import '../../../widgets/alert_dialogs/base_dialog.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/custom_button.dart';
