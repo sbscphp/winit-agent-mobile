@@ -54,161 +54,168 @@ class _OtpDialogState extends ConsumerState<OtpDialog> {
   @override
   Widget build(BuildContext context) {
     final vm = ref.watch(otpViewModel);
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          vertical: 24.h,
-          horizontal: 24.w
-      ),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CustomAssetViewer(asset: AppAsset.email, height: 48.h, width: 48.w,),
-            SizedBox(height: 32.h,),
-            Text(
-              widget.title ?? 'Enter OTP to Continue',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: Theme.of(context).colorScheme.textPrimary
+    return IgnorePointer(
+      ignoring: vm.secondState == ViewState.busy || vm.thirdState == ViewState.busy,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            vertical: 24.h,
+            horizontal: 24.w
+        ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomAssetViewer(asset: AppAsset.email, height: 48.h, width: 48.w,),
+              SizedBox(height: 32.h,),
+              Text(
+                widget.title ?? 'Enter OTP to Continue',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: Theme.of(context).colorScheme.textPrimary
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 16.h,),
-            Text(
-              'We sent a 6 digit OTP to your email  ${Utilities.maskEmail(email: widget.identifier)}, associated with WinIT. Kindly enter your OTP Below. ',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: Theme.of(context).colorScheme.textSecondary
+              SizedBox(height: 16.h,),
+              Text(
+                'We sent a 6 digit OTP to your email  ${Utilities.maskEmail(email: widget.identifier)}, associated with WinIT. Kindly enter your OTP Below. ',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: Theme.of(context).colorScheme.textSecondary
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 16.h,),
-            CustomTextField(
-              isOtp: true,
-              keyboardType: TextInputType.number,
-              controller: _otp,
-              validator: FieldValidator.validate,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(6),
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-            ),
-            SizedBox(height: 16.h,),
-            CountdownTimer(
-              key: ValueKey(endTime),
-              endTime: endTime,
-              builder: (_, time) {
-                final minutes = time.minutes.toString().padLeft(2, '0');
-                final seconds = time.seconds.toString().padLeft(2, '0');
-                return  Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    '$minutes:$seconds',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: ColorPath.piperBrown
+              SizedBox(height: 16.h,),
+              CustomTextField(
+                isOtp: true,
+                keyboardType: TextInputType.number,
+                controller: _otp,
+                validator: FieldValidator.validate,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(6),
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+              ),
+              SizedBox(height: 16.h,),
+              CountdownTimer(
+                key: ValueKey(endTime),
+                endTime: endTime,
+                builder: (_, time) {
+                  final minutes = time.minutes.toString().padLeft(2, '0');
+                  final seconds = time.seconds.toString().padLeft(2, '0');
+                  return  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '$minutes:$seconds',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: ColorPath.piperBrown
+                      ),
+                    )
+                  );
+                },
+                onEnd: () {
+                  setState(() {
+                    _timerElapsed = true;
+                  });
+                },
+              ),
+              SizedBox(height: 24.h,),
+              FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Didn't receive Code? ",
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Theme.of(context).colorScheme.textTertiary
+                      ),
                     ),
-                  )
-                );
-              },
-              onEnd: () {
-                setState(() {
-                  _timerElapsed = true;
-                });
-              },
-            ),
-            SizedBox(height: 24.h,),
-            FittedBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Didn't receive Code? ",
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: Theme.of(context).colorScheme.textTertiary
-                    ),
-                  ),
-                  IgnorePointer(
-                    ignoring: !_timerElapsed,
-                    child: Opacity(
-                      opacity: _timerElapsed ? 1 : 0.4,
-                      child: Clickable(
-                        onPressed: !_timerElapsed ? null : ()async{
-                          // Utilities.hideKeyboard(context);
-                          //
-                          // await vm.resendOtp(
-                          //     otpType: widget.otpType,
-                          //     token: widget.otpType == OtpType.verifyEmail
-                          //         ? ref.read(signUpViewModel).emailVerificationToken ?? ''
-                          //         : ref.read(otpViewModel).verificationToken ?? ''
-                          // );
-                          //
-                          // if(vm.state == ViewState.retrieved){
-                          //   _resetTimer();
-                          // }
-                          //
-                          // showFlushBar(
-                          //     context: context,
-                          //     message: vm.message,
-                          //     success: vm.state == ViewState.retrieved
-                          // );
-                        },
-                        child: Text(
-                          "Resend OTP",
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: ColorPath.ribbonRed,
-                              decoration: TextDecoration.underline,
-                              decorationColor: ColorPath.ribbonRed
+                    IgnorePointer(
+                      ignoring: !_timerElapsed,
+                      child: Opacity(
+                        opacity: _timerElapsed ? 1 : 0.4,
+                        child: Clickable(
+                          onPressed: !_timerElapsed ? null : ()async{
+                            Utilities.hideKeyboard(context);
+
+                            //disable dialog dismissible property
+                            widget.onLoading?.call(true);
+
+                            await vm.resendOtp(
+                                otpType: widget.otpType,
+                                type: 'email'
+                            );
+
+                            //disable dialog dismissible property
+                            widget.onLoading?.call(false);
+
+                            if(vm.secondState == ViewState.retrieved){
+                              _resetTimer();
+                            }
+
+                            showFlushBar(
+                                context: context,
+                                message: vm.message,
+                                success: vm.secondState == ViewState.retrieved
+                            );
+                          },
+                          child: Text(
+                            "Resend OTP",
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: ColorPath.ribbonRed,
+                                decoration: TextDecoration.underline,
+                                decorationColor: ColorPath.ribbonRed
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 32.h,),
-            CustomButton(
-                buttonText: 'Validate Code',
-                showLoader: vm.thirdState == ViewState.busy,
-                useSuffixIcon: false,
-                onPressed: () async{
+              SizedBox(height: 32.h,),
+              CustomButton(
+                  buttonText: 'Validate Code',
+                  showLoader: vm.thirdState == ViewState.busy || vm.secondState == ViewState.busy,
+                  useSuffixIcon: false,
+                  onPressed: () async{
 
-                  final validate = _formKey.currentState!.validate();
-                  if(validate){
+                    final validate = _formKey.currentState!.validate();
+                    if(validate){
 
-                    Utilities.hideKeyboard(context);
+                      Utilities.hideKeyboard(context);
 
-                    //disable dialog dismissible property
-                    widget.onLoading?.call(true);
+                      //disable dialog dismissible property
+                      widget.onLoading?.call(true);
 
-                    //validate pin
-                    await vm.verifyOtp(
-                        otp: _otp.text,
-                        otpType: widget.otpType
-                    );
+                      //validate pin
+                      await vm.verifyOtp(
+                          otp: _otp.text,
+                          otpType: widget.otpType
+                      );
 
-                    //enable dialog dismissible property
-                    widget.onLoading?.call(false);
-                    if(vm.thirdState == ViewState.retrieved){
-                      popNavigation(context: context);
-                      widget.onDone(true);
+                      //enable dialog dismissible property
+                      widget.onLoading?.call(false);
+                      if(vm.thirdState == ViewState.retrieved){
+                        popNavigation(context: context);
+                        widget.onDone(true);
+                      }
+                      showFlushBar(
+                          context: context,
+                          message: vm.message,
+                          success: vm.thirdState == ViewState.retrieved
+                      );
                     }
-                    showFlushBar(
-                        context: context,
-                        message: vm.message,
-                        success: vm.thirdState == ViewState.retrieved
-                    );
                   }
-                }
-            )
+              )
 
 
-          ],
+            ],
+          ),
         ),
       ),
     );

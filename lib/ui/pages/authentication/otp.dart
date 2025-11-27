@@ -178,14 +178,14 @@ class _OtpState extends ConsumerState<Otp> {
                                                   identifier: widget.identifier
                                               );
 
-                                              if(vm.state == ViewState.retrieved){
+                                              if(vm.secondState == ViewState.retrieved){
                                                 _resetTimer();
                                               }
 
                                               showFlushBar(
                                                   context: context,
                                                   message: vm.message,
-                                                  success: vm.state == ViewState.retrieved
+                                                  success: vm.secondState == ViewState.retrieved
                                               );
                                             },
                                             child: Text(
