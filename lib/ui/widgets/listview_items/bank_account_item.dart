@@ -8,9 +8,7 @@ import 'package:winit_agent/core/data/view_models/profile/transaction_pin_vm.dar
 import 'package:winit_agent/ui/widgets/alert_dialogs/action_confirmation.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
-
 import '../../../core/constants/app_asset.dart';
-import '../../../core/constants/color_path.dart';
 import '../../../core/data/enum/view_state.dart';
 import '../../../core/utilities/navigator.dart';
 import '../alert_dialogs/action_completed.dart';
