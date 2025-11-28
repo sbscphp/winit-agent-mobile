@@ -77,6 +77,8 @@ class AppAsset {
   static const String personalDetails = '$_iconDirectory/personal_details.svg';
   static const String businessDetails = '$_iconDirectory/business_details.svg';
   static const String edit2 = '$_iconDirectory/edit_2.svg';
+  static const String email2 = '$_iconDirectory/email.svg';
+  static const String phone = '$_iconDirectory/phone.svg';
 
 
   //bottom nav

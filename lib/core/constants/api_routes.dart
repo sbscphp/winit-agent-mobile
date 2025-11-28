@@ -29,8 +29,16 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/settings/forgot-transaction-pin/resend-otp";
   static var verifyForgotPinOtp =
       "${dotenv.env['AGENT']}/settings/forgot-transaction-pin/verify-otp";
+  static var sendForgotPasswordOtp =
+      "${dotenv.env['AUTH']}/forgot-password/send-code";
+  static var resendForgotPasswordOtp =
+      "${dotenv.env['AUTH']}/forgot-password/resend-code";
+  static verifyForgotPasswordOtp({required String? userId}) =>
+      "${dotenv.env['AUTH']}/forgot-password/confirm-code/$userId";
   static var login =
       "${dotenv.env['AUTH']}/login";
+  static createPassword({required String? userId}) =>
+      "${dotenv.env['AUTH']}/forgot-password/create-password/$userId";
 
 
   
@@ -39,18 +47,11 @@ class ApiRoutes {
   "${dotenv.env['AUTH']}/send-otp-email";
   static var sendOtpVerifyPhone =
       "${dotenv.env['AUTH']}/send-otp-phone";
-  static var sendForgotPasswordOtp =
-      "${dotenv.env['AUTH']}/forgot-password/send-code";
-  static resendForgotPasswordOtp({required String? userId}) =>
-      "${dotenv.env['AUTH']}/forgot-password/resend-code/$userId";
   static var verifyOtpPhone =
       "${dotenv.env['AUTH']}/confirm-otp-phone";
   static var verifyOtpEmail =
       "${dotenv.env['AUTH']}/confirm-otp-email";
-  static verifyForgotPasswordOtp({required String? userId}) =>
-      "${dotenv.env['AUTH']}/forgot-password/confirm-code/$userId";
-  static createPassword({required String? userId}) =>
-      "${dotenv.env['AUTH']}/forgot-password/create-password/$userId";
+
 
 
   //profile/settings

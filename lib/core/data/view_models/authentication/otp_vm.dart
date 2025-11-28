@@ -33,14 +33,27 @@ class OtpVm extends BaseState {
 
    if(updateUi)setState(ViewState.busy);
 
-    final details = {
-      "type": type, //email, phone
-      //"identifier": identifier //mainagent@yopmail.com, 2348126264973
-    };
+   Map<String, dynamic> details = {};
 
-   if(otpType != OtpType.forgotTransactionPin){
-     details['identifier'] = identifier;
+   if(otpType == OtpType.forgotPassword){
+
+     details = {
+       "username": identifier
+     };
+
+   }else{
+
+     details = {
+       "type": type, //email, phone
+       //"identifier": identifier //mainagent@yopmail.com, 2348126264973
+     };
+
+     if(otpType != OtpType.forgotTransactionPin){
+       details['identifier'] = identifier;
+     }
+
    }
+
 
     await _otpDataProvider
         .sendOtp(otpType: otpType, details: details)
@@ -63,13 +76,25 @@ class OtpVm extends BaseState {
 
     setSecondState(ViewState.busy);
 
-    final details = {
-      "type": type, //email, phone
-      //"identifier": identifier //mainagent@yopmail.com, 2348126264973
-    };
+    Map<String, dynamic> details = {};
 
-    if(otpType != OtpType.forgotTransactionPin){
-      details['identifier'] = identifier;
+    if(otpType == OtpType.forgotPassword){
+
+      details = {
+        "username": identifier
+      };
+
+    }else{
+
+      details = {
+        "type": type, //email, phone
+        //"identifier": identifier //mainagent@yopmail.com, 2348126264973
+      };
+
+      if(otpType != OtpType.forgotTransactionPin){
+        details['identifier'] = identifier;
+      }
+
     }
 
 
@@ -96,20 +121,31 @@ class OtpVm extends BaseState {
 
     setThirdState(ViewState.busy);
 
-    final details = {
-      //"type": type, //email, phone
-      //"identifier": identifier, //mainagent@yopmail.com, 2348126264973
-      "otp": otp
-    };
+    Map<String, dynamic> details = {};
 
-    if(otpType != OtpType.forgotTransactionPin){
-      details['type'] = type;
-      details['identifier'] = identifier;
+    if(otpType == OtpType.forgotPassword){
+
+      details = {
+        "code": otp
+      };
+
+    }else{
+
+      details = {
+        "otp": otp
+      };
+
+      if(otpType != OtpType.forgotTransactionPin){
+        details['type'] = type;
+        details['identifier'] = identifier;
+      }
     }
 
 
+
+
     await _otpDataProvider
-        .verifyOtp(otpType: otpType, details: details)
+        .verifyOtp(otpType: otpType, details: details, userId: otpData?.userId)
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
       otpData = response.data;
@@ -133,7 +169,7 @@ class OtpVm extends BaseState {
 
   //returns title for otp screen
   String otpTitle({required OtpType otpType}) {
-    if (otpType == OtpType.createAccount) {
+    if (otpType == OtpType.createAccount || otpType == OtpType.forgotPassword) {
       return "Enter OTP 🔐 🚀 ";
     }
 
@@ -142,10 +178,15 @@ class OtpVm extends BaseState {
   }
 
   //returns sub-title for otp screen
-  String otpSubtitle({required OtpType otpType}) {
-    final hasIdentifier = otpData?.masked != null;
+  String otpSubtitle({required OtpType otpType, bool isEmail = true}) {
     if(otpType == OtpType.createAccount){
+      final hasIdentifier = otpData?.masked != null;
       return "We sent a 6 digit OTP to your phone Number ${hasIdentifier ? otpData?.masked : ''}. Kindly enter your OTP Below. ";
+    }
+
+    if(otpType == OtpType.forgotPassword){
+      final hasIdentifier = otpData?.identifier != null;
+      return "We sent a 6 digit OTP to your ${isEmail ? 'email':'phone number'} ${hasIdentifier ? otpData?.identifier : ''}, associated with WinIT.";
     }
 
 

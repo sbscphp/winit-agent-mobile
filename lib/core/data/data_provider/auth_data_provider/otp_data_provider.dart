@@ -23,22 +23,11 @@ class OtpDataProvider{
         //send otp for forgot transaction pin
         apiRoute = ApiRoutes.sendForgotPinOtp;
       }
-
-
-
-
       if(otpType == OtpType.forgotPassword){
         //send otp for forgot password
         apiRoute = ApiRoutes.sendForgotPasswordOtp;
       }
-      if(otpType == OtpType.verifyEmail){
-        //send otp to verify email
-        apiRoute = ApiRoutes.sendOtpVerifyEmail;
-      }
-      if(otpType == OtpType.verifyPhone){
-        //send otp to verify phone
-        apiRoute = ApiRoutes.sendOtpVerifyPhone;
-      }
+
       Map<String, dynamic> response = await NetworkManager()
           .networkRequestManager(RequestType.post, apiRoute,
           useAuth: isOtpUseAuth(otpType: otpType),
@@ -70,23 +59,11 @@ class OtpDataProvider{
         apiRoute = ApiRoutes.resendForgotPinOtp;
       }
 
-
-
-
-
-
       if(otpType == OtpType.forgotPassword){
-        //send otp for forgot password
-        apiRoute = ApiRoutes.sendForgotPasswordOtp;
+        //resend otp for forgot password
+        apiRoute = ApiRoutes.resendForgotPasswordOtp;
       }
-      if(otpType == OtpType.verifyEmail){
-        //send otp to verify email
-        apiRoute = ApiRoutes.sendOtpVerifyEmail;
-      }
-      if(otpType == OtpType.verifyPhone){
-        //send otp to verify phone
-        apiRoute = ApiRoutes.sendOtpVerifyPhone;
-      }
+
       Map<String, dynamic> response = await NetworkManager()
           .networkRequestManager(RequestType.post, apiRoute,
           useAuth: isOtpUseAuth(otpType: otpType),
@@ -103,7 +80,7 @@ class OtpDataProvider{
     return completer.future;
   }
 
-  Future<ApiResponse<OtpData>> verifyOtp({required OtpType otpType, required Map<String, dynamic> details}) async {
+  Future<ApiResponse<OtpData>> verifyOtp({required OtpType otpType, required Map<String, dynamic> details, String? userId}) async {
     var completer = Completer<ApiResponse<OtpData>>();
     try {
       String apiRoute = '';
@@ -117,22 +94,12 @@ class OtpDataProvider{
         apiRoute = ApiRoutes.verifyForgotPinOtp;
       }
 
-
-
-
-
       if(otpType == OtpType.forgotPassword){
-        //send otp for forgot password
-        apiRoute = ApiRoutes.sendForgotPasswordOtp;
+        //verify otp for forgot password
+        apiRoute = ApiRoutes.verifyForgotPasswordOtp(userId: userId);
       }
-      if(otpType == OtpType.verifyEmail){
-        //send otp to verify email
-        apiRoute = ApiRoutes.sendOtpVerifyEmail;
-      }
-      if(otpType == OtpType.verifyPhone){
-        //send otp to verify phone
-        apiRoute = ApiRoutes.sendOtpVerifyPhone;
-      }
+
+
       Map<String, dynamic> response = await NetworkManager()
           .networkRequestManager(RequestType.post, apiRoute,
           useAuth: isOtpUseAuth(otpType: otpType),

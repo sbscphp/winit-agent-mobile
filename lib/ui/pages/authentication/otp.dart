@@ -7,6 +7,7 @@ import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/enum/otp_type.dart';
 import 'package:winit_agent/core/data/view_models/authentication/otp_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/authentication/password_action.dart';
 import 'package:winit_agent/ui/widgets/app_loader.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/error_state.dart';
@@ -220,6 +221,8 @@ class _OtpState extends ConsumerState<Otp> {
                               return;
                             }
 
+                            Utilities.hideKeyboard(context);
+
                             await vm.verifyOtp(
                                 otpType: widget.otpType,
                                 identifier: widget.identifier,
@@ -236,6 +239,17 @@ class _OtpState extends ConsumerState<Otp> {
                                 return;
 
                               }
+
+                              if(widget.otpType == OtpType.forgotPassword){
+                                replaceNavigation(context: context, widget: PasswordAction(
+                                   fromForgotPassword: true,
+                                  userId: vm.otpData?.userId,
+                                ), routeName: NamedRoutes.passwordAction);
+                                return;
+
+                              }
+
+
 
                             }else{
                               showFlushBar(

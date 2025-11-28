@@ -21,6 +21,9 @@ class NamedRoutes {
   //auth
   static const login = '/login';
   static const otp = '/otp';
+  static const chooseOption = '/chooseOption';
+  static const forgotPassword = '/forgotPassword';
+  static const passwordAction = '/passwordAction';
 
   //bottom-nav
   static const bottomNav = '/bottomNav';

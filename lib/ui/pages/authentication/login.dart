@@ -13,6 +13,7 @@ import 'package:winit_agent/core/data/view_models/profile/bank_account_details_v
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/core/utilities/validator.dart';
+import 'package:winit_agent/ui/pages/authentication/forgot_password/choose_option.dart';
 import 'package:winit_agent/ui/pages/authentication/otp.dart';
 import 'package:winit_agent/ui/pages/bottom_nav.dart';
 import 'package:winit_agent/ui/pages/onboarding/create_account.dart';
@@ -121,7 +122,7 @@ class _LoginState extends ConsumerState<Login> {
                            alignment: Alignment.centerRight,
                            child: Clickable(
                              onPressed: (){
-
+                              pushNavigation(context: context, widget: const ChooseOption(), routeName: NamedRoutes.chooseOption);
                              },
                              child: Text(
                                'Forgot Password?',

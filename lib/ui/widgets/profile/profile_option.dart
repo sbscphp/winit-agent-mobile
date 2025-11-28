@@ -53,8 +53,8 @@ class ProfileOption extends StatelessWidget {
                                 color: Theme.of(context).colorScheme.textPrimary
                             ),
                           ),
-                          SizedBox(height: 2.h,),
-                          Text(
+                          if(subtitle.isNotEmpty)SizedBox(height: 2.h,),
+                          if(subtitle.isNotEmpty)Text(
                             subtitle,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                 fontSize: 10.sp,

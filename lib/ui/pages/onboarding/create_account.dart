@@ -161,6 +161,15 @@ class _CreateAccountState extends ConsumerState<CreateAccount> {
                       onPressed: () async{
                         final _validate = _formKey.currentState!.validate();
                         if(_validate){
+
+                          if(!pwdVm.isPwdValid()){
+                            showFlushBar(
+                                context: context,
+                                message: "Your Password does not meet the requirement",
+                              success: false
+                            );
+                            return;
+                          }
                           await vm.register(
                               phone: _phone.text,
                               email: _email.text,
