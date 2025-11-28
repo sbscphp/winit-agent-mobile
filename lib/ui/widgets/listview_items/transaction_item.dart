@@ -21,85 +21,77 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Clickable(
-      onPressed: (){
-        baseDialog(
-          context: context,
-          content: TransactionReceipt(),
-        );
-      },
-      child: WinitContainer(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.textSecondary
-                    ),
-                  ),
-                  SizedBox(height: 8.h,),
-                  FittedBox(
-                    child: subtitleWidget ?? Row(
-                      children: [
-                        Row(
-                          children: [
-                            CustomAssetViewer(asset: AppAsset.calendar, height: 14.h, width: 14.w,),
-                            SizedBox(width: 4.w,),
-                            Text(
-                              DateUtilities.dayMonthYear(date: date),
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  color: Theme.of(context).colorScheme.textTertiary
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 11.w,),
-                        Row(
-                          children: [
-                            CustomAssetViewer(asset: AppAsset.clockFilled, height: 14.h, width: 14.w,),
-                            SizedBox(width: 4.w,),
-                            Text(
-                              DateUtilities.formatTimeAMPM(dateTime: date),
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  color: Theme.of(context).colorScheme.textTertiary
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(width: 10.w,),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+    return WinitContainer(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                NairaDisplay(
-                  amount: amount,
-                  fontSize: 14.sp,
-                  color:Theme.of(context).colorScheme.textPrimary,
-                  fontWeight: FontWeight.w800,
+                Text(
+                  label,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.textSecondary
+                  ),
                 ),
-                SizedBox(height: 4.h,),
-                StatusTag(status: status, useEndAlignment: true,)
+                SizedBox(height: 8.h,),
+                FittedBox(
+                  child: subtitleWidget ?? Row(
+                    children: [
+                      Row(
+                        children: [
+                          CustomAssetViewer(asset: AppAsset.calendar, height: 14.h, width: 14.w,),
+                          SizedBox(width: 4.w,),
+                          Text(
+                            DateUtilities.dayMonthYear(date: date),
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(context).colorScheme.textTertiary
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 11.w,),
+                      Row(
+                        children: [
+                          CustomAssetViewer(asset: AppAsset.clockFilled, height: 14.h, width: 14.w,),
+                          SizedBox(width: 4.w,),
+                          Text(
+                            DateUtilities.formatTimeAMPM(dateTime: date),
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(context).colorScheme.textTertiary
+                            ),
+                          ),
 
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
-            )
+            ),
+          ),
+          SizedBox(width: 10.w,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              NairaDisplay(
+                amount: amount,
+                fontSize: 14.sp,
+                color:Theme.of(context).colorScheme.textPrimary,
+                fontWeight: FontWeight.w800,
+              ),
+              SizedBox(height: 4.h,),
+              StatusTag(status: status, useEndAlignment: true,)
 
-          ],
-        ),
+            ],
+          )
+
+        ],
       ),
     );
   }

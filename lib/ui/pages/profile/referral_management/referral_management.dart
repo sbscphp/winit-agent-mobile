@@ -43,7 +43,8 @@ class _ReferralManagementState extends State<ReferralManagement> {
             BalanceSummaryCard(
                 label: 'Referral Balance',
                 balance: 405674,
-                amountAdded: 2500
+                amountAdded: 2500,
+              duration: '6',
             ),
             SizedBox(height: 16.h,),
             CopyDetails(

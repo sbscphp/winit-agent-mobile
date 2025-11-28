@@ -221,11 +221,8 @@ class _TermsState extends ConsumerState<Terms> {
                                 await registrationVm.completeOnboarding();
                                 if(registrationVm.secondState == ViewState.retrieved){
 
-                                  final bankAccountVm = ref.read(bankAccountDetailsViewModel);
-                                  bankAccountVm.platformAccount = registrationVm.platformAccount;
-
                                   pushAndClearNavigation(context: context, widget: OnboardingSuccessful(
-                                    agentId: bankAccountVm.platformAccount?.uniqueID ?? '',
+                                    agentId: registrationVm.onboardingCompletion?.uniqueID ?? '',
                                     isTemporaryOnboarding: false,
                                   ), routeName: NamedRoutes.onboardingSuccessful,
                                       clearRoute: NamedRoutes.login

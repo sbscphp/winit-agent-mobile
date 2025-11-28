@@ -57,7 +57,8 @@ class _HomeState extends ConsumerState<Home> {
             BalanceSummaryCard(
                 label: 'Total Sales',
                 balance: 405674,
-                amountAdded: 2500
+                amountAdded: 2500,
+              duration: '6',
             ),
             SizedBox(height: 16.h,),
             balanceBreakdown(context),

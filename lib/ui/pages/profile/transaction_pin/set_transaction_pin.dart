@@ -6,6 +6,7 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/view_models/bottom_nav_view_model.dart';
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/transaction_pin_vm.dart';
+import 'package:winit_agent/core/data/view_models/wallet/wallet_vm.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
@@ -257,12 +258,16 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                                   success: false
                               );
                             }
-                          }else{
+                          }
+                          else{
                             //set up transaction pin flow
                             await vm.setTransactionPin(pin: _pin.text);
                             if(vm.state == ViewState.retrieved){
                                 //update transaction pin field
                                 ref.read(profileViewModel).updatePinProperty();
+                                //fetch wallet summary
+                                ref.read(walletVm).fetchWalletSummary();
+
                               baseDialog(
                                 context: context,
                                 content: ActionCompleted(

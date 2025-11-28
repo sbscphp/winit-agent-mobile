@@ -11,12 +11,14 @@ import 'package:winit_agent/core/data/enum/otp_type.dart';
 import 'package:winit_agent/core/data/view_models/authentication/login_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/bank_account_details_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
+import 'package:winit_agent/core/data/view_models/wallet/wallet_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/core/utilities/validator.dart';
 import 'package:winit_agent/ui/pages/authentication/forgot_password/choose_option.dart';
 import 'package:winit_agent/ui/pages/authentication/otp.dart';
 import 'package:winit_agent/ui/pages/bottom_nav.dart';
 import 'package:winit_agent/ui/pages/onboarding/create_account.dart';
+import 'package:winit_agent/ui/pages/onboarding/registration_requirements.dart';
 import 'package:winit_agent/ui/pages/profile/agent_information/business_details.dart';
 import 'package:winit_agent/ui/pages/profile/agent_information/personal_details.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
@@ -156,6 +158,7 @@ class _LoginState extends ConsumerState<Login> {
                                      //init bank account details
                                      ref.read(bankAccountDetailsViewModel).accountInformation = vm.loginData?.user?.accountInformation;
 
+
                                      //check onboarding step
                                      handleRouting(vm: vm);
 
@@ -183,11 +186,11 @@ class _LoginState extends ConsumerState<Login> {
                                  SizedBox(width: 6.w,),
                                  Clickable(
                                    onPressed: (){
-                                     replaceNavigation(
+                                     pushNavigation(
                                          context: context,
-                                         widget: CreateAccount(
+                                         widget: RegistrationRequirements(
                                          ),
-                                         routeName: NamedRoutes.createAccount
+                                         routeName: NamedRoutes.registrationRequirements
                                      );
                                    },
                                    child: Text(

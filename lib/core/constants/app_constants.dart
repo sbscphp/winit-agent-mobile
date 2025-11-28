@@ -47,6 +47,9 @@ const double draftHeight = 852;
 ///design width, draft(responsiveness)
 const double draftWidth = 393;
 
+///pagination limit
+const int paginationLimit = 20;
+
 
 ///aspect ratio
 double aspectRatio(BuildContext context) {

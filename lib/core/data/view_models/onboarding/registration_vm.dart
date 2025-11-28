@@ -21,7 +21,7 @@ class RegistrationVm extends BaseState{
   LoginData? loginData;
 
   //default wallet
-  BankAccount? platformAccount;
+  BankAccount? onboardingCompletion;
 
   //register agent
   register({
@@ -64,7 +64,7 @@ class RegistrationVm extends BaseState{
         .completeOnboarding()
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
-      platformAccount = response.data;
+      onboardingCompletion = response.data;
       setSecondState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);

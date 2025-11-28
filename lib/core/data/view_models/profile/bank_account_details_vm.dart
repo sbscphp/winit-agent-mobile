@@ -3,6 +3,7 @@ import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/data/enum/view_state.dart';
 import 'package:winit_agent/core/data/models/account_information.dart';
 import 'package:winit_agent/core/data/models/bank_account.dart';
+import 'package:winit_agent/core/data/models/platform_account.dart';
 import 'package:winit_agent/core/data/states/base_state.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/locator.dart';
@@ -26,14 +27,9 @@ class BankAccountDetailsVm extends BaseState{
   AccountInformation? get accountInformation => _accountInformation;
   set accountInformation(AccountInformation? val){
     _accountInformation = val;
-    platformAccount = _accountInformation?.platformAccount;
     _bankAccounts = _accountInformation?.bankInformation ?? [];
     notifyListeners();
   }
-
-
-  //platform account(default wallet for Agent)
-  BankAccount? platformAccount;
 
 
   //bank accounts
@@ -95,62 +91,6 @@ class BankAccountDetailsVm extends BaseState{
       setSecondState(ViewState.error);
     });
   }
-
-
-
-
-
-
-
-
-
-  // //update personal info
-  // updatePersonalInfo({
-  //   required String otherEmail,
-  //   required String otherPhone,
-  //   required String? lga,
-  //   required String address,
-  //   required String landmark
-  // }) async {
-  //
-  //   if(lga == null){
-  //     _message = 'Kindly select a local government area to proceed';
-  //     setState(ViewState.error);
-  //     return;
-  //   }
-  //
-  //   setState(ViewState.busy);
-  //   final details = {
-  //     "lga_of_residence": lga,
-  //     "address": address,
-  //     "landmark": landmark
-  //   };
-  //
-  //   if(otherPhone.isNotEmpty){
-  //     details["other_phone_number"] = Utilities.cleanPhoneNumber(phoneNumber: otherPhone);
-  //   }
-  //
-  //   if(otherEmail.isNotEmpty){
-  //     details["other_email"] = otherEmail;
-  //   }
-  //
-  //   await _profileDp
-  //       .updateInformation(details: details)
-  //       .then((response) {
-  //     _message = response.message ?? defaultSuccessMessage;
-  //     _user = response.data?.personalInformation;
-  //     setState(ViewState.retrieved);
-  //   }).catchError((e) {
-  //     _message = Utilities.formatMessage(e.toString(), isSuccess: false);
-  //     setState(ViewState.error);
-  //   });
-  // }
-
-
-
-
-
-
 
 }
 

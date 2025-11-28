@@ -1,5 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'app_constants.dart';
+
 class ApiRoutes {
 
   //onboarding
@@ -43,14 +45,7 @@ class ApiRoutes {
 
   
 
-  static var sendOtpVerifyEmail =
-  "${dotenv.env['AUTH']}/send-otp-email";
-  static var sendOtpVerifyPhone =
-      "${dotenv.env['AUTH']}/send-otp-phone";
-  static var verifyOtpPhone =
-      "${dotenv.env['AUTH']}/confirm-otp-phone";
-  static var verifyOtpEmail =
-      "${dotenv.env['AUTH']}/confirm-otp-email";
+
 
 
 
@@ -71,6 +66,9 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/settings/update-transaction-pin";
   static var resetTransactionPin =
       "${dotenv.env['AGENT']}/settings/forgot-transaction-pin/update-pin";
+
+
+
 
   static var fetchProfile =
       "${dotenv.env['SETTINGS']}/profile/check_profile";
@@ -116,15 +114,12 @@ class ApiRoutes {
   static markNotificationAsRead({required String? id}) =>
       "${dotenv.env['CUSTOMER']}/notifications/$id/read";
 
-  //prize gallery
-  static var fetchPrizeCategories =
-      "${dotenv.env['GUEST']}/cms/prize-gallery/category";
-  static fetchCategoryPrizes({required String? id}) =>
-      "${dotenv.env['GUEST']}/cms/prize-gallery/prize-by-category-id/$id";
-  static var fetchPredefinedPrizes =
-      "${dotenv.env['GUEST']}/predefined-suggestions";
-  static var suggestPrize =
-      "${dotenv.env['GUEST']}/suggest-prize";
+  //wallet
+  static var fetchWalletSummary =
+      "${dotenv.env['AGENT']}/account/system-generated-account-details";
+  static fetchWalletTransactions({required int? pageNumber, required String? id, String? filterParams}) =>
+      filterParams == null ? "${dotenv.env['AGENT']}/account/bank-account/$id/transactions?page=$pageNumber&limit=$paginationLimit&paginate=1"
+                          :"${dotenv.env['AGENT']}/account/bank-account/$id/transactions?page=$pageNumber&limit=$paginationLimit&paginate=1&$filterParams";
 
 
 

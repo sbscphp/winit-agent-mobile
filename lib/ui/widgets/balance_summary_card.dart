@@ -10,7 +10,8 @@ class BalanceSummaryCard extends StatelessWidget {
   final String label;
   final double balance;
   final double amountAdded;
-  const BalanceSummaryCard({super.key, required this.label, required this.balance, required this.amountAdded});
+  final String duration;
+  const BalanceSummaryCard({super.key, required this.duration, required this.label, required this.balance, required this.amountAdded});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class BalanceSummaryCard extends StatelessWidget {
                     )}',
                   ),
                   TextSpan(
-                    text: ' added in last 4 days',
+                    text: ' added in last $duration ${(int.tryParse(duration) ?? 0) > 1 ? 'days':'day'}',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w400,
                         color: ColorPath.frenchGrey
