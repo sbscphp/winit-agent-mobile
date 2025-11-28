@@ -54,7 +54,6 @@ class WalletTransactionsVm extends BaseState{
       if(firstCall){
         //populate list
         _transactions = response.data?.data ?? [];
-        _transactions.add(Transaction());
         setState(ViewState.retrieved);
       }
       else{

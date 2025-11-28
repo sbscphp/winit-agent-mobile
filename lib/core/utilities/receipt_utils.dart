@@ -62,7 +62,9 @@ class ReceiptUtils{
       final file = await File('${tempDir.path}/receipt.png').create();
       file.writeAsBytesSync(bytes);
       final xFile = XFile(file.path);
-      Share.shareXFiles([xFile], text: 'Here is your receipt');
+      SharePlus.instance.share(
+          ShareParams(text: 'Here is your receipt', files: [xFile])
+      );
     }catch(e){
       //show error message
       showFlushBar(
