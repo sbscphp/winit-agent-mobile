@@ -5,7 +5,6 @@ import '../../../../locator.dart';
 import '../../../constants/app_constants.dart';
 import '../../../utilities/utilities.dart';
 import '../../enum/view_state.dart';
-import '../../models/game.dart';
 import '../../states/base_state.dart';
 
 

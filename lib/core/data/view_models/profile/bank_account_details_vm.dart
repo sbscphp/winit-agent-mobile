@@ -3,7 +3,6 @@ import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/data/enum/view_state.dart';
 import 'package:winit_agent/core/data/models/account_information.dart';
 import 'package:winit_agent/core/data/models/bank_account.dart';
-import 'package:winit_agent/core/data/models/platform_account.dart';
 import 'package:winit_agent/core/data/states/base_state.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/locator.dart';
