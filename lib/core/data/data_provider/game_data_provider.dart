@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-
 import '../../constants/api_routes.dart';
 import '../../utilities/utilities.dart';
 import '../enum/request_type.dart';
