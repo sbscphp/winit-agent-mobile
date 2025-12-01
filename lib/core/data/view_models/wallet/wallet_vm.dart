@@ -28,6 +28,7 @@ class WalletVm extends BaseState{
   }
 
   //wallet details
+  bool get hasBalance => walletBalance != 0;
   double get walletBalance => double.tryParse(platformAccount?.accountBalance?.toString() ?? '0') ?? 0;
   double get addedAmount => double.tryParse(platformAccount?.lastPeriodDaysBalance?.toString() ?? '0') ?? 0;
   String get duration => platformAccount?.lastPeriodDays?.toString() ?? '';

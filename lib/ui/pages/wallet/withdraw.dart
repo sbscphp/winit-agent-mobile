@@ -192,6 +192,7 @@ class _WithdrawState extends ConsumerState<Withdraw> {
                               onPressed: () => switchNotifier.value = true,
                           ),
                           secondChild: EnterTransactionPin(
+                              visitingRoute: NamedRoutes.withdraw,
                               onDone: (value)async{
                                 Future.delayed(const Duration(milliseconds: 50), () async{
 
@@ -219,7 +220,8 @@ class _WithdrawState extends ConsumerState<Withdraw> {
                                         },
                                       ),
                                     );
-                                  }else{
+                                  }
+                                  else{
                                     showFlushBar(
                                         context: context,
                                         message: vm.message,

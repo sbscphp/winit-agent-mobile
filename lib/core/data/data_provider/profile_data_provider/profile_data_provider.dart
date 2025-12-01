@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:winit_agent/core/data/models/data/account_closure_data.dart';
 import 'package:winit_agent/core/data/models/data/information_data.dart';
 import 'package:winit_agent/core/data/models/user.dart';
 
@@ -152,6 +153,43 @@ class ProfileDataProvider{
     try {
       Map<String, dynamic> response = await NetworkManager()
           .networkRequestManager(RequestType.put, ApiRoutes.resetTransactionPin,
+          useAuth: true,
+          body: jsonEncode(details)
+      );
+      var result = ApiResponse.fromJson(
+          response,
+          null);
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
+  //check account closure status
+  Future<ApiResponse<AccountClosureData>> checkAccountClosureStatus() async {
+    var completer = Completer<ApiResponse<AccountClosureData>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.get, ApiRoutes.checkClosureStatus,
+      );
+      var result = ApiResponse<AccountClosureData>.fromJson(
+        response,
+            (data) => AccountClosureData.fromJson(data as Map<String, dynamic>),
+      );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
+  //close account
+  Future<ApiResponse> closeAccount({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.post, ApiRoutes.closeAccount,
           useAuth: true,
           body: jsonEncode(details)
       );

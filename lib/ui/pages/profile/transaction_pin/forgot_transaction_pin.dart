@@ -23,7 +23,8 @@ import '../../../widgets/onboarding/identity_verification_notes.dart';
 import '../../../widgets/screen_title.dart';
 
 class ForgotTransactionPin extends ConsumerWidget {
-  const ForgotTransactionPin({super.key});
+  final String? visitingRoute;
+  const ForgotTransactionPin({super.key, this.visitingRoute});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -109,9 +110,9 @@ class ForgotTransactionPin extends ConsumerWidget {
                             otpType: OtpType.forgotTransactionPin,
                             onDone: (value){
                               if(value){
-                                print('got here>>>');
-                                pushNavigation(context: context, widget: const SetTransactionPin(
+                                pushNavigation(context: context, widget: SetTransactionPin(
                                   fromResetPin: true,
+                                  visitingRoute: visitingRoute,
                                 ), routeName: NamedRoutes.setTransactionPin);
                               }
                             },

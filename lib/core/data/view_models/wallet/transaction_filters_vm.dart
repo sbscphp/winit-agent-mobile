@@ -53,8 +53,11 @@ class TransactionFiltersVm extends BaseState{
     }
 
 
+    int filterIndex = transactionFilterOptions.indexOf(selectedFilter);
+
+
     final filters = {
-      'sample': 1
+      'filter_by': filterValues[filterIndex]
     };
 
     await _walletDp.fetchWalletTransactions(

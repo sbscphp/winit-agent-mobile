@@ -28,7 +28,8 @@ class SetTransactionPin extends ConsumerStatefulWidget {
   final bool isChangePin;
   final bool isEnterNewPin;
   final bool fromResetPin;
-  const SetTransactionPin({super.key, this.fromResetPin = false, this.isChangePin = false, this.isEnterNewPin = false});
+  final String? visitingRoute;
+  const SetTransactionPin({super.key, this.visitingRoute, this.fromResetPin = false, this.isChangePin = false, this.isEnterNewPin = false});
 
   @override
   ConsumerState<SetTransactionPin> createState() => _SetTransactionPinState();
@@ -237,6 +238,16 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                             //reset transaction pin flow
                             await vm.resetTransactionPin(pin: _pin.text);
                             if(vm.state == ViewState.retrieved){
+
+                              if(widget.visitingRoute != null){
+                                popUntilNavigation(context: context, route: widget.visitingRoute!);
+                                showFlushBar(
+                                    context: context,
+                                    message: vm.message,
+                                );
+                                return;
+                              }
+
                               baseDialog(
                                 context: context,
                                 content: ActionCompleted(

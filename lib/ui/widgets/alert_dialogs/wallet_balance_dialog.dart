@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/data/view_models/profile/account_closure_vm.dart';
+import 'package:winit_agent/core/data/view_models/wallet/wallet_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/wallet/withdraw.dart';
 
@@ -22,77 +25,83 @@ class WalletBalanceDialog extends StatelessWidget {
           vertical: 24.h,
           horizontal: 24.w
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CustomAssetViewer(asset: AppAsset.warning, height: 48.h, width: 48.w,),
-          SizedBox(height: 32.h,),
-          FittedBox(
-            child: Text(
-              'Wallet Balance',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: Theme.of(context).colorScheme.textPrimary
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(height: 16.h,),
-          Text(
-            1 + 1 == 3 ? 'You still have funds in your wallet. Please withdraw your remaining balance to ₦0.00 before proceeding with account closure.':
-            'You can proceed to close your account.',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w400,
-                color: Theme.of(context).colorScheme.textSecondary
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 16.h,),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(
-              vertical: 16.h,
-              horizontal: 16.w
-            ),
-            decoration: BoxDecoration(
-              color: ColorPath.stratosBlue,
-              borderRadius: BorderRadius.all(Radius.circular(16.r))
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
+      child: Consumer(
+        builder: (context, ref, child){
+          final wVm = ref.watch(walletVm);
+          final accountClosureVm = ref.read(accountClosureViewModel);
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomAssetViewer(asset: AppAsset.warning, height: 48.h, width: 48.w,),
+              SizedBox(height: 32.h,),
+              FittedBox(
+                child: Text(
                   'Wallet Balance',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: ColorPath.mischkaGrey
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: Theme.of(context).colorScheme.textPrimary
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 5.h,),
-                NairaDisplay(
-                  amount: 0,
-                  fontSize: 24.sp,
-                  color:Colors.white,
-                  fontWeight: FontWeight.w800,
+              ),
+              SizedBox(height: 16.h,),
+              Text(
+                wVm.hasBalance ? 'You still have funds in your wallet. Please withdraw your remaining balance to ₦0.00 before proceeding with account closure.':
+                'You can proceed to close your account.',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: Theme.of(context).colorScheme.textSecondary
                 ),
-              ],
-            ),
-          ),
-          SizedBox(height: 16.h,),
-          CustomButton(
-              useSuffixIcon: false,
-              buttonText: 1 + 1 == 3 ? 'Proceed to Withdrawal':'Proceed to Account Closure',
-              onPressed: 1 + 1 == 3 ? (){
-                pushAndClearNavigation(context: context,
-                    widget: const Withdraw(), routeName: NamedRoutes.withdraw,
-                  clearRoute: NamedRoutes.bottomNav
-                );
-              }:onPressed
-          )
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 16.h,),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(
+                    vertical: 16.h,
+                    horizontal: 16.w
+                ),
+                decoration: BoxDecoration(
+                    color: ColorPath.stratosBlue,
+                    borderRadius: BorderRadius.all(Radius.circular(16.r))
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Wallet Balance',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: ColorPath.mischkaGrey
+                      ),
+                    ),
+                    SizedBox(height: 5.h,),
+                    NairaDisplay(
+                      amount: 0,
+                      fontSize: 24.sp,
+                      color:Colors.white,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 16.h,),
+              CustomButton(
+                  useSuffixIcon: false,
+                  buttonText:accountClosureVm.canCloseAccount ? 'Proceed to Account Closure':'Proceed to Withdrawal',
+                  onPressed: accountClosureVm.canCloseAccount ? onPressed : (){
+                    pushAndClearNavigation(context: context,
+                        widget: const Withdraw(), routeName: NamedRoutes.withdraw,
+                        clearRoute: NamedRoutes.bottomNav
+                    );
+                  }
+              )
 
 
-        ],
+            ],
+          );
+        },
       ),
     );
   }

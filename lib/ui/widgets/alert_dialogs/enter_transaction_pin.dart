@@ -3,8 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/view_models/profile/transaction_pin_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/profile/transaction_pin/forgot_transaction_pin.dart';
+import 'package:winit_agent/ui/pages/profile/transaction_pin/set_transaction_pin.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/color_path.dart';
@@ -22,7 +25,8 @@ class EnterTransactionPin extends ConsumerStatefulWidget {
   final String? buttonText;
   final String? title;
   final String? subtitle;
-  const EnterTransactionPin({super.key, this.onLoading, required this.onDone, this.buttonText, this.title, this.subtitle});
+  final String? visitingRoute;
+  const EnterTransactionPin({super.key, this.visitingRoute, this.onLoading, required this.onDone, this.buttonText, this.title, this.subtitle});
 
   @override
   ConsumerState<EnterTransactionPin> createState() => _EnterTransactionPinState();
@@ -92,6 +96,11 @@ class _EnterTransactionPinState extends ConsumerState<EnterTransactionPin> {
                   ),
                   Clickable(
                     onPressed: (){
+                      pushNavigation(context: context, widget: ForgotTransactionPin(
+                        visitingRoute: widget.visitingRoute,
+                      ),
+                        routeName: NamedRoutes.forgotTransactionPin
+                      );
                     },
                     child: Text(
                       "Reset",
