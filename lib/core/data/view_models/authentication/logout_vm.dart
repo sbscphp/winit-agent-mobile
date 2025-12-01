@@ -3,7 +3,6 @@ import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/constants/secure_storage_constants.dart';
 import 'package:winit_agent/core/data/data_provider/auth_data_provider/auth_data_provider.dart';
 import 'package:winit_agent/core/data/enum/view_state.dart';
-import 'package:winit_agent/core/data/models/data/login_data.dart';
 import 'package:winit_agent/core/data/states/base_state.dart';
 import 'package:winit_agent/core/utilities/secure_storage/secure_storage_utils.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
