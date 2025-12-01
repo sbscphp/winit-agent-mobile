@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
-import 'package:winit_agent/core/data/models/bank_account.dart';
 import 'package:winit_agent/core/data/view_models/profile/bank_account_details_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/transaction_pin_vm.dart';
 import 'package:winit_agent/core/data/view_models/wallet/wallet_transactions_vm.dart';
