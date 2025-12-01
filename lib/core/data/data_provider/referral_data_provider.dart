@@ -1,13 +1,8 @@
 import 'dart:async';
-
 import 'package:winit_agent/core/data/models/data/referral_data.dart';
-import 'package:winit_agent/core/data/models/transaction.dart';
-import 'package:winit_agent/core/data/models/platform_account.dart';
-
 import '../../constants/api_routes.dart';
 import '../enum/request_type.dart';
 import '../models/api_response.dart';
-import '../models/data/pagination_data.dart';
 import '../network_manager/network_manager.dart';
 
 class ReferralDataProvider{

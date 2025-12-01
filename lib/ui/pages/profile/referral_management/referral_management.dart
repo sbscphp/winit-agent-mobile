@@ -20,7 +20,6 @@ import '../../../widgets/alert_dialogs/transaction_receipt.dart';
 import '../../../widgets/balance_summary_card.dart';
 import '../../../widgets/copy_details.dart';
 import '../../../widgets/custom_appbar.dart';
-import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_svg.dart';
 import '../../../widgets/empty_state.dart';
 import '../../../widgets/list_header.dart';
