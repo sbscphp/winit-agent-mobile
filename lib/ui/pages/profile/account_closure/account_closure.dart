@@ -9,14 +9,12 @@ import 'package:winit_agent/ui/pages/authentication/login.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/wallet_balance_dialog.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
-
 import '../../../../core/constants/app_asset.dart';
 import '../../../../core/constants/app_dimension.dart';
 import '../../../../core/constants/color_path.dart';
 import '../../../../core/constants/named_routes.dart';
 import '../../../../core/data/enum/view_state.dart';
 import '../../../../core/utilities/navigator.dart';
-import '../../../widgets/alert_dialogs/action_completed.dart';
 import '../../../widgets/alert_dialogs/base_dialog.dart';
 import '../../../widgets/alert_dialogs/enter_transaction_pin.dart';
 import '../../../widgets/cross_fade_widget.dart';

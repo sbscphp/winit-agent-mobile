@@ -7,7 +7,6 @@ import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/view_models/profile/transaction_pin_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/profile/transaction_pin/forgot_transaction_pin.dart';
-import 'package:winit_agent/ui/pages/profile/transaction_pin/set_transaction_pin.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/color_path.dart';
