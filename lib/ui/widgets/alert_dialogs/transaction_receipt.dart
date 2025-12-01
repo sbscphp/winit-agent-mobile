@@ -4,7 +4,7 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/ui/widgets/close_icon.dart';
 import 'package:winit_agent/ui/widgets/status_tag.dart';
 import '../../../core/constants/app_asset.dart';
-import '../../../core/data/models/data/transactions.dart';
+import '../../../core/data/models/transaction.dart';
 import '../../../core/utilities/receipt_utils.dart';
 import '../../../core/utilities/utilities.dart';
 import '../custom_button.dart';
@@ -12,7 +12,8 @@ import '../naira_display.dart';
 
 class TransactionReceipt extends StatefulWidget {
   final Transaction transaction;
-  const TransactionReceipt({super.key, required this.transaction});
+  final bool isReferral;
+  const TransactionReceipt({super.key, required this.transaction, this.isReferral = false});
 
   @override
   State<TransactionReceipt> createState() => _TransactionReceiptState();
@@ -1157,7 +1158,11 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         return 'Commission Transaction';
       case 'bonus':
         return 'Performance Commission.';
+
       default:
+        if(widget.isReferral){
+          return 'Referral Transaction';
+        }
         return 'Wallet Transaction';
     }
   }
@@ -1175,6 +1180,9 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
       case 'bonus':
         return bonus(context);
       default:
+        if(widget.isReferral){
+          return referral(context);
+        }
         return ticketPurchase(context);
     }
   }

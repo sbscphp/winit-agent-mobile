@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winit_agent/core/data/data_provider/wallet_data_provider.dart';
-import 'package:winit_agent/core/data/models/data/transactions.dart';
+import 'package:winit_agent/core/data/models/transaction.dart';
 import '../../../../locator.dart';
 import '../../../constants/app_constants.dart';
 import '../../../utilities/utilities.dart';

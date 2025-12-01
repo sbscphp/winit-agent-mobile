@@ -236,8 +236,8 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                   return Center(
                     child: EmptyState(
                       asset: AppAsset.emptyState,
-                      title: 'No Results',
-                      subtitle: 'no results ',
+                      title: 'No Transactions',
+                      subtitle: 'no transactions yet ',
                     ),
                   );
                 }

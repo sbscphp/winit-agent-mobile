@@ -53,6 +53,7 @@ class ProfileVm extends BaseState{
   String get landmark => _user?.landmark ?? '';
   String? get lga => _user?.lgaOfResidence;
   String get agentId => _user?.uniqueID ?? '';
+  String get referralCode => _user?.referralCode ?? '';
 
   //business info
   String get tinNumber => _businessInformation?.tinNumber ?? '';

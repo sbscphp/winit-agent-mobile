@@ -9,8 +9,10 @@ class ApiRoutes {
       "${dotenv.env['AUTH']}/signup";
   static var completeNinLivenessCheck =
       "${dotenv.env['AGENT']}/onboarding/nin-verify";
+  // static var bvnVerification =
+  //     "${dotenv.env['AGENT']}/onboarding/bvn-verify";
   static var bvnVerification =
-      "${dotenv.env['AGENT']}/onboarding/bvn-verify";
+      "${dotenv.env['AGENT']}/onboarding/bvn-basic-verify";
   static var completeOnboarding =
       "${dotenv.env['AGENT']}/onboarding/complete-account";
   static var setTransactionPin =
@@ -104,7 +106,7 @@ class ApiRoutes {
 
   //referral
   static fetchReferralHistory({required int? pageNumber}) =>
-      "${dotenv.env['REFERRAL']}/users?page=$pageNumber";
+      "${dotenv.env['AGENT']}/referral/referred-users?limit=$paginationLimit&paginate=1&page=$pageNumber";
 
   //notification
   static var updateNotificationSettings =

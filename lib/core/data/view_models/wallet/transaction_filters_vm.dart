@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winit_agent/core/data/data_provider/wallet_data_provider.dart';
-import 'package:winit_agent/core/data/models/data/transactions.dart';
+import 'package:winit_agent/core/data/models/transaction.dart';
 import '../../../../locator.dart';
 import '../../../constants/app_constants.dart';
 import '../../../utilities/utilities.dart';
@@ -45,6 +45,7 @@ class TransactionFiltersVm extends BaseState{
   fetchFilteredResults({bool firstCall = true, bool refreshUi = true, required String? id}) async {
     if(firstCall){
       pageNumber = 1;
+      _showFilteredList = true;
       if(refreshUi)setState(ViewState.busy);
     }
     else{
@@ -65,7 +66,6 @@ class TransactionFiltersVm extends BaseState{
       if(firstCall){
         //populate list
         _filteredResults = response.data?.data ?? [];
-        _showFilteredList = true;
         setState(ViewState.retrieved);
       }
       else{

@@ -118,7 +118,7 @@ class _WalletState extends ConsumerState<Wallet> {
                     ListHeader(
                       label: 'Wallet Transaction',
                       subtitle: 'Purchase transaction done via wallet',
-                      showAllVisible: transactionsVm.state == ViewState.retrieved, //&& transactionsVm.transactions.isNotEmpty
+                      showAllVisible: transactionsVm.state == ViewState.retrieved && transactionsVm.transactions.isNotEmpty,
                       onPressed: (){
                         pushNavigation(context: context, widget: const ViewAllTransactions(), routeName: NamedRoutes.viewAllTransactions);
                       },

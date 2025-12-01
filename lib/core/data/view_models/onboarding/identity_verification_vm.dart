@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/data/data_provider/onboarding_data_provider/onboarding_data_provider.dart';
 import 'package:winit_agent/core/data/enum/view_state.dart';
+import 'package:winit_agent/core/data/models/data/bvn_data.dart';
 import 'package:winit_agent/core/data/states/base_state.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/locator.dart';
@@ -18,6 +19,9 @@ class IdentityVerificationVm extends BaseState{
   //bvn verification status
   bool _isBvnVerified = false;
   bool get isBvnVerified => _isBvnVerified;
+
+  //bvn data
+  BvnData? bvnData;
 
 
 
@@ -54,7 +58,8 @@ class IdentityVerificationVm extends BaseState{
         .bvnVerification(details: details)
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
-      _isBvnVerified = response.data?.isMatch ?? false; //todo: update
+      bvnData = response.data;
+      _isBvnVerified = bvnData?.isMatch ?? false;
       setSecondState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);

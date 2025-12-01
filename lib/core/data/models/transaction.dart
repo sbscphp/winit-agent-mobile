@@ -1,3 +1,5 @@
+import 'package:winit_agent/core/data/models/user.dart';
+
 class Transaction {
   final String? uuid;
   final String? agentId;
@@ -9,6 +11,12 @@ class Transaction {
   final String? status;
   final dynamic metadata;
   final DateTime? createdAt;
+  //referral
+  final User? user;
+  final String? mainStatus;
+  final String? reason;
+  final DateTime? dateReferred;
+  final dynamic rewardAmount;
 
   Transaction({
     this.uuid,
@@ -21,6 +29,13 @@ class Transaction {
     this.status,
     this.metadata,
     this.createdAt,
+
+    //referral
+    this.user,
+    this.mainStatus,
+    this.reason,
+    this.dateReferred,
+    this.rewardAmount,
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
@@ -34,6 +49,13 @@ class Transaction {
     status: json["status"],
     metadata: json["metadata"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+
+    //referral
+    user: json["user"] == null ? null : User.fromJson(json["user"]),
+    mainStatus: json["main_status"],
+    reason: json["reason"],
+    dateReferred: json["date_referred"] == null ? null : DateTime.parse(json["date_referred"]),
+    rewardAmount: json["reward_amount"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -47,5 +69,12 @@ class Transaction {
     "status": status,
     "metadata": metadata,
     "created_at": createdAt?.toIso8601String(),
+
+    //referral
+    "user": user?.toJson(),
+    "main_status": mainStatus,
+    "reason": reason,
+    "date_referred": dateReferred?.toIso8601String(),
+    "reward_amount": rewardAmount,
   };
 }
