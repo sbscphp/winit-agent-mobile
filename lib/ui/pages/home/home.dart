@@ -4,14 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
-import 'package:winit_agent/core/data/models/game.dart';
 import 'package:winit_agent/core/data/view_models/games/all_games_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/error_state.dart';
 import 'package:winit_agent/ui/widgets/listview_items/game_item.dart';
-
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/constants/named_routes.dart';
