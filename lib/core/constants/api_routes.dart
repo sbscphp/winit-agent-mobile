@@ -124,6 +124,8 @@ class ApiRoutes {
   static fetchWalletTransactions({required int? pageNumber, required String? id, String? filterParams}) =>
       filterParams == null ? "${dotenv.env['AGENT']}/account/bank-account/$id/transactions?page=$pageNumber&limit=$paginationLimit&paginate=1"
                           :"${dotenv.env['AGENT']}/account/bank-account/$id/transactions?page=$pageNumber&limit=$paginationLimit&paginate=1&$filterParams";
+  static var withdraw =
+      "${dotenv.env['AGENT']}/account/withdraw";
 
 
 

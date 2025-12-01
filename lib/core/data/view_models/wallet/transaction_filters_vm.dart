@@ -52,6 +52,7 @@ class TransactionFiltersVm extends BaseState{
       setPaginatedState(ViewState.busy);
     }
 
+
     final filters = {
       'sample': 1
     };

@@ -7,6 +7,7 @@ import 'package:winit_agent/core/data/view_models/wallet/wallet_vm.dart';
 import 'package:winit_agent/ui/widgets/app_loader.dart';
 import 'package:winit_agent/ui/widgets/bottom_sheets/filter_options.dart';
 import 'package:winit_agent/ui/widgets/error_state.dart';
+import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 
 import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/app_dimension.dart';
@@ -121,8 +122,16 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                       label: 'Filter Transaction',
                       subtitle: 'Filter wallet transactions with ease',
                     options: transactionFiltersVm.transactionFilterOptions,
-                    selectedOption: (value){
-                        //todo: fetch filtered data
+                    selectedOption: (value)async{
+                      transactionFiltersVm.selectedFilter = value;
+                      if(transactionFiltersVm.selectedFilter.toLowerCase() != 'show all'){
+                        await transactionFiltersVm.fetchFilteredResults(id: ref.read(walletVm).walletId);
+                        showFlushBar(
+                            context: context,
+                            message: transactionFiltersVm.message,
+                          success: transactionFiltersVm.state == ViewState.retrieved
+                        );
+                      }
                     },
                   ),
                 );

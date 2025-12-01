@@ -51,6 +51,23 @@ class WalletVm extends BaseState{
     });
   }
 
+  //withdraw
+  withdraw({required double amount, required String pin}) async {
+    setSecondState(ViewState.busy);
+    final details = {
+      "amount": amount,
+      "account_id": walletId,
+      "transaction_pin": pin
+    };
+    await _walletDp.withdraw(details: details).then((response) async{
+      _message = response.message ?? defaultSuccessMessage;
+      setSecondState(ViewState.retrieved);
+    }).catchError((e) {
+      _message = Utilities.formatMessage(e.toString(), isSuccess: false);
+      setSecondState(ViewState.error);
+    });
+  }
+
 
 
 

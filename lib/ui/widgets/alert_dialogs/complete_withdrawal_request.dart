@@ -44,7 +44,7 @@ class CompleteWithdrawalRequest extends StatelessWidget {
               ),
               children: [
                 TextSpan(
-                  text: 'Are you sure you want to complete this withdrawal request for Fund? Kindly note that process takes between 24 - 48 hours business day.   Be patient as your fund would be availed to you very soon.',
+                  text: 'Are you sure you want to complete this withdrawal request for Fund? Kindly note that process takes between 24 - 48 hours business day.   Be patient as your fund would be available to you very soon.',
                 ),
                 TextSpan(
                   text: ' Thank YOU. ',

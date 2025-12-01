@@ -35,6 +35,14 @@ class BankAccountDetailsVm extends BaseState{
   List<BankAccount> _bankAccounts = [];
   List<BankAccount> get bankAccounts => _bankAccounts;
 
+  //selected bank account
+  BankAccount? _selectedBankAccount;
+  BankAccount? get selectedBankAccount => _selectedBankAccount;
+  set selectedBankAccount(BankAccount? val){
+    _selectedBankAccount = val;
+    notifyListeners();
+  }
+
 
   //add bank account
   addBankAccount({
@@ -89,6 +97,10 @@ class BankAccountDetailsVm extends BaseState{
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);
       setSecondState(ViewState.error);
     });
+  }
+
+  reset(){
+    _selectedBankAccount = null;
   }
 
 }

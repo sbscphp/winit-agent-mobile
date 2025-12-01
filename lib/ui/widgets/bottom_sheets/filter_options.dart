@@ -83,7 +83,7 @@ class _FilterOptionsState extends State<FilterOptions> {
                   final isSelected = _selectedOption?.toLowerCase() == option.toLowerCase();
                   return Clickable(
                     onPressed: (){
-                      widget.selectedOption('sample');
+                      widget.selectedOption(option);
                       popNavigation(context: context);
                     },
                     child: WinitContainer(

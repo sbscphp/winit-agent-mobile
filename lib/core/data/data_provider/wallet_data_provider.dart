@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:winit_agent/core/data/models/transaction.dart';
 import 'package:winit_agent/core/data/models/platform_account.dart';
@@ -49,6 +50,25 @@ class WalletDataProvider{
               (gameJson) => Transaction.fromJson(gameJson),
         ),
       );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
+  //withdraw
+  Future<ApiResponse> withdraw({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.post, ApiRoutes.withdraw,
+          useAuth: true,
+          body: jsonEncode(details)
+      );
+      var result = ApiResponse.fromJson(
+          response,
+          null);
       completer.complete(result);
     } catch (e) {
       completer.completeError(e);
