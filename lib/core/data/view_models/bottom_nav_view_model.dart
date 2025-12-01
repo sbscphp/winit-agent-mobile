@@ -12,7 +12,7 @@ import 'package:winit_agent/ui/pages/wallet/wallet.dart';
 class BottomNavViewModel extends ChangeNotifier{
 
   //current index of the bottom nav-bar
-  int _currentIndex = 4;
+  int _currentIndex = 0;
   int get currentIndex => _currentIndex;
   setCurrentIndex(int value, {bool refreshUi = true}){
     _currentIndex = value;

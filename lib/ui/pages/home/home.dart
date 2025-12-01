@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/data/models/game.dart';
+import 'package:winit_agent/core/data/view_models/games/all_games_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
+import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/widgets/error_state.dart';
 import 'package:winit_agent/ui/widgets/listview_items/game_item.dart';
 
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/constants/named_routes.dart';
+import '../../../core/data/enum/view_state.dart';
 import '../../../core/data/view_models/bottom_nav_view_model.dart';
 import '../../../core/utilities/utilities.dart';
 import '../../widgets/alert_dialogs/action_completed.dart';
 import '../../widgets/alert_dialogs/base_dialog.dart';
 import '../../widgets/balance_summary_card.dart';
 import '../../widgets/custom_appbar.dart';
+import '../../widgets/empty_state.dart';
 import '../../widgets/list_header.dart';
 import '../../widgets/listview_items/transaction_item.dart';
 import '../../widgets/naira_display.dart';
@@ -77,27 +84,7 @@ class _HomeState extends ConsumerState<Home> {
               },
             ),
             SizedBox(height: 16.h,),
-            SizedBox(
-              height: 190.h,
-              child: ListView.separated(
-                itemCount: 5,
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.only(right: 16.w,),
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  return GameItem(
-                      index: index,
-                      returnSmallCard: true,
-                    cardWidth: 172.5.w,
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SizedBox(
-                    width: 16.w,
-                  );
-                },
-              ),
-            ),
+            games(context),
             SizedBox(height: 24.h,),
             ListHeader(
               label: '',
@@ -322,6 +309,86 @@ class _HomeState extends ConsumerState<Home> {
            ),
          );
         });
+  }
+
+  games(BuildContext context){
+    return Consumer(
+      builder: (context, ref, child){
+        final gamesVm = ref.watch(allGamesViewModel);
+        if(gamesVm.state == ViewState.busy){
+          return SizedBox(
+            height: 200.h,
+            child: ListView.separated(
+              itemCount: 5,
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.only(right: 16.w,),
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                return Shimmer.fromColors(
+                  baseColor: ColorPath.silverGrey.withCustomOpacity(0.1),
+                  highlightColor: ColorPath.athensGrey2,
+                  child: Container(
+                    width: 172.5.w,
+                    color: Theme.of(context).colorScheme.brandColor2,
+
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return SizedBox(
+                  width: 16.w,
+                );
+              },
+            ),
+          );
+        }
+        if(gamesVm.state == ViewState.retrieved){
+          if(gamesVm.allGames.isEmpty){
+            return Center(
+                child: EmptyState(
+                  asset: AppAsset.emptyState,
+                  title: 'No Game Yet',
+                  subtitle: 'There are currently no games yet to Purchase Raffle ticket for',
+                )
+            );
+          }
+          return SizedBox(
+            height: 200.h,
+            child: ListView.separated(
+              itemCount: gamesVm.allGames.length,
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.only(right: 16.w,),
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                final game = gamesVm.allGames[index];
+                return GameItem(
+                  index: index,
+                  returnSmallCard: true,
+                  cardWidth: 172.5.w,
+                  game: game,
+                );
+              },
+              separatorBuilder: (context, index) {
+                return SizedBox(
+                  width: 16.w,
+                );
+              },
+            ),
+          );
+        }
+
+        if(gamesVm.state == ViewState.error){
+          return Center(
+            child: ErrorState(
+              message: gamesVm.message,
+                onPressed: ()=>gamesVm.fetchAllGames()),
+          );
+        }
+
+        return const SizedBox.shrink();
+
+      },
+    );
   }
 
   showTransactionPinPrompt(){

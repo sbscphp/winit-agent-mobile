@@ -19,19 +19,21 @@ class GameItem extends StatelessWidget {
   final bool returnSmallCard;
   final double? cardWidth;
   final bool fromExploreScreen;
+  final Game game;
   const GameItem({
     super.key,
     this.cardWidth,
     required this.index,
     this.returnSmallCard = false,
-    this.fromExploreScreen = false
+    this.fromExploreScreen = false,
+    required this.game
   });
 
   @override
   Widget build(BuildContext context) {
     final isBig = returnSmallCard ? false : index % 3 == 0;
     //final height = isBig ? 270.h : 210.h;
-    final game = Game();
+    //final game = Game();
     final name = game.categoryName ?? 'N/A';
     final month = DateUtilities.monthOnly(date: game.endDate);
     final day = DateUtilities.getDayOfMonthSuffix(
@@ -42,7 +44,7 @@ class GameItem extends StatelessWidget {
     );
     final details = game.name ?? 'N/A';
     final ctaText = game.ctaText ?? 'N/A';
-    final colorTheme = ColorTheme();
+    final colorTheme = game.colorThemes;
     final textColor = ColorPath.dynamicColor(
       colorTheme?.entryStateTextColor,
       Theme.of(context).colorScheme.textPrimary,
@@ -200,7 +202,7 @@ class GameItem extends StatelessWidget {
               ],
             ),
             Container(
-              height: 0.5.h,
+              height: 1.h,
               width: double.infinity,
               margin: EdgeInsets.only(top: 4.h, bottom: 8.h),
               color: textColor,
