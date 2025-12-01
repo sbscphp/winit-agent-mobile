@@ -79,22 +79,15 @@ class ApiRoutes {
 
 
 
-
-
-  static var fetchProfile =
-      "${dotenv.env['SETTINGS']}/profile/check_profile";
-  static var updateProfile =
-      "${dotenv.env['SETTINGS']}/profile/update_profile";
-  static var updatePassword =
-      "${dotenv.env['SETTINGS']}/security/update/password";
-  static var updateSpendLimit =
-      "${dotenv.env['SETTINGS']}/spend_limit/update";
-  static var updateSelfExclusion =
-      "${dotenv.env['SETTINGS']}/self_exclusion/update";
-
   //Game
-  static fetchGames({required int? pageNumber}) =>
-      "${dotenv.env['GUEST']}/all-featured-games?page=$pageNumber";
+  static fetchGames({required int? pageNumber, String? filterParams}) =>
+      filterParams == null
+          ?"${dotenv.env['AGENT']}/game/all-games?limit=$paginationLimit&paginate=1&page=$pageNumber"
+          :"${dotenv.env['AGENT']}/game/all-games?limit=$paginationLimit&paginate=1&page=$pageNumber&$filterParams";
+
+
+
+
   static fetchSingleGame({required String? gameId}) =>
       "${dotenv.env['GUEST']}/game/$gameId";
   static getTicketsByOrderId({required String? orderId}) =>
