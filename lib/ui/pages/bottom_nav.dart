@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:winit_agent/core/data/view_models/authentication/logout_vm.dart';
 import 'package:winit_agent/core/data/view_models/bottom_nav_view_model.dart';
 import 'package:winit_agent/ui/widgets/custom_bottom_nav.dart';
+
+import '../../core/data/enum/view_state.dart';
 
 class BottomNav extends ConsumerStatefulWidget {
   const BottomNav({super.key});
@@ -58,12 +61,20 @@ class _BottomNavState extends ConsumerState<BottomNav> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(top: 0.h),
-                  child: CustomBottomNav(
-                  selectedIndex: vm.currentIndex,
-                  onChanged: (index) {
-                    vm.updateIndex(index);
-                  },
-                ),
+                  child: Consumer(
+                    builder: (context, ref, child){
+                      final logoutVm = ref.watch(logoutViewModel);
+                      return IgnorePointer(
+                        ignoring: logoutVm.state == ViewState.busy,
+                        child: CustomBottomNav(
+                          selectedIndex: vm.currentIndex,
+                          onChanged: (index) {
+                            vm.updateIndex(index);
+                          },
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

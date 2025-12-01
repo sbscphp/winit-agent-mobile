@@ -43,6 +43,8 @@ class ApiRoutes {
       "${dotenv.env['AUTH']}/login";
   static createPassword({required String? userId}) =>
       "${dotenv.env['AUTH']}/forgot-password/create-password/$userId";
+  static var logout =
+      "${dotenv.env['AGENT']}/logout";
 
 
   

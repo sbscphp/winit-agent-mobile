@@ -44,10 +44,10 @@ class LoginVm extends BaseState{
 
     await _authDp
         .login(details: details)
-        .then((response) {
+        .then((response) async{
       _message = response.message ?? defaultSuccessMessage;
       loginData = response.data;
-      SecureStorageUtils.saveToken(token: loginData?.accessToken ?? '');
+      await SecureStorageUtils.saveToken(token: loginData?.accessToken ?? '');
       setState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);
