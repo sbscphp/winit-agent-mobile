@@ -155,6 +155,8 @@ class _WithdrawState extends ConsumerState<Withdraw> {
                     buttonText: 'Continue',
                     onPressed: (){
 
+                      Utilities.hideKeyboard(context);
+
                       final amount = Utilities.formatToDouble(value: _amount.text);
 
                       if(amount < 1){
