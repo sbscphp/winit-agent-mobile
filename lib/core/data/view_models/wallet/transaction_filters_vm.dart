@@ -18,9 +18,16 @@ class TransactionFiltersVm extends BaseState{
   String _message = '';
   String get message => _message;
 
+  String _purchaseMessage = '';
+  String get purchaseMessage => _purchaseMessage;
+
   //list of filtered results(polls)
   List<Transaction> _filteredResults = [];
   List<Transaction> get filteredResults => _filteredResults;
+
+  //list of purchase transactions
+  List<Transaction> _purchaseTransactions = [];
+  List<Transaction> get purchaseTransactions => _purchaseTransactions;
 
   //page number
   int pageNumber = 1;
@@ -39,10 +46,21 @@ class TransactionFiltersVm extends BaseState{
     notifyListeners();
   }
 
-
+  //fetch 'purchase' transactions
+  fetchPurchaseTransactions({bool showLoader = true}) async {
+    if(showLoader)setSecondState(ViewState.busy);
+    await _walletDp.fetchPurchaseTransactions(filterParams: 'purchase').then((response) async{
+      _purchaseMessage = response.message ?? defaultSuccessMessage;
+      _purchaseTransactions = response.data ?? [];
+      setSecondState(ViewState.retrieved);
+    }).catchError((e) {
+      _purchaseMessage = Utilities.formatMessage(e.toString(), isSuccess: false);
+      setSecondState(ViewState.error);
+    });
+  }
 
   //fetch filtered results(transactions)
-  fetchFilteredResults({bool firstCall = true, bool refreshUi = true, required String? id}) async {
+  fetchFilteredResults({bool firstCall = true, bool refreshUi = true}) async {
     if(firstCall){
       pageNumber = 1;
       _showFilteredList = true;
@@ -62,7 +80,6 @@ class TransactionFiltersVm extends BaseState{
 
     await _walletDp.fetchWalletTransactions(
         pageNumber: pageNumber,
-        id: id,
         filterParams: Utilities.returnQueryString(params: filters),
     ).then((response) async{
       _message = response.message ?? defaultSuccessMessage;

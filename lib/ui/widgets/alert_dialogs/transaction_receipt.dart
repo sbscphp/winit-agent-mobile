@@ -1147,7 +1147,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   }
 
   String _receiptTile(){
-    switch(widget.transaction.type?.toLowerCase()){
+    switch(widget.transaction.transactionType?.toLowerCase()){
       case 'topup':
         return 'Wallet Top Up';
       case 'purchase':
@@ -1168,7 +1168,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   }
 
   Widget _transactionDetails(BuildContext context){
-    switch(widget.transaction.type?.toLowerCase()){
+    switch(widget.transaction.transactionType?.toLowerCase()){
       case 'topup':
         return walletTopUp(context);
       case 'purchase':

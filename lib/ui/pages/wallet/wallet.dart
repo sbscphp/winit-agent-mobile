@@ -51,7 +51,7 @@ class _WalletState extends ConsumerState<Wallet> {
     vm.fetchWalletSummary(showLoader: showLoader).then((value){
       if(vm.state == ViewState.retrieved){
         final transactionsVm = ref.read(walletTransactionsViewModel);
-        transactionsVm.fetchTransactions(id: vm.walletId, refreshUi: showLoader);
+        transactionsVm.fetchTransactions(refreshUi: showLoader);
       }
     });
   }
@@ -140,7 +140,7 @@ class _WalletState extends ConsumerState<Wallet> {
                                 EmptyState(
                                   asset: AppAsset.emptyState,
                                   title: 'No Transaction Yet',
-                                  subtitle: 'You currently have no ticket purchase transaction yet. ',
+                                  subtitle: 'You currently have no transaction yet. ',
                                 ),
                                 SizedBox(height: 16.h,),
                                 Padding(
@@ -194,7 +194,7 @@ class _WalletState extends ConsumerState<Wallet> {
                           return Center(
                             child: ErrorState(
                               message: transactionsVm.message,
-                                onPressed: ()=>transactionsVm.fetchTransactions(id: vm.walletId)
+                                onPressed: ()=>transactionsVm.fetchTransactions()
                             ),
                           );
                         }

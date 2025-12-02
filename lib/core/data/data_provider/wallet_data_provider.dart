@@ -32,14 +32,14 @@ class WalletDataProvider{
   }
 
   //fetch wallet transactions
-  Future<ApiResponse<PaginationData<Transaction>>> fetchWalletTransactions({required int? pageNumber, required String? id, String? filterParams}) async {
+  Future<ApiResponse<PaginationData<Transaction>>> fetchWalletTransactions({required int? pageNumber, String? filterParams, bool paginate = true}) async {
     var completer = Completer<ApiResponse<PaginationData<Transaction>>>();
     try {
       Map<String, dynamic> response = await NetworkManager()
           .networkRequestManager(RequestType.get, ApiRoutes.fetchWalletTransactions(
           pageNumber: pageNumber,
-        id: id,
-        filterParams: filterParams
+        paginate: paginate,
+        filterParams: filterParams,
       ),
           useAuth: true
       );
@@ -49,6 +49,28 @@ class WalletDataProvider{
           data as Map<String, dynamic>,
               (gameJson) => Transaction.fromJson(gameJson),
         ),
+      );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
+  //fetch purchase transaction
+  Future<ApiResponse<List<Transaction>>> fetchPurchaseTransactions({String? filterParams}) async {
+    var completer = Completer<ApiResponse<List<Transaction>>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.get, ApiRoutes.fetchWalletTransactions(pageNumber: 1, paginate: false, filterParams: filterParams),
+      );
+      var result = ApiResponse<List<Transaction>>.fromJson(
+        response,
+            (data) => (data as List<dynamic>)
+            .map((e) => Transaction.fromJson(
+          e as Map<String, dynamic>,
+        ))
+            .toList(),
       );
       completer.complete(result);
     } catch (e) {

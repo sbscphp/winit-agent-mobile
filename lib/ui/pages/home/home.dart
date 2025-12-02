@@ -6,6 +6,7 @@ import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/view_models/games/all_games_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
+import 'package:winit_agent/core/data/view_models/wallet/transaction_filters_vm.dart';
 import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/error_state.dart';
@@ -26,6 +27,7 @@ import '../../widgets/listview_items/transaction_item.dart';
 import '../../widgets/naira_display.dart';
 import '../../widgets/profile/profile_image.dart';
 import '../profile/transaction_pin/set_transaction_pin.dart';
+import '../wallet/view_all_transactions.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});
@@ -39,6 +41,10 @@ class _HomeState extends ConsumerState<Home> {
   @override
   void initState() {
     showTransactionPinPrompt();
+    final filterTransactionsVm = ref.read(transactionFiltersViewModel);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      filterTransactionsVm.fetchPurchaseTransactions();
+    });
     super.initState();
   }
 
@@ -90,53 +96,7 @@ class _HomeState extends ConsumerState<Home> {
             SizedBox(height: 16.h,),
             games(context),
             SizedBox(height: 24.h,),
-            ListHeader(
-              label: '',
-              subtitle: 'List of your most Game purchase.',
-              titleWidget: RichText(
-                textAlign: TextAlign.left,
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: ColorPath.blueBlue,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: 'Most Recent:',
-                    ),
-                    TextSpan(
-                      text: ' Game Purchase',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          color: Theme.of(context).colorScheme.textSecondary
-                      ),
-                    ),
-
-                  ],
-                ),
-              ),
-              onPressed: (){
-                //pushNavigation(context: context, widget: const ViewAllTransactions(), routeName: NamedRoutes.viewAllTransactions);
-              },
-            ),
-            SizedBox(height: 16.h,),
-            ListView.separated(
-              itemCount: 5,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              itemBuilder: (BuildContext context, int index) {
-                return TransactionItem(
-                    label: 'Purchased of 15 Ticket Unit',
-                    date: DateTime.now(),
-                    amount: 2500,
-                    status: 'successful'
-                );
-              },
-              separatorBuilder: (context, index) {
-                return SizedBox(height: 16.h,);
-              },
-            )
+            recentPurchaseTransactions(context)
 
 
           ],
@@ -392,6 +352,100 @@ class _HomeState extends ConsumerState<Home> {
         return const SizedBox.shrink();
 
       },
+    );
+  }
+
+  recentPurchaseTransactions(BuildContext context){
+    final filterTransactionsVm = ref.watch(transactionFiltersViewModel);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ListHeader(
+          label: '',
+          subtitle: 'List of your most Game purchase.',
+          titleWidget: RichText(
+            textAlign: TextAlign.left,
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w800,
+                color: ColorPath.blueBlue,
+              ),
+              children: [
+                TextSpan(
+                  text: 'Most Recent:',
+                ),
+                TextSpan(
+                  text: ' Game Purchase',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: Theme.of(context).colorScheme.textSecondary
+                  ),
+                ),
+
+              ],
+            ),
+          ),
+          onPressed: (){
+            pushNavigation(context: context, widget: const ViewAllTransactions(), routeName: NamedRoutes.viewAllTransactions);
+          },
+        ),
+        SizedBox(height: 16.h,),
+        Builder(
+          builder: (context) {
+
+            if(filterTransactionsVm.secondState == ViewState.busy){
+              return Shimmer.fromColors(
+                baseColor: ColorPath.silverGrey.withCustomOpacity(0.1),
+                highlightColor: ColorPath.athensGrey2,
+                child: Container(
+                  height: 90.h,
+                  width: double.infinity,
+                  color: Theme.of(context).colorScheme.brandColor2,
+
+                ),
+              );
+            }
+
+            if(filterTransactionsVm.secondState == ViewState.retrieved){
+              if(filterTransactionsVm.purchaseTransactions.isEmpty){
+                return  EmptyState(
+                  asset: AppAsset.emptyState,
+                  title: 'No Transaction Yet',
+                  subtitle: 'You currently have no ticket purchase transaction yet. ',
+                );
+              }
+              return ListView.separated(
+                itemCount: 5,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemBuilder: (BuildContext context, int index) {
+                  return TransactionItem(
+                      label: 'Purchased of 15 Ticket Unit',
+                      date: DateTime.now(),
+                      amount: 2500,
+                      status: 'successful'
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return SizedBox(height: 16.h,);
+                },
+              );
+            }
+
+            if(filterTransactionsVm.secondState == ViewState.error){
+              return Center(
+                child: ErrorState(
+                  message: filterTransactionsVm.purchaseMessage,
+                    onPressed: ()=>filterTransactionsVm.fetchPurchaseTransactions()),
+              );
+            }
+
+            return const SizedBox.shrink();
+
+          }
+        )
+      ],
     );
   }
 

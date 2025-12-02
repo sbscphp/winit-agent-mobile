@@ -123,9 +123,9 @@ class ApiRoutes {
   //wallet
   static var fetchWalletSummary =
       "${dotenv.env['AGENT']}/account/system-generated-account-details";
-  static fetchWalletTransactions({required int? pageNumber, required String? id, String? filterParams}) =>
-      filterParams == null ? "${dotenv.env['AGENT']}/account/bank-account/$id/transactions?page=$pageNumber&limit=$paginationLimit&paginate=1"
-                          :"${dotenv.env['AGENT']}/account/bank-account/$id/transactions?page=$pageNumber&limit=$paginationLimit&paginate=1&$filterParams";
+  static fetchWalletTransactions({required int? pageNumber, String? filterParams, bool paginate = true}) =>
+      filterParams == null ? "${dotenv.env['AGENT']}/account/all-transactions?page=$pageNumber&limit=$paginationLimit&paginate=${paginate ? "1":"0"}"
+                          :"${dotenv.env['AGENT']}/account/all-transactions?page=$pageNumber&limit=$paginationLimit&paginate=${paginate ? "1":"0"}&$filterParams";
   static var withdraw =
       "${dotenv.env['AGENT']}/account/withdraw";
 

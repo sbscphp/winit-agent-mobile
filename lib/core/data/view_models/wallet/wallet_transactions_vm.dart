@@ -36,7 +36,7 @@ class WalletTransactionsVm extends BaseState{
 
 
   //fetch transactions
-  fetchTransactions({bool firstCall = true, bool refreshUi = true, required String? id}) async {
+  fetchTransactions({bool firstCall = true, bool refreshUi = true}) async {
     if(firstCall){
       pageNumber = 1;
       if(refreshUi)setState(ViewState.busy);
@@ -46,8 +46,7 @@ class WalletTransactionsVm extends BaseState{
     }
 
     await _walletDp.fetchWalletTransactions(
-      pageNumber: pageNumber,
-      id: id
+      pageNumber: pageNumber
     ).then((response) async{
       _message = response.message ?? defaultSuccessMessage;
       totalRecords = response.data?.total ?? 0;

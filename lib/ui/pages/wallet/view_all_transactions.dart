@@ -53,8 +53,7 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
           if (vm.paginatedState != ViewState.busy && vm.transactions.length < vm.totalRecords) {
             //fetch more transactions
             vm.fetchTransactions(
-                firstCall: false,
-              id: ref.read(walletVm).walletId
+                firstCall: false
             );
           }
         }
@@ -73,8 +72,7 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
           if (vm.paginatedState != ViewState.busy && vm.filteredResults.length < vm.totalRecords) {
             //fetch more transactions(filters)
             vm.fetchFilteredResults(
-                firstCall: false,
-                id: ref.read(walletVm).walletId
+                firstCall: false
             );
           }
         }
@@ -125,7 +123,7 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                     selectedOption: (value)async{
                       transactionFiltersVm.selectedFilter = value;
                       if(transactionFiltersVm.selectedFilter.toLowerCase() != 'show all'){
-                        await transactionFiltersVm.fetchFilteredResults(id: ref.read(walletVm).walletId);
+                        await transactionFiltersVm.fetchFilteredResults();
                         showFlushBar(
                             context: context,
                             message: transactionFiltersVm.message,
@@ -216,7 +214,7 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                       ErrorState(
                           message: transactionFiltersVm.message,
                           isPaginationType: true,
-                          onPressed: ()=>transactionFiltersVm.fetchFilteredResults(firstCall: false, id: ref.read(walletVm).walletId))
+                          onPressed: ()=>transactionFiltersVm.fetchFilteredResults(firstCall: false))
                   ],
                 );
               }
@@ -225,7 +223,7 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                 return Center(
                   child: ErrorState(
                       message: transactionFiltersVm.message,
-                      onPressed: ()=>transactionFiltersVm.fetchFilteredResults(id: ref.read(walletVm).walletId)),
+                      onPressed: ()=>transactionFiltersVm.fetchFilteredResults()),
                 );
               }
 
@@ -300,7 +298,7 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                       ErrorState(
                           message: vm.message,
                           isPaginationType: true,
-                          onPressed: ()=>vm.fetchTransactions(firstCall: false, id: ref.read(walletVm).walletId))
+                          onPressed: ()=>vm.fetchTransactions(firstCall: false))
                   ],
                 );
               }
@@ -309,7 +307,7 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                 return Center(
                   child: ErrorState(
                     message: vm.message,
-                      onPressed: ()=>vm.fetchTransactions(id: ref.read(walletVm).walletId)),
+                      onPressed: ()=>vm.fetchTransactions()),
                 );
               }
 

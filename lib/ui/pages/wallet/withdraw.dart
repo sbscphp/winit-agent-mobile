@@ -208,7 +208,7 @@ class _WithdrawState extends ConsumerState<Withdraw> {
                                     vm.fetchWalletSummary(showLoader: false);
 
                                     //re-fetch transaction history
-                                    ref.read(walletTransactionsViewModel).fetchTransactions(id: vm.walletId, refreshUi: false);
+                                    ref.read(walletTransactionsViewModel).fetchTransactions(refreshUi: false);
 
                                     baseDialog(
                                       context: context,
