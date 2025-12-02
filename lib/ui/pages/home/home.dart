@@ -277,6 +277,7 @@ class _HomeState extends ConsumerState<Home> {
 
   salesStats(BuildContext context){
     final salesVm = ref.watch(salesStatViewModel);
+    final lga = ref.read(profileViewModel).lga;
 
     if(salesVm.state == ViewState.busy){
       return Column(
@@ -324,9 +325,9 @@ class _HomeState extends ConsumerState<Home> {
         children: [
           BalanceSummaryCard(
             label: 'Total Sales',
-            balance: 405674,
-            amountAdded: 2500,
-            duration: '6',
+            balance: salesVm.totalSales,
+            amountAdded: salesVm.amountAdded,
+            duration: salesVm.period,
           ),
           SizedBox(height: 16.h,),
           GridView.builder(
@@ -368,7 +369,7 @@ class _HomeState extends ConsumerState<Home> {
                         FittedBox(
                           child: Text(
                             Utilities.formatAmount(
-                                amount: 1200,
+                                amount: salesVm.totalTicketSold,
                                 addDecimal: false
                             ),
                             style: Theme.of(context)
@@ -410,7 +411,7 @@ class _HomeState extends ConsumerState<Home> {
                         ),
                         SizedBox(height: 2.h,),
                         NairaDisplay(
-                          amount: 4536,
+                          amount: salesVm.commissionsBalance,
                           fontSize: 14.sp,
                           color:ColorPath.hazeGreen,
                           fontWeight: FontWeight.w800,
@@ -445,7 +446,7 @@ class _HomeState extends ConsumerState<Home> {
                         ),
                         SizedBox(height: 2.h,),
                         NairaDisplay(
-                          amount: 4536,
+                          amount: salesVm.bonusBalance,
                           fontSize: 14.sp,
                           color:ColorPath.piperBrown,
                           fontWeight: FontWeight.w800,
@@ -468,7 +469,7 @@ class _HomeState extends ConsumerState<Home> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '5th in Kosofe',
+                        '${Utilities.ordinal(salesVm.position)} in $lga',
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall
@@ -480,9 +481,9 @@ class _HomeState extends ConsumerState<Home> {
                       SizedBox(height: 2.h,),
                       FittedBox(
                         child: Text(
-                          "+${Utilities.abbreviateAmount(
-                              value: 123000
-                          )} Tickets Sold Today",
+                          salesVm.ticketsSoldToday == 0 ? 'O Tickets Sold Today':"${Utilities.abbreviateAmount(
+                              value: salesVm.ticketsSoldToday
+                          )} ${salesVm.ticketsSoldToday > 1 ? 'Tickets':'Ticket'} Sold Today",
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium

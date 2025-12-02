@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/data/view_models/games/selected_game_vm.dart';
 import 'package:winit_agent/ui/pages/games/enter_customer_details.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/games/game_purchase_dock.dart';
@@ -10,21 +12,39 @@ import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/constants/named_routes.dart';
 import '../../../core/utilities/navigator.dart';
+import '../../../core/utilities/utilities.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/naira_display.dart';
 import '../../widgets/quantity_counter.dart';
 
 
-class SelectQuantity extends StatefulWidget {
+class SelectQuantity extends ConsumerStatefulWidget {
   const SelectQuantity({super.key});
 
   @override
-  State<SelectQuantity> createState() => _SelectQuantityState();
+  ConsumerState<SelectQuantity> createState() => _SelectQuantityState();
 }
 
-class _SelectQuantityState extends State<SelectQuantity> {
+class _SelectQuantityState extends ConsumerState<SelectQuantity> {
+
+  bool val = false;
+  late int quantity;
+  late double amount;
+  //double referralAmountApplied = 0;
+  //bool referralApplied = false;
+
+  @override
+  void initState() {
+    final vm = ref.read(selectedGameViewModel);
+    quantity = vm.selectedTicket?.number ?? 1;
+    amount = double.tryParse(vm.selectedTicket?.discountPrice?.toString() ?? '0') ?? 0;
+    //ref.read(paymentViewModel).reset();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final vm = ref.watch(selectedGameViewModel);
     return Scaffold(
       appBar: customAppBar(
         context: context,
@@ -72,9 +92,13 @@ class _SelectQuantityState extends State<SelectQuantity> {
                   ),
                   SizedBox(height: 32.h,),
                   QuantityCounter(
-                      value: 1,
+                      value: quantity,
+                      upperLimit: vm.maxCount,
                       onChanged: (value){
-
+                        setState(() {
+                          quantity = value ?? 1;
+                          amount = vm.calculatePrice(quantity: quantity);
+                        });
                       }
                   ),
                   SizedBox(height: 16.h,),
@@ -94,7 +118,7 @@ class _SelectQuantityState extends State<SelectQuantity> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 36.w),
                       child: NairaDisplay(
-                        amount: 5000,
+                        amount: amount,
                         addDecimal: false,
                         fontSize: 36.sp,
                         color:Theme.of(context).colorScheme.textPrimary,
@@ -131,7 +155,10 @@ class _SelectQuantityState extends State<SelectQuantity> {
                                   text: 'One (1) Ticket is ',
                                 ),
                                 TextSpan(
-                                  text: '₦5,000',
+                                  text: '₦${Utilities.formatAmount(
+                                    amount: vm.discountedPrice,
+                                    addDecimal: false
+                                  )}',
                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       fontWeight: FontWeight.w700,
                                       color: ColorPath.charcoalBlack

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/data/view_models/games/selected_game_vm.dart';
 
 import '../../../core/constants/color_path.dart';
 import '../clickable.dart';
 import '../count_down_timer.dart';
 import '../countdown_circle.dart';
 
-class CountdownTile extends StatefulWidget {
+class CountdownTile extends ConsumerStatefulWidget {
   final bool? initiallyExpanded;
   const CountdownTile({super.key, this.initiallyExpanded = false});
 
   @override
-  State<CountdownTile> createState() => _CountdownTileState();
+  ConsumerState<CountdownTile> createState() => _CountdownTileState();
 }
 
-class _CountdownTileState extends State<CountdownTile> {
+class _CountdownTileState extends ConsumerState<CountdownTile> {
 
   bool _isExpanded = false;
 
@@ -28,6 +30,7 @@ class _CountdownTileState extends State<CountdownTile> {
 
   @override
   Widget build(BuildContext context) {
+    final vm = ref.read(selectedGameViewModel);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       width: double.infinity,
@@ -73,7 +76,7 @@ class _CountdownTileState extends State<CountdownTile> {
             secondChild: Padding(
               padding: EdgeInsets.only(top: 8.h),
               child:  CountdownTimer(
-                endTime: DateTime.now().add(Duration(days: 5)),
+                endTime: vm.gameEndDate,
                 onEnd: (){
 
                 },

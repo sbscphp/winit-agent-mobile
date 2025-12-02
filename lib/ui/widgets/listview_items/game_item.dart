@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/data/view_models/games/selected_game_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/games/select_quantity.dart';
 import '../../../core/constants/app_asset.dart';
@@ -29,6 +31,12 @@ class GameItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final container =
+    ProviderScope.containerOf(context);
+
+    final selectedGameVm =
+    container.read(selectedGameViewModel);
+
     final isBig = returnSmallCard ? false : index % 3 == 0;
     //final height = isBig ? 270.h : 210.h;
     //final game = Game();
@@ -63,6 +71,7 @@ class GameItem extends StatelessWidget {
     if (returnSmallCard) {
       return Clickable(
         onPressed: (){
+          selectedGameVm.setSelectedGame(game);
           pushNavigation(context: context, widget: const SelectQuantity(), routeName: NamedRoutes.selectQuantity);
         },
         child: Container(
@@ -94,6 +103,7 @@ class GameItem extends StatelessWidget {
       crossAxisCellCount: isBig ? 2 : 1,
       child: Clickable(
         onPressed: () {
+          selectedGameVm.setSelectedGame(game);
           pushNavigation(context: context, widget: const SelectQuantity(), routeName: NamedRoutes.selectQuantity);
         },
         child: Container(
