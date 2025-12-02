@@ -192,6 +192,13 @@ class _ProfileState extends ConsumerState<Profile> {
                                   pin: ref.read(transactionPinViewModel).currentPin ?? ''
                               );
 
+                              if(accountClosureVm.secondState == ViewState.retrieved){
+                                pushAndClearNavigation(context: context, widget: const Login(),
+                                    routeName: NamedRoutes.login,
+                                    clearRoute: NamedRoutes.landing
+                                );
+                              }
+
                               showFlushBar(
                                   context: context,
                                   message: accountClosureVm.message,

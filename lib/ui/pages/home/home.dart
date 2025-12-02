@@ -68,17 +68,23 @@ class _HomeState extends ConsumerState<Home> {
             SizedBox(height: 16.h,),
             balanceBreakdown(context),
             SizedBox(height: 24.h,),
-            ListHeader(
-              label: 'Live Games ',
-              subtitle: 'Play and buy Ticket for live games today',
-              onPressed: (){
-                final container =
-                ProviderScope.containerOf(context);
+            Consumer(
+              builder: (context, ref, child){
+                final gamesVm = ref.watch(allGamesViewModel);
+                return ListHeader(
+                  label: 'Live Games ',
+                  subtitle: 'Play and buy Ticket for live games today',
+                  showAllVisible: gamesVm.state == ViewState.retrieved && gamesVm.allGames.isNotEmpty,
+                  onPressed: (){
+                    final container =
+                    ProviderScope.containerOf(context);
 
-                final bottomNavVm =
-                container.read(bottomNavViewModel);
+                    final bottomNavVm =
+                    container.read(bottomNavViewModel);
 
-                bottomNavVm.updateIndex(0);
+                    bottomNavVm.updateIndex(0);
+                  },
+                );
               },
             ),
             SizedBox(height: 16.h,),
