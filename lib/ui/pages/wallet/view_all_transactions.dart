@@ -3,12 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/data/view_models/wallet/transaction_filters_vm.dart';
 import 'package:winit_agent/core/data/view_models/wallet/wallet_transactions_vm.dart';
-import 'package:winit_agent/core/data/view_models/wallet/wallet_vm.dart';
 import 'package:winit_agent/ui/widgets/app_loader.dart';
 import 'package:winit_agent/ui/widgets/bottom_sheets/filter_options.dart';
 import 'package:winit_agent/ui/widgets/error_state.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
-
 import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
