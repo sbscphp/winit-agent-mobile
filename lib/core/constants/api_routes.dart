@@ -47,6 +47,12 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/logout";
 
 
+  //home/dashboard
+  static var fetchDashboardStats =
+      "${dotenv.env['AGENT']}/dashboard/sales-stats";
+
+
+
   
 
 

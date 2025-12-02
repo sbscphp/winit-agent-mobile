@@ -6,6 +6,7 @@ import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/view_models/games/all_games_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/sales_stat_vm.dart';
 import 'package:winit_agent/core/data/view_models/wallet/transaction_filters_vm.dart';
 import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
@@ -42,8 +43,10 @@ class _HomeState extends ConsumerState<Home> {
   void initState() {
     showTransactionPinPrompt();
     final filterTransactionsVm = ref.read(transactionFiltersViewModel);
+    final statsVm = ref.read(salesStatViewModel);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       filterTransactionsVm.fetchPurchaseTransactions();
+      statsVm.fetchSalesStat();
     });
     super.initState();
   }
@@ -65,14 +68,7 @@ class _HomeState extends ConsumerState<Home> {
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BalanceSummaryCard(
-                label: 'Total Sales',
-                balance: 405674,
-                amountAdded: 2500,
-              duration: '6',
-            ),
-            SizedBox(height: 16.h,),
-            balanceBreakdown(context),
+            salesStats(context),
             SizedBox(height: 24.h,),
             Consumer(
               builder: (context, ref, child){
@@ -103,176 +99,6 @@ class _HomeState extends ConsumerState<Home> {
         ),
       ),
     );
-  }
-
-  balanceBreakdown(BuildContext context){
-    return GridView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        itemCount: 4,
-        gridDelegate:
-        SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 8.h,
-          crossAxisSpacing: 8.w,
-          mainAxisExtent: 60.h,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-         if(index == 0){
-           return Container(
-             padding: EdgeInsets.symmetric(
-                 horizontal: 16.w
-             ),
-             decoration: BoxDecoration(
-                 color: ColorPath.hummingBirdBlue,
-                 borderRadius: BorderRadius.all(Radius.circular(8.r))
-             ),
-             child: Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 Text(
-                   'Total Ticket Sold',
-                   style: Theme.of(context)
-                       .textTheme
-                       .bodySmall
-                       ?.copyWith(
-                       fontWeight: FontWeight.w400,
-                       color: ColorPath.troutGrey
-                   ),
-                 ),
-                 SizedBox(height: 2.h,),
-                 FittedBox(
-                   child: Text(
-                     Utilities.formatAmount(
-                         amount: 1200,
-                         addDecimal: false
-                     ),
-                     style: Theme.of(context)
-                         .textTheme
-                         .bodyMedium
-                         ?.copyWith(
-                         fontWeight: FontWeight.w800,
-                         color: ColorPath.curiousBlue
-                     ),
-                   ),
-                 ),
-               ],
-             ),
-           );
-         }
-
-         if(index == 1){
-           return Container(
-             padding: EdgeInsets.symmetric(
-                 horizontal: 16.w
-             ),
-             decoration: BoxDecoration(
-                 color: ColorPath.foamGreen,
-                 borderRadius: BorderRadius.all(Radius.circular(8.r))
-             ),
-             child: Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 Text(
-                   'Commission Balance',
-                   style: Theme.of(context)
-                       .textTheme
-                       .bodySmall
-                       ?.copyWith(
-                       fontWeight: FontWeight.w400,
-                       color: ColorPath.troutGrey
-                   ),
-                 ),
-                 SizedBox(height: 2.h,),
-             NairaDisplay(
-               amount: 4536,
-               fontSize: 14.sp,
-               color:ColorPath.hazeGreen,
-               fontWeight: FontWeight.w800,
-             ),
-               ],
-             ),
-           );
-         }
-
-         if(index == 2){
-           return Container(
-             padding: EdgeInsets.symmetric(
-                 horizontal: 16.w
-             ),
-             decoration: BoxDecoration(
-                 color: ColorPath.beeBrown,
-                 borderRadius: BorderRadius.all(Radius.circular(8.r))
-             ),
-             child: Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 Text(
-                   'Bonus Income',
-                   style: Theme.of(context)
-                       .textTheme
-                       .bodySmall
-                       ?.copyWith(
-                       fontWeight: FontWeight.w400,
-                       color: ColorPath.troutGrey
-                   ),
-                 ),
-                 SizedBox(height: 2.h,),
-                 NairaDisplay(
-                   amount: 4536,
-                   fontSize: 14.sp,
-                   color:ColorPath.piperBrown,
-                   fontWeight: FontWeight.w800,
-                 ),
-               ],
-             ),
-           );
-         }
-
-         return Container(
-           padding: EdgeInsets.symmetric(
-               horizontal: 16.w
-           ),
-           decoration: BoxDecoration(
-               color: ColorPath.athensGrey2,
-               borderRadius: BorderRadius.all(Radius.circular(8.r))
-           ),
-           child: Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
-             mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               Text(
-                 '5th in Kosofe',
-                 style: Theme.of(context)
-                     .textTheme
-                     .bodySmall
-                     ?.copyWith(
-                     fontWeight: FontWeight.w400,
-                     color: ColorPath.troutGrey
-                 ),
-               ),
-               SizedBox(height: 2.h,),
-               FittedBox(
-                 child: Text(
-                   "+${Utilities.abbreviateAmount(
-                     value: 123000
-                   )} Tickets Sold Today",
-                   style: Theme.of(context)
-                       .textTheme
-                       .bodyMedium
-                       ?.copyWith(
-                       fontWeight: FontWeight.w800,
-                       color: ColorPath.charcoalBlack
-                   ),
-                 ),
-               ),
-             ],
-           ),
-         );
-        });
   }
 
   games(BuildContext context){
@@ -447,6 +273,244 @@ class _HomeState extends ConsumerState<Home> {
         )
       ],
     );
+  }
+
+  salesStats(BuildContext context){
+    final salesVm = ref.watch(salesStatViewModel);
+
+    if(salesVm.state == ViewState.busy){
+      return Column(
+        children: [
+          Shimmer.fromColors(
+            baseColor: ColorPath.silverGrey.withCustomOpacity(0.1),
+            highlightColor: ColorPath.athensGrey2,
+            child: Container(
+              height: 130.h,
+              width: double.infinity,
+              color: Theme.of(context).colorScheme.brandColor2,
+
+            ),
+          ),
+          SizedBox(height: 20.h,),
+          GridView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: 4,
+              gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 8.h,
+                crossAxisSpacing: 8.w,
+                mainAxisExtent: 60.h,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return Shimmer.fromColors(
+                  baseColor: ColorPath.silverGrey.withCustomOpacity(0.1),
+                  highlightColor: ColorPath.athensGrey2,
+                  child: Container(
+                    width: double.infinity,
+                    color: Theme.of(context).colorScheme.brandColor2,
+
+                  ),
+                );
+              })
+        ],
+      );
+    }
+
+    if(salesVm.state == ViewState.retrieved){
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BalanceSummaryCard(
+            label: 'Total Sales',
+            balance: 405674,
+            amountAdded: 2500,
+            duration: '6',
+          ),
+          SizedBox(height: 16.h,),
+          GridView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: 4,
+              gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 8.h,
+                crossAxisSpacing: 8.w,
+                mainAxisExtent: 60.h,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                if(index == 0){
+                  return Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16.w
+                    ),
+                    decoration: BoxDecoration(
+                        color: ColorPath.hummingBirdBlue,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Total Ticket Sold',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: ColorPath.troutGrey
+                          ),
+                        ),
+                        SizedBox(height: 2.h,),
+                        FittedBox(
+                          child: Text(
+                            Utilities.formatAmount(
+                                amount: 1200,
+                                addDecimal: false
+                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: ColorPath.curiousBlue
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                if(index == 1){
+                  return Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16.w
+                    ),
+                    decoration: BoxDecoration(
+                        color: ColorPath.foamGreen,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Commission Balance',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: ColorPath.troutGrey
+                          ),
+                        ),
+                        SizedBox(height: 2.h,),
+                        NairaDisplay(
+                          amount: 4536,
+                          fontSize: 14.sp,
+                          color:ColorPath.hazeGreen,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                if(index == 2){
+                  return Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16.w
+                    ),
+                    decoration: BoxDecoration(
+                        color: ColorPath.beeBrown,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Bonus Income',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: ColorPath.troutGrey
+                          ),
+                        ),
+                        SizedBox(height: 2.h,),
+                        NairaDisplay(
+                          amount: 4536,
+                          fontSize: 14.sp,
+                          color:ColorPath.piperBrown,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                return Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 16.w
+                  ),
+                  decoration: BoxDecoration(
+                      color: ColorPath.athensGrey2,
+                      borderRadius: BorderRadius.all(Radius.circular(8.r))
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '5th in Kosofe',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: ColorPath.troutGrey
+                        ),
+                      ),
+                      SizedBox(height: 2.h,),
+                      FittedBox(
+                        child: Text(
+                          "+${Utilities.abbreviateAmount(
+                              value: 123000
+                          )} Tickets Sold Today",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                              fontWeight: FontWeight.w800,
+                              color: ColorPath.charcoalBlack
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              })
+        ],
+      );
+    }
+
+    if(salesVm.state == ViewState.error){
+      return Center(
+        child: ErrorState(
+          message: salesVm.message,
+          onPressed: ()=>salesVm.fetchSalesStat(),
+        ),
+      );
+    }
+
+    return const SizedBox.shrink();
+
   }
 
   showTransactionPinPrompt(){

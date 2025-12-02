@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:winit_agent/core/data/models/data/account_closure_data.dart';
 import 'package:winit_agent/core/data/models/data/information_data.dart';
+import 'package:winit_agent/core/data/models/sales_stat.dart';
 import 'package:winit_agent/core/data/models/user.dart';
 
 import '../../../constants/api_routes.dart';
@@ -14,6 +15,24 @@ import '../../models/bank_account.dart';
 import '../../network_manager/network_manager.dart';
 
 class ProfileDataProvider{
+
+  //fetch dashboard stats
+  Future<ApiResponse<SalesStat>> fetchSalesStat() async {
+    var completer = Completer<ApiResponse<SalesStat>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.get, ApiRoutes.fetchDashboardStats,
+      );
+      var result = ApiResponse<SalesStat>.fromJson(
+        response,
+            (data) => SalesStat.fromJson(data as Map<String, dynamic>),
+      );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
 
   //update avatar
   Future<ApiResponse<User>> updateAvatar({required Map<String, dynamic> details}) async {
