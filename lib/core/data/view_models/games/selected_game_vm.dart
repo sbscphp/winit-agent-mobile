@@ -28,8 +28,22 @@ class SelectedGameVm extends BaseState{
   //selected ticket
   Ticket? selectedTicket;
 
+  //game end date
   DateTime? _gameEndDate;
   DateTime get gameEndDate => _gameEndDate ?? DateTime.now();
+
+  //total price
+  double _amount = 0;
+  double get amount => _amount;
+
+  //quantity
+  int _quantity = 1;
+  int get quantity => _quantity;
+  set quantity(int val){
+    _quantity = val;
+  }
+
+
 
   bool _mainDrawEnded = false;
   bool get mainDrawEnded => _mainDrawEnded;
@@ -38,7 +52,7 @@ class SelectedGameVm extends BaseState{
     notifyListeners();
   }
 
-  String get name => game?.name ?? 'N/A';
+  String get name => game?.categoryName ?? 'N/A';
   String get gameId => game?.uuid ?? '';
   bool get hasEarlyBirdDraw => game?.prizes?.earlyDraw != null;
   Draw get mainDraw => game?.prizes?.mainDraw ?? Draw();
@@ -157,8 +171,13 @@ class SelectedGameVm extends BaseState{
     }
   }
 
+  initPriceAndQuantity(){
+    _quantity = selectedTicket?.number ?? 1;
+    _amount = double.tryParse(selectedTicket?.discountPrice?.toString() ?? '0') ?? 0;
+  }
+
   //calculates price based on quantity selected by user
-  double calculatePrice({required int quantity}){
+  calculatePrice(){
 
     double price = 0;
 
@@ -168,22 +187,22 @@ class SelectedGameVm extends BaseState{
     //check discount type
     if(discountType.toLowerCase() == 'straight_line' || discountType.isEmpty){
       double value = double.tryParse(game?.discount?.value?.toString() ?? '0') ?? 0;
-      price = _returnNewAmount(
+      _amount = _returnNewAmount(
           value: value,
-          quantity: quantity,
+          quantity: _quantity,
            unitPrice: unitPrice
       );
     }
     else if(discountType.toLowerCase() == 'band'){
       final selectedTier = _returnSelectedTier(quantity: quantity);
-      price = _returnNewAmount(
+      _amount = _returnNewAmount(
           value:double.tryParse(selectedTier?.value?.toString() ?? '0') ?? 0,
-          quantity: quantity,
+          quantity: _quantity,
           unitPrice: unitPrice
       );
     }
 
-    return price;
+    notifyListeners();
   }
 
   //returns the tier whose min–max range includes the given quantity.

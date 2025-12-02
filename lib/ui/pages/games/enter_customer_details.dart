@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/enum/otp_type.dart';
+import 'package:winit_agent/core/data/view_models/games/selected_game_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/core/utilities/validator.dart';
 import 'package:winit_agent/ui/pages/games/select_payment_method.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
+import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/constants/named_routes.dart';
 import '../../../core/utilities/input_formatters/nigerian_phone_number_formatter.dart';
+import '../../../core/utilities/utilities.dart';
 import '../../widgets/alert_dialogs/base_dialog.dart';
 import '../../widgets/alert_dialogs/otp_dialog.dart';
 import '../../widgets/bottom_sheets/base_bottom_sheet.dart';
@@ -22,24 +26,34 @@ import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_check_box.dart';
 import '../../widgets/custom_radio_button.dart';
+import '../../widgets/games/game_appbar_title.dart';
 import '../../widgets/games/game_purchase_dock.dart';
 import '../../widgets/games/game_purchase_header.dart';
 import '../../widgets/naira_display.dart';
 import '../../widgets/text_fields/onboarding_text_field.dart';
 import '../../widgets/winit_container.dart';
 
-class EnterCustomerDetails extends StatefulWidget {
+class EnterCustomerDetails extends ConsumerStatefulWidget {
   const EnterCustomerDetails({super.key});
 
   @override
-  State<EnterCustomerDetails> createState() => _EnterCustomerDetailsState();
+  ConsumerState<EnterCustomerDetails> createState() => _EnterCustomerDetailsState();
 }
 
-class _EnterCustomerDetailsState extends State<EnterCustomerDetails> with TickerProviderStateMixin{
+class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> with TickerProviderStateMixin{
 
   late TabController _controller;
 
+  bool _is18 = false;
+
+  final _formKey = GlobalKey<FormState>();
   final _dob = TextEditingController();
+  final _firstname = TextEditingController();
+  final _lastname = TextEditingController();
+  final _phone = TextEditingController();
+  final _email = TextEditingController();
+  final _confirmEmail = TextEditingController();
+
 
   @override
   void initState() {
@@ -53,32 +67,13 @@ class _EnterCustomerDetailsState extends State<EnterCustomerDetails> with Ticker
 
   @override
   Widget build(BuildContext context) {
+    final vm = ref.watch(selectedGameViewModel);
     return Scaffold(
       appBar: customAppBar(
         context: context,
         centerTitle: false,
         useCustomTitleWidget: true,
-        titleWidget: RichText(
-          text: TextSpan(
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w700,
-              color:  ColorPath.turquoiseGreen,
-            ),
-            children: [
-              TextSpan(
-                text: 'Buy Ticket: ',
-              ),
-              TextSpan(
-                text: 'Mega Raffle',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white
-                ),
-              ),
-
-            ],
-          ),
-        ),
+        titleWidget: GameAppbarTitle(),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,7 +131,7 @@ class _EnterCustomerDetailsState extends State<EnterCustomerDetails> with Ticker
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     NairaDisplay(
-                                      amount: 5000,
+                                      amount: vm.amount,
                                       addDecimal: false,
                                       fontSize: 14.sp,
                                       color:ColorPath.blueBlue,
@@ -144,7 +139,10 @@ class _EnterCustomerDetailsState extends State<EnterCustomerDetails> with Ticker
                                     ),
                                     SizedBox(height: 2.h,),
                                     Text(
-                                      '10 Tickets',
+                                      '${Utilities.formatAmount(
+                                        amount: vm.quantity.toDouble(),
+                                        addDecimal: false
+                                      )} ${vm.quantity > 1 ? 'Tickets':'Ticket'}',
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                           fontWeight: FontWeight.w400,
                                           color: Theme.of(context).colorScheme.textPrimary
@@ -212,26 +210,47 @@ class _EnterCustomerDetailsState extends State<EnterCustomerDetails> with Ticker
           GamePurchaseDock(
               onPressed: (){
 
-                if(1 + 1 == 2){
-                  baseDialog(
-                    context: context,
-                    content: OtpDialog(
-                      title: 'Enter OTP from Customer to Validate and Purchase Ticket',
-                      identifier: 'dejbaba@gmail.com',
-                      otpType: OtpType.createAccount, //todo: update
-                      onDone: (value){
-                        if(value){
+                if(_controller.index == 0){
 
-                        }
-                      },
-                    ),
-                  );
-                  return;
+                  //new customer
+                  final validate = _formKey.currentState!.validate();
+                  if(validate){
+                    if(_dob.text.isEmpty){
+                      showFlushBar(
+                          context: context,
+                          message: 'Kindly enter your date of birth to proceed',
+                        success: false
+                      );
+                      return;
+                    }
+                    if(!_is18){
+                      showFlushBar(
+                          context: context,
+                          message: 'Kindly ensure and confirm that customer is 18 years of age and over',
+                        success: false
+                      );
+                      return;
+                    }
+
+                    //todo: request otp for new customer
+                    if(1 + 1 == 2){
+                      baseDialog(
+                        context: context,
+                        content: OtpDialog(
+                          title: 'Enter OTP from Customer to Validate and Purchase Ticket',
+                          identifier: 'dejbaba@gmail.com',
+                          otpType: OtpType.createAccount, //todo: update
+                          onDone: (value){
+                            if(value){
+                                pushNavigation(context: context, widget: const SelectPaymentMethod(), routeName: NamedRoutes.selectPaymentMethod);
+                            }
+                          },
+                        ),
+                      );
+                      return;
+                    }
+                  }
                 }
-
-
-
-                pushNavigation(context: context, widget: const SelectPaymentMethod(), routeName: NamedRoutes.selectPaymentMethod);
               }
           )
         ],
@@ -269,116 +288,118 @@ class _EnterCustomerDetailsState extends State<EnterCustomerDetails> with Ticker
         horizontal: AppDimension.paddingLeft
       ),
       child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            OnboardingTextField(
-              label: 'First Name',
-              hintText: 'Enter First Name',
-              //controller: _loginChoice,
-              validator: FieldValidator.validate,
-              keyboardType: TextInputType.text,
-            ),
-            SizedBox(height: 24.h,),
-            OnboardingTextField(
-              label: 'Last Name',
-              hintText: 'Enter Last Name',
-              //controller: _loginChoice,
-              validator: FieldValidator.validate,
-              keyboardType: TextInputType.text,
-            ),
-            SizedBox(height: 24.h,),
-            Clickable(
-              onPressed: (){
-                baseBottomSheet(
-                    context: context,
-                    content: BirthdaySelectorView(
-                        initialDate: DateFormat("dd-MM-yyyy").tryParse(_dob.text),
-                        returningValue: (value){
-                          setState(() {
-                            //set birthdate text controller
-                            _dob.text = value;
-                          });
-                        })
-                );
-              },
-              child: OnboardingTextField(
-                enabled: false,
-                label: 'Date of Birth',
-                hintText: 'DD/MM/YYYY',
-                //controller: _loginChoice,
-                //validator: EmailValidator.validateEmail,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              OnboardingTextField(
+                label: 'First Name',
+                hintText: 'Enter First Name',
+                controller: _firstname,
+                validator: FieldValidator.validate,
                 keyboardType: TextInputType.text,
               ),
-            ),
-            SizedBox(height: 24.h,),
-            OnboardingTextField(
-              label: 'Phone Number',
-              hintText: 'Enter Phone Number',
-              //controller: _loginChoice,
-              validator: FieldValidator.validate,
-              enabled: false,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(18),
-                NigerianPhoneNumberFormatter()
-              ],
-            ),
-            SizedBox(height: 24.h,),
-            OnboardingTextField(
-              label: 'Email Address',
-              hintText: 'Enter email',
-              //controller: _loginChoice,
-              validator: EmailValidator.validateEmail,
-              keyboardType: TextInputType.emailAddress,
-            ),
-            SizedBox(height: 24.h,),
-            OnboardingTextField(
-              label: 'Confirm Email Address ',
-              hintText: 'confirm email',
-              //controller: _loginChoice,
-              validator: EmailValidator.validateEmail,
-              keyboardType: TextInputType.emailAddress,
-            ),
-            SizedBox(height: 24.h,),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomCheckBox(
-                    height: 24,
-                    width: 24,
-                    onchanged: (value){
-
-                    }
+              SizedBox(height: 24.h,),
+              OnboardingTextField(
+                label: 'Last Name',
+                hintText: 'Enter Last Name',
+                controller: _lastname,
+                validator: FieldValidator.validate,
+                keyboardType: TextInputType.text,
+              ),
+              SizedBox(height: 24.h,),
+              Clickable(
+                onPressed: (){
+                  baseBottomSheet(
+                      context: context,
+                      content: BirthdaySelectorView(
+                          initialDate: DateFormat("dd-MM-yyyy").tryParse(_dob.text),
+                          returningValue: (value){
+                            setState(() {
+                              //set birthdate text controller
+                              _dob.text = value;
+                            });
+                          })
+                  );
+                },
+                child: OnboardingTextField(
+                  enabled: false,
+                  label: 'Date of Birth',
+                  hintText: 'DD/MM/YYYY',
+                  //controller: _loginChoice,
+                  //validator: EmailValidator.validateEmail,
+                  keyboardType: TextInputType.text,
                 ),
-                SizedBox(width: 10.w,),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Customer is 18 and Over',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).colorScheme.textPrimary
-                        ),
-                      ),
-                      SizedBox(height: 2.h,),
-                      Text(
-                        'Customer verifies and validates that they are 18 years of age and over',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: Theme.of(context).colorScheme.textSecondary
-                        ),
-                      ),
-                    ],
+              ),
+              SizedBox(height: 24.h,),
+              OnboardingTextField(
+                label: 'Phone Number',
+                hintText: 'Enter Phone Number',
+                controller: _phone,
+                validator: FieldValidator.validate,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(18),
+                  NigerianPhoneNumberFormatter()
+                ],
+              ),
+              SizedBox(height: 24.h,),
+              OnboardingTextField(
+                label: 'Email Address',
+                hintText: 'Enter email',
+                controller: _email,
+                validator: EmailValidator.validateEmail,
+                keyboardType: TextInputType.emailAddress,
+              ),
+              SizedBox(height: 24.h,),
+              OnboardingTextField(
+                label: 'Confirm Email Address ',
+                hintText: 'confirm email',
+                controller: _confirmEmail,
+                validator: (value) => FieldValidator.compareAndConfirm(value, source: _email.text, errorMessage: 'Your emails don’t match.'),
+                keyboardType: TextInputType.emailAddress,
+              ),
+              SizedBox(height: 24.h,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomCheckBox(
+                      height: 24,
+                      width: 24,
+                      onchanged: (value){
+                        _is18 = value;
+                      }
                   ),
-                ),
-              ],
-            )
+                  SizedBox(width: 10.w,),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Customer is 18 and Over',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).colorScheme.textPrimary
+                          ),
+                        ),
+                        SizedBox(height: 2.h,),
+                        Text(
+                          'Customer verifies and validates that they are 18 years of age and over',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).colorScheme.textSecondary
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
 
-        
-          ],
+
+            ],
+          ),
         ),
       ),
     );

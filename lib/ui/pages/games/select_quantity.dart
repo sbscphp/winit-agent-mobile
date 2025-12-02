@@ -6,6 +6,7 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/view_models/games/selected_game_vm.dart';
 import 'package:winit_agent/ui/pages/games/enter_customer_details.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
+import 'package:winit_agent/ui/widgets/games/game_appbar_title.dart';
 import 'package:winit_agent/ui/widgets/games/game_purchase_dock.dart';
 import 'package:winit_agent/ui/widgets/games/game_purchase_header.dart';
 import '../../../core/constants/app_dimension.dart';
@@ -28,16 +29,17 @@ class SelectQuantity extends ConsumerStatefulWidget {
 class _SelectQuantityState extends ConsumerState<SelectQuantity> {
 
   bool val = false;
-  late int quantity;
-  late double amount;
+  // late int quantity;
+  // late double amount;
   //double referralAmountApplied = 0;
   //bool referralApplied = false;
 
   @override
   void initState() {
     final vm = ref.read(selectedGameViewModel);
-    quantity = vm.selectedTicket?.number ?? 1;
-    amount = double.tryParse(vm.selectedTicket?.discountPrice?.toString() ?? '0') ?? 0;
+    vm.initPriceAndQuantity();
+    // quantity = vm.selectedTicket?.number ?? 1;
+    // amount = double.tryParse(vm.selectedTicket?.discountPrice?.toString() ?? '0') ?? 0;
     //ref.read(paymentViewModel).reset();
     super.initState();
   }
@@ -50,27 +52,7 @@ class _SelectQuantityState extends ConsumerState<SelectQuantity> {
         context: context,
         centerTitle: false,
         useCustomTitleWidget: true,
-        titleWidget: RichText(
-          text: TextSpan(
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w700,
-              color:  ColorPath.turquoiseGreen,
-            ),
-            children: [
-              TextSpan(
-                text: 'Buy Ticket: ',
-              ),
-              TextSpan(
-                text: 'Mega Raffle',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white
-                ),
-              ),
-
-            ],
-          ),
-        ),
+        titleWidget: GameAppbarTitle(),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,13 +74,15 @@ class _SelectQuantityState extends ConsumerState<SelectQuantity> {
                   ),
                   SizedBox(height: 32.h,),
                   QuantityCounter(
-                      value: quantity,
+                      value: vm.quantity,
                       upperLimit: vm.maxCount,
                       onChanged: (value){
-                        setState(() {
-                          quantity = value ?? 1;
-                          amount = vm.calculatePrice(quantity: quantity);
-                        });
+                        // setState(() {
+                        //   vm.quantity = value ?? 1;
+                        //   vm.calculatePrice();
+                        // });
+                        vm.quantity = value ?? 1;
+                        vm.calculatePrice();
                       }
                   ),
                   SizedBox(height: 16.h,),
@@ -118,7 +102,7 @@ class _SelectQuantityState extends ConsumerState<SelectQuantity> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 36.w),
                       child: NairaDisplay(
-                        amount: amount,
+                        amount: vm.amount,
                         addDecimal: false,
                         fontSize: 36.sp,
                         color:Theme.of(context).colorScheme.textPrimary,

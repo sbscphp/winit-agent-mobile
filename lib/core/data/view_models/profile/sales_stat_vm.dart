@@ -22,12 +22,12 @@ class SalesStatVm extends BaseState{
   
   //values
   double get totalSales => double.tryParse(salesStat?.totalSales?.toString() ?? '0') ?? 0;
-  double get amountAdded => double.tryParse(salesStat?.commissionsLastPeriodValue?.toString() ?? '0') ?? 0; //todo: ask juwon
+  double get amountAdded => double.tryParse(salesStat?.ticketsLastPeriodSoldValue?.toString() ?? '0') ?? 0;
   String get period => salesStat?.period?.toString() ?? '0';
   double get totalTicketSold => double.tryParse(salesStat?.totalTicketsSoldQuantity?.toString() ?? '0') ?? 0;
-  double get bonusBalance => double.tryParse(salesStat?.commissionsValue?.toString() ?? '0') ?? 0; //todo: ask juwon
+  double get bonusBalance => double.tryParse(salesStat?.bonusValue?.toString() ?? '0') ?? 0;
   double get commissionsBalance => double.tryParse(salesStat?.commissionsValue?.toString() ?? '0') ?? 0;
-  double get ticketsSoldToday => double.tryParse(salesStat?.ticketsLastPeriodQuantity?.toString() ?? '0') ?? 0; //todo: ask juwon
+  double get ticketsSoldToday => double.tryParse(salesStat?.rankValue?.toString() ?? '0') ?? 0;
   int get position => int.tryParse(salesStat?.rankPosition?.toString() ?? '1') ?? 1;
 
 

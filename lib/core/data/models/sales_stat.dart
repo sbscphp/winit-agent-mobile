@@ -5,12 +5,14 @@ class SalesStat {
   final dynamic ticketsLastPeriodSoldValue;
   final dynamic ticketsLastPeriodQuantity;
   final dynamic commissionsValue;
+  final dynamic bonusValue;
   final dynamic commissionsPaidValue;
   final dynamic commissionsUnpaidValue;
   final dynamic commissionsLastPeriodValue;
   final dynamic commissionsLastPeriodPaidValue;
   final dynamic commissionsLastPeriodUnpaidValue;
   final dynamic rankPosition;
+  final dynamic rankValue;
   final dynamic totalAgentsInRank;
   final String? rankBy;
 
@@ -21,12 +23,14 @@ class SalesStat {
     this.ticketsLastPeriodSoldValue,
     this.ticketsLastPeriodQuantity,
     this.commissionsValue,
+    this.bonusValue,
     this.commissionsPaidValue,
     this.commissionsUnpaidValue,
     this.commissionsLastPeriodValue,
     this.commissionsLastPeriodPaidValue,
     this.commissionsLastPeriodUnpaidValue,
     this.rankPosition,
+    this.rankValue,
     this.totalAgentsInRank,
     this.rankBy,
   });
@@ -38,6 +42,7 @@ class SalesStat {
     ticketsLastPeriodSoldValue: json["tickets_last_period_sold_value"],
     ticketsLastPeriodQuantity: json["tickets_last_period_quantity"],
     commissionsValue: json["commissions_value"],
+    bonusValue: json["bonus_value"],
     commissionsPaidValue: json["commissions_paid_value"],
     commissionsUnpaidValue: json["commissions_unpaid_value"],
     commissionsLastPeriodValue: json["commissions_last_period_value"],
@@ -46,6 +51,7 @@ class SalesStat {
     rankPosition: json["rank_position"],
     totalAgentsInRank: json["total_agents_in_rank"],
     rankBy: json["rank_by"],
+    rankValue: json["rank_value"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -63,5 +69,6 @@ class SalesStat {
     "rank_position": rankPosition,
     "total_agents_in_rank": totalAgentsInRank,
     "rank_by": rankBy,
+    "rank_value": rankValue,
   };
 }

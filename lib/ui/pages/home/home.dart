@@ -435,7 +435,7 @@ class _HomeState extends ConsumerState<Home> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Bonus Income',
+                          'Performance Commission',
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall
