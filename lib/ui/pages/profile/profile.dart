@@ -22,7 +22,6 @@ import 'package:winit_agent/ui/widgets/winit_container.dart';
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/data/enum/view_state.dart';
-import '../../widgets/alert_dialogs/action_completed.dart';
 import '../../widgets/alert_dialogs/action_confirmation.dart';
 import '../../widgets/alert_dialogs/base_dialog.dart';
 import '../../widgets/alert_dialogs/enter_transaction_pin.dart';
