@@ -71,11 +71,13 @@ class ApiRoutes {
   static var resetTransactionPin =
       "${dotenv.env['AGENT']}/settings/forgot-transaction-pin/update-pin";
 
-  //account closure
+  //account closure/deletion
   static var checkClosureStatus =
       "${dotenv.env['AGENT']}/settings/closure/account/closure-status";
   static var closeAccount =
       "${dotenv.env['AGENT']}/settings/closure/account/close";
+  static var deleteAccount =
+      "${dotenv.env['AGENT']}/settings/delete-account";
 
 
 

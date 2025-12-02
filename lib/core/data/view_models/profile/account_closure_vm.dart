@@ -60,6 +60,26 @@ class AccountClosureVm extends BaseState{
     });
   }
 
+  //delete account
+  deleteAccount({required String pin}) async {
+
+    setSecondState(ViewState.busy);
+
+    final details = {
+      "pin": pin
+    };
+
+    await _profileDp
+        .deleteAccount(details: details)
+        .then((response) {
+      _message = response.message ?? defaultSuccessMessage;
+      setSecondState(ViewState.retrieved);
+    }).catchError((e) {
+      _message = Utilities.formatMessage(e.toString(), isSuccess: false);
+      setSecondState(ViewState.error);
+    });
+  }
+
 
 
 

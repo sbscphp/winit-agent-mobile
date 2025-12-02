@@ -202,4 +202,23 @@ class ProfileDataProvider{
     }
     return completer.future;
   }
+
+  //delete account
+  Future<ApiResponse> deleteAccount({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.delete, ApiRoutes.deleteAccount,
+          useAuth: true,
+          body: jsonEncode(details)
+      );
+      var result = ApiResponse.fromJson(
+          response,
+          null);
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
 }

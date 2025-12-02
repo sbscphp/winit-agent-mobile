@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/view_models/authentication/logout_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/account_closure_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/transaction_pin_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/authentication/login.dart';
 import 'package:winit_agent/ui/pages/profile/account_closure/account_closure.dart';
@@ -20,8 +22,11 @@ import 'package:winit_agent/ui/widgets/winit_container.dart';
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/data/enum/view_state.dart';
+import '../../widgets/alert_dialogs/action_completed.dart';
 import '../../widgets/alert_dialogs/action_confirmation.dart';
 import '../../widgets/alert_dialogs/base_dialog.dart';
+import '../../widgets/alert_dialogs/enter_transaction_pin.dart';
+import '../../widgets/cross_fade_widget.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_painter/dotted_border.dart';
 import '../../widgets/profile/profile_image.dart';
@@ -34,11 +39,15 @@ class Profile extends ConsumerStatefulWidget {
 }
 
 class _ProfileState extends ConsumerState<Profile> {
+
+  final switchNotifier = ValueNotifier(false);
+
   @override
   Widget build(BuildContext context) {
     final logoutVm = ref.watch(logoutViewModel);
+    final accountClosureVm = ref.watch(accountClosureViewModel);
     return BusyOverlay(
-      show: logoutVm.state == ViewState.busy,
+      show: logoutVm.state == ViewState.busy || accountClosureVm.secondState == ViewState.busy,
       child: Scaffold(
         appBar: customAppBar(
           context: context,
@@ -157,7 +166,48 @@ class _ProfileState extends ConsumerState<Profile> {
               ),
               SizedBox(height: 24.h,),
               Clickable(
-                onPressed: (){},
+                onPressed: (){
+                  controllableBaseDialog(
+                    context: context,
+                    onClosed: () {
+                      switchNotifier.value = false;
+                    },
+                    builder: (context, setDismissible) {
+                      return CrossFadeWidget(
+                          switchNotifier: switchNotifier,
+                          firstChild: ActionConfirmation(
+                            popInternally: false,
+                            title: 'Delete Account?',
+                            subtitle:
+                            'Are you sure you want to delete your account?',
+                            buttonText: 'Yes, Delete',
+                            onPressed: () => switchNotifier.value = true,
+                          ),
+                          secondChild: EnterTransactionPin(
+                            visitingRoute: NamedRoutes.bottomNav,
+                            buttonText: 'Delete Account',
+                            onDone: (success) async{
+                              // setDismissible(true);
+
+                              await accountClosureVm.deleteAccount(
+                                  pin: ref.read(transactionPinViewModel).currentPin ?? ''
+                              );
+
+                              showFlushBar(
+                                  context: context,
+                                  message: accountClosureVm.message,
+                                  success: accountClosureVm.secondState == ViewState.retrieved,
+                              );
+                            },
+                            onLoading: (loading) {
+                              setDismissible(!loading);
+                            },
+                          )
+                      );
+
+                    },
+                  );
+                },
                 child: CustomPaint(
                   painter: DottedBorder(
                       color: ColorPath.ribbonRed,
