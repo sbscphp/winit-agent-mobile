@@ -6,16 +6,20 @@ import 'package:intl/intl.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/enum/otp_type.dart';
+import 'package:winit_agent/core/data/view_models/authentication/otp_vm.dart';
+import 'package:winit_agent/core/data/view_models/games/customer_details_vm.dart';
 import 'package:winit_agent/core/data/view_models/games/selected_game_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/core/utilities/validator.dart';
 import 'package:winit_agent/ui/pages/games/select_payment_method.dart';
+import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/constants/named_routes.dart';
+import '../../../core/data/enum/view_state.dart';
 import '../../../core/utilities/input_formatters/nigerian_phone_number_formatter.dart';
 import '../../../core/utilities/utilities.dart';
 import '../../widgets/alert_dialogs/base_dialog.dart';
@@ -67,193 +71,244 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
 
   @override
   Widget build(BuildContext context) {
-    final vm = ref.watch(selectedGameViewModel);
-    return Scaffold(
-      appBar: customAppBar(
-        context: context,
-        centerTitle: false,
-        useCustomTitleWidget: true,
-        titleWidget: GameAppbarTitle(),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Expanded(
-          //   child: SingleChildScrollView(
-          //     padding: EdgeInsets.symmetric(
-          //         horizontal: AppDimension.paddingLeft,
-          //         vertical: 14.h
-          //     ),
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //       ],
-          //     ),
-          //   ),
-          // ),
-        Expanded(
-          child: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: AppDimension.paddingLeft,
-                      right: AppDimension.paddingRight,
-                      top:AppDimension.paddingTop,
-                      bottom: 16.h
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GamePurchaseHeader(
-                          title: 'Enter Customer Details',
-                          subtitle: 'Enter only valid customer information',
-                          stepValue: 2,
-                        ),
-                        SizedBox(height: 16.h,),
-                        Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 12.h,
-                            horizontal: 16.w
+    final vm = ref.read(selectedGameViewModel);
+    final otpVm = ref.watch(otpViewModel);
+    final customerDetailsVm = ref.watch(customerDetailsViewModel);
+    return BusyOverlay(
+      show: otpVm.state == ViewState.busy || customerDetailsVm.state == ViewState.busy,
+      child: Scaffold(
+        appBar: customAppBar(
+          context: context,
+          centerTitle: false,
+          useCustomTitleWidget: true,
+          titleWidget: GameAppbarTitle(),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+          Expanded(
+            child: NestedScrollView(
+              headerSliverBuilder: (context, innerBoxIsScrolled) {
+                return [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: AppDimension.paddingLeft,
+                        right: AppDimension.paddingRight,
+                        top:AppDimension.paddingTop,
+                        bottom: 16.h
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GamePurchaseHeader(
+                            title: 'Enter Customer Details',
+                            subtitle: 'Enter only valid customer information',
+                            stepValue: 2,
                           ),
-                          decoration: BoxDecoration(
-                            color: ColorPath.titanPurple,
-                            borderRadius: BorderRadius.all(Radius.circular(12.r))
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    NairaDisplay(
-                                      amount: vm.amount,
-                                      addDecimal: false,
-                                      fontSize: 14.sp,
-                                      color:ColorPath.blueBlue,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    SizedBox(height: 2.h,),
-                                    Text(
-                                      '${Utilities.formatAmount(
-                                        amount: vm.quantity.toDouble(),
-                                        addDecimal: false
-                                      )} ${vm.quantity > 1 ? 'Tickets':'Ticket'}',
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                          fontWeight: FontWeight.w400,
-                                          color: Theme.of(context).colorScheme.textPrimary
-                                      ),
-                                    ),
-
-
-                                  ],
-                                ),
-                              ),
-                              Clickable(
-                                onPressed: (){
-                                  popNavigation(context: context);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 8.h,
-                                    horizontal: 16.w
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: ColorPath.pigPink,
-                                    borderRadius: BorderRadius.all(Radius.circular(10000.r))
-                                  ),
-                                  child: Row(
+                          SizedBox(height: 16.h,),
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 12.h,
+                              horizontal: 16.w
+                            ),
+                            decoration: BoxDecoration(
+                              color: ColorPath.titanPurple,
+                              borderRadius: BorderRadius.all(Radius.circular(12.r))
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
+                                      NairaDisplay(
+                                        amount: vm.amount,
+                                        addDecimal: false,
+                                        fontSize: 14.sp,
+                                        color:ColorPath.blueBlue,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                      SizedBox(height: 2.h,),
                                       Text(
-                                        'Edit Purchase',
+                                        '${Utilities.formatAmount(
+                                          amount: vm.quantity.toDouble(),
+                                          addDecimal: false
+                                        )} ${vm.quantity > 1 ? 'Tickets':'Ticket'}',
                                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            color: ColorPath.ribbonRed
+                                            fontWeight: FontWeight.w400,
+                                            color: Theme.of(context).colorScheme.textPrimary
                                         ),
                                       ),
-                                      SizedBox(width: 8.w,),
-                                      CustomAssetViewer(asset: AppAsset.edit, height: 16.h, width: 16.w,)
+
 
                                     ],
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                                Clickable(
+                                  onPressed: (){
+                                    popNavigation(context: context);
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 8.h,
+                                      horizontal: 16.w
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: ColorPath.pigPink,
+                                      borderRadius: BorderRadius.all(Radius.circular(10000.r))
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'Edit Purchase',
+                                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                              fontWeight: FontWeight.w600,
+                                              color: ColorPath.ribbonRed
+                                          ),
+                                        ),
+                                        SizedBox(width: 8.w,),
+                                        CustomAssetViewer(asset: AppAsset.edit, height: 16.h, width: 16.w,)
+
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: _SliverAppBarDelegate(
-                    tabBar(),
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: _SliverAppBarDelegate(
+                      tabBar(),
+                    ),
                   ),
-                ),
-              ];
-            },
-            body: TabBarView(
-              controller: _controller,
-              children: [
-                newCustomer(),
-                returningCustomer(),
-              ],
+                ];
+              },
+              body: TabBarView(
+                controller: _controller,
+                children: [
+                  newCustomer(),
+                  returningCustomer(),
+                ],
+              ),
             ),
           ),
-        ),
-          SizedBox(height: 20.h,),
-          GamePurchaseDock(
-              onPressed: (){
+            SizedBox(height: 20.h,),
+            GamePurchaseDock(
+                onPressed: ()async{
 
-                if(_controller.index == 0){
+                  if(_controller.index == 0){
 
-                  //new customer
-                  final validate = _formKey.currentState!.validate();
-                  if(validate){
-                    if(_dob.text.isEmpty){
-                      showFlushBar(
-                          context: context,
-                          message: 'Kindly enter your date of birth to proceed',
-                        success: false
-                      );
-                      return;
-                    }
-                    if(!_is18){
-                      showFlushBar(
-                          context: context,
-                          message: 'Kindly ensure and confirm that customer is 18 years of age and over',
-                        success: false
-                      );
-                      return;
-                    }
+                    //new customer
+                    final validate = _formKey.currentState!.validate();
+                    if(validate){
+                      if(_dob.text.isEmpty){
+                        showFlushBar(
+                            context: context,
+                            message: 'Kindly enter your date of birth to proceed',
+                          success: false
+                        );
+                        return;
+                      }
+                      if(!_is18){
+                        showFlushBar(
+                            context: context,
+                            message: 'Kindly ensure and confirm that customer is 18 years of age and over',
+                          success: false
+                        );
+                        return;
+                      }
+                      if(_email.text.trim() != _confirmEmail.text.trim()){
+                        showFlushBar(
+                            context: context,
+                            message: "Your emails don't match",
+                            success: false
+                        );
+                        return;
+                      }
 
-                    //todo: request otp for new customer
-                    if(1 + 1 == 2){
-                      baseDialog(
-                        context: context,
-                        content: OtpDialog(
-                          title: 'Enter OTP from Customer to Validate and Purchase Ticket',
-                          identifier: 'dejbaba@gmail.com',
-                          otpType: OtpType.createAccount, //todo: update
-                          onDone: (value){
-                            if(value){
-                                pushNavigation(context: context, widget: const SelectPaymentMethod(), routeName: NamedRoutes.selectPaymentMethod);
-                            }
+                      final cleanedPhone = Utilities.cleanPhoneNumber(phoneNumber: _phone.text);
+
+                      await otpVm.sendOtp(
+                          otpType: OtpType.createCustomer,
+                          payload: {
+                            "phone_number": cleanedPhone
                           },
-                        ),
                       );
-                      return;
+
+                      if(otpVm.state == ViewState.retrieved){
+
+                        controllableBaseDialog(
+                          context: context,
+                          onClosed: () {
+                          },
+                          builder: (context, setDismissible) {
+                            return OtpDialog(
+                              title: 'Enter OTP from Customer to Validate and Purchase Ticket',
+                              subtitle: 'We sent a 6 digit OTP to customer phone Number ${Utilities.maskCharacters(
+                                subject: Utilities.formatSavedUserPhoneNumber(phoneNumber: cleanedPhone),
+                                startIndex: 4,
+                              )}, associated with WinIT. Kindly enter your OTP Below. ',
+                              identifier: cleanedPhone,
+                              otpType: OtpType.createCustomer,
+                              onDone: (value)async{
+                                if(value){
+
+                                  //create customer
+                                  await customerDetailsVm.createCustomer(
+                                      firstname: _firstname.text,
+                                      lastname: _lastname.text,
+                                      dob: _dob.text,
+                                      phone: cleanedPhone,
+                                      email: _email.text
+                                  );
+
+                                  if(customerDetailsVm.state == ViewState.retrieved){
+                                    pushNavigation(context: context, widget: const SelectPaymentMethod(), routeName: NamedRoutes.selectPaymentMethod);
+                                  }
+
+                                  showFlushBar(
+                                      context: context,
+                                      message: customerDetailsVm.message,
+                                      success: customerDetailsVm.state == ViewState.retrieved
+                                  );
+
+                                }
+                              },
+                              onLoading: (loading) {
+                                setDismissible(!loading);
+                              },
+                            );
+
+                          },
+                        );
+                      }else{
+                        showFlushBar(
+                            context: context,
+                            message: otpVm.message,
+                          success: false
+                        );
+                      }
+
+
+
+
+
+
                     }
                   }
                 }
-              }
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -327,7 +382,7 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
                   enabled: false,
                   label: 'Date of Birth',
                   hintText: 'DD/MM/YYYY',
-                  //controller: _loginChoice,
+                  controller: _dob,
                   //validator: EmailValidator.validateEmail,
                   keyboardType: TextInputType.text,
                 ),
@@ -349,7 +404,8 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
                 label: 'Email Address',
                 hintText: 'Enter email',
                 controller: _email,
-                validator: EmailValidator.validateEmail,
+                isCompulsory: false,
+                //validator: EmailValidator.validateEmail,
                 keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 24.h,),
@@ -357,7 +413,8 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
                 label: 'Confirm Email Address ',
                 hintText: 'confirm email',
                 controller: _confirmEmail,
-                validator: (value) => FieldValidator.compareAndConfirm(value, source: _email.text, errorMessage: 'Your emails don’t match.'),
+                isCompulsory: false,
+                //validator: (value) => FieldValidator.compareAndConfirm(value, source: _email.text, errorMessage: 'Your emails don’t match.'),
                 keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 24.h,),

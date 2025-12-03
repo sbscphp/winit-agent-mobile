@@ -130,19 +130,31 @@ class Utilities {
   }
 
   //mask characters in a string
-  static String maskCharacters(
-      {required String? subject,
-      required int startIndex,
-      required int endIndex}) {
-    if (subject != null) {
-      if (subject.isEmpty) {
-        return '********';
-      }
-      return subject.replaceRange(
-          startIndex, endIndex, "*" * (endIndex - startIndex));
+  static String maskCharacters({
+    required String? subject,
+    required int startIndex,
+    int? endIndex,
+  }) {
+    if (subject == null || subject.isEmpty) {
+      return '********';
     }
 
-    return '';
+    // If endIndex is null, mask up to the second-to-last character
+    final effectiveEndIndex = endIndex ?? (subject.length - 1);
+
+    // Safety check: ensure indices are within bounds
+    if (startIndex < 0 ||
+        effectiveEndIndex > subject.length ||
+        startIndex >= effectiveEndIndex) {
+      return subject; // return unchanged if invalid indices
+    }
+
+    // Replace the range with asterisks
+    return subject.replaceRange(
+      startIndex,
+      effectiveEndIndex,
+      "*" * (effectiveEndIndex - startIndex),
+    );
   }
 
   //returns user's initials

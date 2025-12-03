@@ -28,7 +28,8 @@ class OtpVm extends BaseState {
     required OtpType otpType,
     String type = 'phone',
     String identifier = '',
-    bool updateUi = true
+    bool updateUi = true,
+    Map<String, dynamic>? payload
   }) async {
 
    if(updateUi)setState(ViewState.busy);
@@ -41,7 +42,8 @@ class OtpVm extends BaseState {
        "username": identifier
      };
 
-   }else{
+   }
+   else{
 
      details = {
        "type": type, //email, phone
@@ -56,7 +58,7 @@ class OtpVm extends BaseState {
 
 
     await _otpDataProvider
-        .sendOtp(otpType: otpType, details: details)
+        .sendOtp(otpType: otpType, details: payload ?? details)
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
       otpData = response.data;
@@ -71,7 +73,8 @@ class OtpVm extends BaseState {
   resendOtp({
     required OtpType otpType,
     String type = 'phone',
-    String identifier = ''
+    String identifier = '',
+    Map<String, dynamic>? payload
   }) async {
 
     setSecondState(ViewState.busy);
@@ -100,7 +103,7 @@ class OtpVm extends BaseState {
 
 
     await _otpDataProvider
-        .resendOtp(otpType: otpType, details: details)
+        .resendOtp(otpType: otpType, details: payload ?? details)
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
       otpData = response.data;
@@ -116,7 +119,8 @@ class OtpVm extends BaseState {
     required OtpType otpType,
     String type = 'phone',
     String identifier = '',
-    required String otp
+    required String otp,
+    Map<String, dynamic>? payload
   }) async {
 
     setThirdState(ViewState.busy);
@@ -129,7 +133,8 @@ class OtpVm extends BaseState {
         "code": otp
       };
 
-    }else{
+    }
+    else{
 
       details = {
         "otp": otp
@@ -145,7 +150,7 @@ class OtpVm extends BaseState {
 
 
     await _otpDataProvider
-        .verifyOtp(otpType: otpType, details: details, userId: otpData?.userId)
+        .verifyOtp(otpType: otpType, details: payload ?? details, userId: otpData?.userId)
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
       otpData = response.data;

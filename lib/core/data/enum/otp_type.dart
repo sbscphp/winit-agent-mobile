@@ -1,7 +1,8 @@
 enum OtpType {
   forgotPassword,
-  verifyPhone,
-  verifyEmail,
+  // verifyPhone, //not used
+  // verifyEmail, //not used
   createAccount,
-  forgotTransactionPin
+  forgotTransactionPin,
+  createCustomer
 }

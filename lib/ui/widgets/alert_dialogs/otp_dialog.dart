@@ -23,8 +23,9 @@ class OtpDialog extends ConsumerStatefulWidget {
   final ValueChanged<bool>? onLoading;
   final String identifier;
   final String? title;
+  final String? subtitle;
   final OtpType otpType;
-  const OtpDialog({super.key, required this.otpType, this.title, this.onLoading, required this.onDone, required this.identifier});
+  const OtpDialog({super.key, required this.otpType, this.title, this.subtitle, this.onLoading, required this.onDone, required this.identifier});
 
   @override
   ConsumerState<OtpDialog> createState() => _OtpDialogState();
@@ -79,7 +80,7 @@ class _OtpDialogState extends ConsumerState<OtpDialog> {
               ),
               SizedBox(height: 16.h,),
               Text(
-                'We sent a 6 digit OTP to your email  ${Utilities.maskEmail(email: widget.identifier)}, associated with WinIT. Kindly enter your OTP Below. ',
+                widget.subtitle ?? 'We sent a 6 digit OTP to your email  ${Utilities.maskEmail(email: widget.identifier)}, associated with WinIT. Kindly enter your OTP Below. ',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w400,
                     color: Theme.of(context).colorScheme.textSecondary
@@ -91,7 +92,7 @@ class _OtpDialogState extends ConsumerState<OtpDialog> {
                 isOtp: true,
                 keyboardType: TextInputType.number,
                 controller: _otp,
-                validator: FieldValidator.validate,
+                  validator: (value) => FieldValidator.validateLength(value, requiredLength: 6, errorMessage: 'Otp must be 6 digits.'),
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(6),
                   FilteringTextInputFormatter.digitsOnly,
@@ -146,7 +147,9 @@ class _OtpDialogState extends ConsumerState<OtpDialog> {
 
                             await vm.resendOtp(
                                 otpType: widget.otpType,
-                                type: 'email'
+                                type: 'email',
+                                payload: widget.otpType == OtpType.createCustomer
+                                  ? {"phone_number": widget.identifier}:null
                             );
 
                             //disable dialog dismissible property
@@ -195,7 +198,12 @@ class _OtpDialogState extends ConsumerState<OtpDialog> {
                       //validate pin
                       await vm.verifyOtp(
                           otp: _otp.text,
-                          otpType: widget.otpType
+                          otpType: widget.otpType,
+                          payload: widget.otpType == OtpType.createCustomer
+                      ?    {
+                            "phone_number": widget.identifier,
+                            "otp": _otp.text
+                          }:null
                       );
 
                       //enable dialog dismissible property

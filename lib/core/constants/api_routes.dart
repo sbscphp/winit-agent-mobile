@@ -39,6 +39,10 @@ class ApiRoutes {
       "${dotenv.env['AUTH']}/forgot-password/resend-code";
   static verifyForgotPasswordOtp({required String? userId}) =>
       "${dotenv.env['AUTH']}/forgot-password/confirm-code/$userId";
+  static var sendCreateCustomerOtp =
+      "${dotenv.env['AGENT']}/customer/send-otp-phone";
+  static var verifyCreateCustomerOtp =
+      "${dotenv.env['AGENT']}/customer/confirm-otp-phone";
   static var login =
       "${dotenv.env['AUTH']}/login";
   static createPassword({required String? userId}) =>
@@ -50,12 +54,6 @@ class ApiRoutes {
   //home/dashboard
   static var fetchDashboardStats =
       "${dotenv.env['AGENT']}/dashboard/sales-stats";
-
-
-
-  
-
-
 
 
 
@@ -92,6 +90,8 @@ class ApiRoutes {
       filterParams == null
           ?"${dotenv.env['AGENT']}/game/all-games?limit=$paginationLimit&paginate=1&page=$pageNumber"
           :"${dotenv.env['AGENT']}/game/all-games?limit=$paginationLimit&paginate=1&page=$pageNumber&$filterParams";
+  static var createCustomer =
+      "${dotenv.env['AGENT']}/customer/create";
 
 
 

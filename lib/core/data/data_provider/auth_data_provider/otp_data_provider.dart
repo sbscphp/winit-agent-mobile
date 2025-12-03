@@ -27,6 +27,10 @@ class OtpDataProvider{
         //send otp for forgot password
         apiRoute = ApiRoutes.sendForgotPasswordOtp;
       }
+      if(otpType == OtpType.createCustomer){
+        //send otp for create customer
+        apiRoute = ApiRoutes.sendCreateCustomerOtp;
+      }
 
       Map<String, dynamic> response = await NetworkManager()
           .networkRequestManager(RequestType.post, apiRoute,
@@ -63,6 +67,10 @@ class OtpDataProvider{
         //resend otp for forgot password
         apiRoute = ApiRoutes.resendForgotPasswordOtp;
       }
+      if(otpType == OtpType.createCustomer){
+        //resend otp for create customer
+        apiRoute = ApiRoutes.sendCreateCustomerOtp;
+      }
 
       Map<String, dynamic> response = await NetworkManager()
           .networkRequestManager(RequestType.post, apiRoute,
@@ -97,6 +105,10 @@ class OtpDataProvider{
       if(otpType == OtpType.forgotPassword){
         //verify otp for forgot password
         apiRoute = ApiRoutes.verifyForgotPasswordOtp(userId: userId);
+      }
+      if(otpType == OtpType.createCustomer){
+        //verify otp for create customer
+        apiRoute = ApiRoutes.verifyCreateCustomerOtp;
       }
 
 
@@ -151,8 +163,6 @@ class OtpDataProvider{
   isOtpUseAuth({required OtpType otpType}) {
     switch (otpType) {
       case OtpType.forgotPassword:
-      case OtpType.verifyEmail:
-      case OtpType.verifyPhone:
       case OtpType.createAccount:
         return false;
       default:

@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import '../../constants/api_routes.dart';
 import '../../utilities/utilities.dart';
 import '../enum/request_type.dart';
 import '../models/api_response.dart';
 import '../models/data/pagination_data.dart';
 import '../models/game.dart';
+import '../models/user.dart';
 import '../network_manager/network_manager.dart';
 
 
@@ -24,6 +26,26 @@ class GameDataProvider{
           data as Map<String, dynamic>,
               (gameJson) => Game.fromJson(gameJson),
         ),
+      );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
+  //create customer
+  Future<ApiResponse<User>> createCustomer({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse<User>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.post, ApiRoutes.createCustomer,
+          useAuth: true,
+        body: jsonEncode(details)
+      );
+      var result = ApiResponse<User>.fromJson(
+        response,
+            (data) => User.fromJson(data as Map<String, dynamic>),
       );
       completer.complete(result);
     } catch (e) {
