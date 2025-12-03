@@ -54,6 +54,28 @@ class GameDataProvider{
     return completer.future;
   }
 
+  //search customer
+  Future<ApiResponse<List<User>>> searchCustomer({required String? phone}) async {
+    var completer = Completer<ApiResponse<List<User>>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.get, ApiRoutes.searchCustomers(phone: phone),
+      );
+      var result = ApiResponse<List<User>>.fromJson(
+        response,
+            (data) => (data as List<dynamic>)
+            .map((e) => User.fromJson(
+          e as Map<String, dynamic>,
+        ))
+            .toList(),
+      );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
 
 
 

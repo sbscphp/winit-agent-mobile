@@ -19,8 +19,20 @@ class CustomerDetailsVm extends BaseState{
   String _message = '';
   String get message => _message;
 
-  //created user
-  User? createdUser;
+  //created customer
+  User? createdCustomer;
+
+  //search results
+  List<User> _customers = [];
+  List<User> get customers => _customers;
+
+  //selected customer
+  User? _selectedCustomer;
+  User? get selectedCustomer => _selectedCustomer;
+  set selectedCustomer(User? val){
+    _selectedCustomer = val;
+    notifyListeners();
+  }
 
   //create customer
   createCustomer({
@@ -45,7 +57,23 @@ class CustomerDetailsVm extends BaseState{
     };
     await _gameDp.createCustomer(details: details).then((response) async{
       _message = response.message ?? defaultSuccessMessage;
-      createdUser = response.data;
+      createdCustomer = response.data;
+      setState(ViewState.retrieved);
+    }).catchError((e) {
+      _message = Utilities.formatMessage(e.toString(), isSuccess: false);
+      setState(ViewState.error);
+    });
+  }
+
+  //search customer
+  searchCustomer({
+    required String phone,
+  })async{
+    _selectedCustomer = null;
+    setState(ViewState.busy);
+    await _gameDp.searchCustomer(phone: Utilities.cleanPhoneNumber(phoneNumber: phone)).then((response) async{
+      _message = response.message ?? defaultSuccessMessage;
+      _customers = response.data ?? [];
       setState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);
@@ -57,6 +85,6 @@ class CustomerDetailsVm extends BaseState{
 
 }
 
-final customerDetailsViewModel = ChangeNotifierProvider<CustomerDetailsVm>((ref){
+final customerDetailsViewModel = ChangeNotifierProvider.autoDispose<CustomerDetailsVm>((ref){
   return CustomerDetailsVm();
 });

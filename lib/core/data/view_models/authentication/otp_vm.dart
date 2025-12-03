@@ -22,6 +22,8 @@ class OtpVm extends BaseState {
   OtpData? otpData;
 
   DateTime get endTime => DateTime.now().add(Duration(minutes: int.tryParse(otpData?.minutes ?? '5') ?? 5));
+  bool get isReturningUser => otpData?.returningUser ?? false;
+  String get returningUserPhone => Utilities.formatSavedUserPhoneNumber(phoneNumber: otpData?.phoneNumber ?? '');
 
   //send otp based on OtpType
   sendOtp({

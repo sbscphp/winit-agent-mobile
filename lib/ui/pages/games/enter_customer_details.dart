@@ -50,6 +50,7 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
 
   bool _is18 = false;
 
+  //new customer
   final _formKey = GlobalKey<FormState>();
   final _dob = TextEditingController();
   final _firstname = TextEditingController();
@@ -57,6 +58,11 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
   final _phone = TextEditingController();
   final _email = TextEditingController();
   final _confirmEmail = TextEditingController();
+
+  //returning customer
+  final _formKey2 = GlobalKey<FormState>();
+  final _search = TextEditingController();
+
 
 
   @override
@@ -196,7 +202,7 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
                 controller: _controller,
                 children: [
                   newCustomer(),
-                  returningCustomer(),
+                  returningCustomer(customerDetailsVm),
                 ],
               ),
             ),
@@ -245,6 +251,22 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
                       );
 
                       if(otpVm.state == ViewState.retrieved){
+
+
+                        if(otpVm.isReturningUser){
+                          //init text controller for search field
+                          _search.text = otpVm.returningUserPhone;
+                          //move to 2nd tab
+                          _controller.animateTo(1);
+
+                          showFlushBar(
+                              context: context,
+                              message: otpVm.message,
+                              success: false
+                          );
+
+                          return;
+                        }
 
                         controllableBaseDialog(
                           context: context,
@@ -304,6 +326,22 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
 
 
                     }
+                  }
+                  else{
+                    //returning customer
+
+                    //check if a customer has been selected
+                    if(customerDetailsVm.selectedCustomer == null){
+                      showFlushBar(
+                          context: context,
+                          message: 'Kindly search and select a customer to proceed',
+                        success: false
+                      );
+                      return;
+                    }
+
+                    pushNavigation(context: context, widget: const SelectPaymentMethod(), routeName: NamedRoutes.selectPaymentMethod);
+
                   }
                 }
             )
@@ -462,106 +500,139 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
     );
   }
 
-  returningCustomer(){
+  returningCustomer(CustomerDetailsVm vm){
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(
           vertical: 24.h,
           horizontal: AppDimension.paddingLeft
       ),
       child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            OnboardingTextField(
-              label: 'Customer ID/Phone Number',
-              hintText: 'Enter Customer ID/Phone Number',
-              //controller: _loginChoice,
-              validator: FieldValidator.validate,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(18),
-                NigerianPhoneNumberFormatter()
-              ],
-            ),
-            SizedBox(height: 16.h,),
-            Align(
-              alignment: Alignment.centerRight,
-              child: CustomButton(
-                buttonWidth: null,
-                  buttonText: 'Search Customer',
-                  onPressed: () {
-                    //pushNavigation(context: context, widget: const BottomNav(), routeName: NamedRoutes.bottomNav);
-                  }
-              ),
-            ),
-            SizedBox(height: 24.h,),
-            Text(
-              'Customer Found ',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: Theme.of(context).colorScheme.textPrimary
-              ),
-            ),
-            SizedBox(height: 16.h,),
-            WinitContainer(
-              bgColor: ColorPath.magnoliaPurple,
-              border: Border.all(color: ColorPath.meirosePurple, width: 1.w),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomRadioButton(disableClick: true, value: true,),
-                        SizedBox(width: 8.w,),
-                        Container(
-                          height: 32.h,
-                            width: 32.w,
-                            decoration: BoxDecoration(
-                              color: ColorPath.periwinklePurple,
-                              borderRadius: BorderRadius.all(Radius.circular(8.r))
-                            ),
-                            child: Center(child: CustomAssetViewer(asset: AppAsset.avatar3, height: 16.h, width: 16.w,))),
-                        SizedBox(width: 8.w,),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '08028424699',
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    color: Theme.of(context).colorScheme.textPrimary
-                                ),
-                              ),
-                              SizedBox(height: 2.h,),
-                              FittedBox(
-                                child: Text(
-                                  'Salisu Funke Olajide',
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      color: Theme.of(context).colorScheme.textSecondary
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+        child: Form(
+          key: _formKey2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              OnboardingTextField(
+                label: 'Customer ID/Phone Number',
+                hintText: 'Enter Customer ID/Phone Number',
+                controller: _search,
+                validator: FieldValidator.validate,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(18),
+                  NigerianPhoneNumberFormatter()
                 ],
               ),
-            )
+              SizedBox(height: 16.h,),
+              Align(
+                alignment: Alignment.centerRight,
+                child: CustomButton(
+                  buttonWidth: null,
+                    buttonText: 'Search Customer',
+                    onPressed: () async{
+                      final validate = _formKey2.currentState!.validate();
+                      if(validate){
+                        await vm.searchCustomer(phone: _search.text);
+                        showFlushBar(
+                            context: context,
+                            message: vm.message,
+                          success: vm.state == ViewState.retrieved
+                        );
+                      }
+                    }
+                ),
+              ),
+              if(vm.customers.isNotEmpty) SizedBox(height: 24.h,),
+              if(vm.customers.isNotEmpty)Text(
+                vm.customers.length > 1 ? 'Customers Found':'Customer Found',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).colorScheme.textPrimary
+                ),
+              ),
+              if(vm.customers.isNotEmpty) SizedBox(height: 16.h,),
+              if(vm.customers.isNotEmpty)ListView.separated(
+                itemCount: vm.customers.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemBuilder: (BuildContext context, int index) {
+                  final customer = vm.customers[index];
+                  final phone = customer.phoneNumber ?? 'N/A';
+                  final firstname = customer.firstname ?? 'N/A';
+                  final lastname = customer.lastname ?? 'N/A';
+                  final isSelected = customer.uuid == vm.selectedCustomer?.uuid;
+                  return Clickable(
+                    onPressed: (){
+                      vm.selectedCustomer = customer;
+                    },
+                    child: WinitContainer(
+                      bgColor: ColorPath.magnoliaPurple,
+                      border: Border.all(color: ColorPath.meirosePurple, width: 1.w),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomRadioButton(disableClick: true, value: isSelected,),
+                                SizedBox(width: 8.w,),
+                                Container(
+                                    height: 32.h,
+                                    width: 32.w,
+                                    decoration: BoxDecoration(
+                                        color: ColorPath.periwinklePurple,
+                                        borderRadius: BorderRadius.all(Radius.circular(8.r))
+                                    ),
+                                    child: Center(child: CustomAssetViewer(asset: AppAsset.avatar3, height: 16.h, width: 16.w,))),
+                                SizedBox(width: 8.w,),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        phone,
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            color: Theme.of(context).colorScheme.textPrimary
+                                        ),
+                                      ),
+                                      SizedBox(height: 2.h,),
+                                      FittedBox(
+                                        child: Text(
+                                          '$firstname $lastname',
+                                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              fontWeight: FontWeight.w400,
+                                              color: Theme.of(context).colorScheme.textSecondary
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return SizedBox(height: 16.h,);
+                },
+              )
 
 
 
 
 
 
-          ],
+
+            ],
+          ),
         ),
       ),
     );

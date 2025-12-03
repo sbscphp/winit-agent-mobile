@@ -20,7 +20,9 @@ import '../../../core/data/view_models/bottom_nav_view_model.dart';
 import '../../../core/utilities/utilities.dart';
 import '../../widgets/alert_dialogs/action_completed.dart';
 import '../../widgets/alert_dialogs/base_dialog.dart';
+import '../../widgets/alert_dialogs/transaction_receipt.dart';
 import '../../widgets/balance_summary_card.dart';
+import '../../widgets/clickable.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/list_header.dart';
@@ -241,16 +243,30 @@ class _HomeState extends ConsumerState<Home> {
                 );
               }
               return ListView.separated(
-                itemCount: 5,
+                itemCount: filterTransactionsVm.purchaseTransactions.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
                 itemBuilder: (BuildContext context, int index) {
-                  return TransactionItem(
-                      label: 'Purchased of 15 Ticket Unit',
-                      date: DateTime.now(),
-                      amount: 2500,
-                      status: 'successful'
+                  final transaction = filterTransactionsVm.purchaseTransactions[index];
+                  final desc = transaction.description ?? 'N/A';
+                  final date = transaction.createdAt ?? DateTime.now();
+                  final amount = double.tryParse(transaction.amount?.toString() ?? '0') ?? 0;
+                  final status = transaction.status ?? '';
+
+                  return Clickable(
+                    onPressed: (){
+                      baseDialog(
+                        context: context,
+                        content: TransactionReceipt(transaction: transaction,),
+                      );
+                    },
+                    child: TransactionItem(
+                        label: desc,
+                        date: date,
+                        amount: amount,
+                        status: status
+                    ),
                   );
                 },
                 separatorBuilder: (context, index) {

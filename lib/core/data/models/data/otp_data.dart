@@ -2,8 +2,10 @@ class OtpData {
   final String? masked;
   final String? userId;
   final String? identifier;
+  final bool? returningUser;
   final String? minutes;
   final String? temporaryId;
+  final String? phoneNumber;
   final bool? isVerified;
   final dynamic registrationStep;
 
@@ -13,6 +15,8 @@ class OtpData {
     this.userId,
     this.minutes,
     this.temporaryId,
+    this.returningUser,
+    this.phoneNumber,
     this.isVerified,
     this.registrationStep
   });
@@ -24,6 +28,8 @@ class OtpData {
     minutes: json["minutes"],
     temporaryId: json["temporary_id"],
     isVerified: json["is_verified"],
+      returningUser: json["returning_user"],
+      phoneNumber: json["phone_number"],
     registrationStep: json["registration_step"]
   );
 
@@ -32,6 +38,8 @@ class OtpData {
     "user_id": userId,
     "identifier": identifier,
     "minutes": minutes,
+    "returning_user": returningUser,
+    "phone_number": phoneNumber,
     "temporary_id": temporaryId,
     "is_verified": isVerified,
     "registration_step": registrationStep

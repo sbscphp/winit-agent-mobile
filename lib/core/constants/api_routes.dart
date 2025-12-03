@@ -92,6 +92,8 @@ class ApiRoutes {
           :"${dotenv.env['AGENT']}/game/all-games?limit=$paginationLimit&paginate=1&page=$pageNumber&$filterParams";
   static var createCustomer =
       "${dotenv.env['AGENT']}/customer/create";
+  static searchCustomers({required String? phone}) =>
+      "${dotenv.env['AGENT']}/customer/search?phone=$phone";
 
 
 
