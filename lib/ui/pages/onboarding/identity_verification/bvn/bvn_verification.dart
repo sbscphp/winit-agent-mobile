@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/view_models/onboarding/identity_verification_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/onboarding/identity_verification/identity_verification_result.dart';
 import 'package:winit_agent/ui/pages/onboarding/identity_verification/identity_verification_summary.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
@@ -97,7 +98,7 @@ class _BvnVerificationState extends ConsumerState<BvnVerification> {
                         await vm.bvnVerification(bvn: _bvn.text);
 
                         if(vm.secondState == ViewState.retrieved){
-                          pushNavigation(context: context, widget: const IdentityVerificationSummary(), routeName: NamedRoutes.identityVerificationSummary);
+                          pushNavigation(context: context, widget: const IdentityVerificationResult(), routeName: NamedRoutes.identityVerificationResult);
                         }
 
                         showFlushBar(

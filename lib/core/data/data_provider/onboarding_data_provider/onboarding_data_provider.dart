@@ -52,14 +52,14 @@ class OnboardingDataProvider{
   }
 
   //bvn verification
-  Future<ApiResponse<BvnData>> bvnVerification({required Map<String, dynamic> details}) async {
-    var completer = Completer<ApiResponse<BvnData>>();
+  Future<ApiResponse<IdentityResultData>> bvnVerification({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse<IdentityResultData>>();
     try {
       Map<String, dynamic> response = await NetworkManager()
           .networkRequestManager(RequestType.post, ApiRoutes.bvnVerification,
           body: jsonEncode(details)
       );
-      var result = ApiResponse<BvnData>.fromJson(
+      var result = ApiResponse<IdentityResultData>.fromJson(
           response,
           null);
       completer.complete(result);

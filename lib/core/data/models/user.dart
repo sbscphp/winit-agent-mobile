@@ -8,6 +8,7 @@ class User {
   final dynamic firstname;
   final dynamic lastname;
   final dynamic dateOfBirth;
+  final dynamic birthdate;
   final dynamic gender;
   final dynamic address;
   final dynamic landmark;
@@ -37,6 +38,7 @@ class User {
     this.firstname,
     this.lastname,
     this.dateOfBirth,
+    this.birthdate,
     this.gender,
     this.address,
     this.landmark,
@@ -67,6 +69,7 @@ class User {
     firstname: json["firstname"],
     lastname: json["lastname"],
     dateOfBirth: json["date_of_birth"],
+    birthdate: json["birthdate"],
     gender: json["gender"],
     address: json["address"],
     landmark: json["landmark"],
@@ -97,6 +100,7 @@ class User {
     "firstname": firstname,
     "lastname": lastname,
     "date_of_birth": dateOfBirth,
+    "birthdate": birthdate,
     "gender": gender,
     "address": address,
     "landmark": landmark,

@@ -116,7 +116,7 @@ class _IdentityDetailsState extends State<IdentityDetails> {
                 'Gender',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w400,
-                    color: widget.genderColor ?? ColorPath.charcoalBlack
+                    color: ColorPath.charcoalBlack
                 ),
               ),
               SizedBox(width: 10.w,),
@@ -124,7 +124,7 @@ class _IdentityDetailsState extends State<IdentityDetails> {
                 widget.gender,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: ColorPath.charcoalBlack
+                    color: widget.genderColor ?? ColorPath.charcoalBlack
                 ),
               ),
 

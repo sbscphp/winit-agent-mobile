@@ -21,7 +21,26 @@ class IdentityVerificationVm extends BaseState{
   bool get isBvnVerified => _isBvnVerified;
 
   //bvn data
-  BvnData? bvnData;
+  IdentityResultData? _identityResultData;
+
+  String get bvnFirstname => _identityResultData?.returnedData?.firstname ?? 'N/A';
+  String get bvnLastname => _identityResultData?.returnedData?.lastname ?? 'N/A';
+  String get bvnPhone => Utilities.formatSavedUserPhoneNumber(phoneNumber: _identityResultData?.returnedData?.phoneNumber ?? '');
+  String get bvnGender => _identityResultData?.returnedData?.gender ?? 'N/A';
+  String get bvnDob => _identityResultData?.returnedData?.birthdate ?? 'N/A';
+
+  bool get firstnameMatched => _identityResultData?.fieldMatches?.firstname ?? false;
+  bool get lastnameMatched => _identityResultData?.fieldMatches?.lastname ?? false;
+  bool get phoneMatched => _identityResultData?.fieldMatches?.phone ?? false;
+  bool get genderMatched => _identityResultData?.fieldMatches?.gender ?? false;
+  bool get dobMatched => _identityResultData?.fieldMatches?.birthdate ?? false;
+
+  //nin data
+  String get ninFirstname => _identityResultData?.ninDetails?.firstname ?? 'N/A';
+  String get ninLastname => _identityResultData?.ninDetails?.lastname ?? 'N/A';
+  String get ninPhone => Utilities.formatSavedUserPhoneNumber(phoneNumber: _identityResultData?.ninDetails?.phoneNumber ?? '');
+  String get ninGender => _identityResultData?.ninDetails?.gender ?? 'N/A';
+  String get ninDob => _identityResultData?.ninDetails?.birthdate ?? 'N/A';
 
 
 
@@ -58,8 +77,8 @@ class IdentityVerificationVm extends BaseState{
         .bvnVerification(details: details)
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
-      bvnData = response.data;
-      _isBvnVerified = bvnData?.isMatch ?? false;
+      _identityResultData = response.data;
+      _isBvnVerified = _identityResultData?.isMatch ?? false;
       setSecondState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);

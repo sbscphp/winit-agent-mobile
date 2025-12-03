@@ -162,7 +162,7 @@ class Utilities {
 
   //formats saved user login phone number
   static String formatSavedUserPhoneNumber({required String phoneNumber}) {
-    if (phoneNumber.isEmpty) return '';
+    if (phoneNumber.isEmpty) return 'N/A';
 
     // Remove the '+234' prefix if it exists
     if (phoneNumber.startsWith('+234')) {
