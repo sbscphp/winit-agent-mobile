@@ -118,6 +118,7 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                       label: 'Filter Transaction',
                       subtitle: 'Filter wallet transactions with ease',
                     options: transactionFiltersVm.transactionFilterOptions,
+                    initialValue: transactionFiltersVm.selectedFilter,
                     selectedOption: (value)async{
                       transactionFiltersVm.selectedFilter = value;
                       if(transactionFiltersVm.selectedFilter.toLowerCase() != 'show all'){
