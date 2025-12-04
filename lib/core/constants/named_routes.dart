@@ -70,6 +70,12 @@ class NamedRoutes {
 
 
 
+  //dialogs
+  static const pinDialog = '/pinDialog';
+
+
+
+
 
 
 }

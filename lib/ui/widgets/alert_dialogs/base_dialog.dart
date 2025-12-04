@@ -12,11 +12,13 @@ Future<void> baseDialog({
   required Widget content,
   bool isDismissible = true,
   VoidCallback? onClosed,
+  String? routeName
 }) async{
   await showGeneralDialog(
     context: context,
     barrierDismissible: isDismissible,
     barrierLabel: "BaseDialog",
+    routeSettings: RouteSettings(name: routeName),
     barrierColor: Colors.black.withCustomOpacity(0.32),
     transitionDuration: const Duration(milliseconds: 50),
     pageBuilder: (_, __, ___) {
@@ -57,11 +59,13 @@ Future<void> controllableBaseDialog({
   Widget Function(BuildContext, void Function(bool))? builder,
   bool isDismissible = true,
   VoidCallback? onClosed,
+  String? routeName
 }) async {
   final ValueNotifier<bool> dismissibleNotifier = ValueNotifier(isDismissible);
   await showGeneralDialog(
     context: context,
     barrierLabel: "BaseDialog",
+    routeSettings: RouteSettings(name: routeName),
     barrierColor: Colors.black.withCustomOpacity(0.32),
     transitionDuration: const Duration(milliseconds: 50),
     barrierDismissible: dismissibleNotifier.value,

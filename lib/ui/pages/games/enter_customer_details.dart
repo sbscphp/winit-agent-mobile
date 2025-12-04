@@ -532,6 +532,7 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
                     onPressed: () async{
                       final validate = _formKey2.currentState!.validate();
                       if(validate){
+                        Utilities.hideKeyboard(context);
                         await vm.searchCustomer(phone: _search.text);
                         showFlushBar(
                             context: context,

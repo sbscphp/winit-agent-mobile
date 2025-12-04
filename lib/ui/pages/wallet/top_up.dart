@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/data/models/payment_method.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/action_completed.dart';
 import 'package:winit_agent/ui/widgets/list_header.dart';
@@ -130,7 +131,7 @@ class _TopUpState extends State<TopUp> {
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext context, int index) {
-                          return PaymentMethodItem();
+                          return PaymentMethodItem(paymentMethod: PaymentMethod(),);
                         },
                         separatorBuilder: (context, index) {
                           return SizedBox(height: 24.h,);

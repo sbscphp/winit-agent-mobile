@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/data/enum/checkout_type.dart';
+import 'package:winit_agent/core/data/view_models/checkout/payment_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/games/ticket_sales_receipt.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/utilities/utilities.dart';
+import '../alert_dialogs/base_dialog.dart';
+import '../alert_dialogs/enter_transaction_pin.dart';
 import '../close_icon.dart';
 import '../custom_button.dart';
 import '../naira_display.dart';
 
-class PaymentBreakdown extends StatelessWidget {
+class PaymentBreakdown extends ConsumerWidget {
   const PaymentBreakdown({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final vm = ref.watch(paymentViewModel);
     return Padding(
       padding: EdgeInsets.only(
           top: 24.h,
@@ -57,7 +63,7 @@ class PaymentBreakdown extends StatelessWidget {
                 SizedBox(width: 10.w,),
                 Flexible(
                   child: Text(
-                    'Wallet',
+                    vm.checkoutType == CheckoutType.wallet ? 'Wallet':'Paystack',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: Theme.of(context).colorScheme.textPrimary
@@ -80,7 +86,10 @@ class PaymentBreakdown extends StatelessWidget {
                 SizedBox(width: 10.w,),
                 Flexible(
                   child: Text(
-                    '12',
+                    Utilities.formatAmount(
+                      amount: vm.quantity.toDouble(),
+                      addDecimal: false
+                    ),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: Theme.of(context).colorScheme.textPrimary
@@ -103,7 +112,7 @@ class PaymentBreakdown extends StatelessWidget {
                 SizedBox(width: 10.w,),
                 Flexible(
                   child:  NairaDisplay(
-                    amount: 22000,
+                    amount: vm.totalAmount,
                     fontSize: 14.sp,
                     color:Theme.of(context).colorScheme.textPrimary,
                     fontWeight: FontWeight.w700,
@@ -125,7 +134,7 @@ class PaymentBreakdown extends StatelessWidget {
                 SizedBox(width: 10.w,),
                 Flexible(
                   child:  NairaDisplay(
-                    amount: 22000,
+                    amount: vm.amountToPay,
                     fontSize: 16.sp,
                     color:ColorPath.blueBlue,
                     fontWeight: FontWeight.w800,
@@ -136,11 +145,42 @@ class PaymentBreakdown extends StatelessWidget {
             SizedBox(height: 40.h,),
             CustomButton(
                 buttonText: 'Pay ₦${Utilities.formatAmount(
-                  amount: 45000,
-                  addDecimal: false
+                    amount: vm.amountToPay,
+                    addDecimal: true
                 )}',
                 onPressed: () {
-                  replaceNavigation(context: context, widget: const TicketSalesReceipt(), routeName: NamedRoutes.ticketSalesReceipt);
+
+                  if(vm.checkoutType == CheckoutType.wallet){
+                    //purchase from account
+                    controllableBaseDialog(
+                      context: context,
+                      routeName: NamedRoutes.pinDialog,
+                      onClosed: () {
+                      },
+                      builder: (context, setDismissible) {
+                        return EnterTransactionPin(
+                          visitingRoute: NamedRoutes.pinDialog,
+                          subtitle: 'Enter your four (4) Digit Transaction pin to complete this transaction',
+                          buttonText: 'Complete Payment',
+                          onDone: (success) async{
+                            // setDismissible(true);
+
+
+                          },
+                          onLoading: (loading) {
+                            setDismissible(!loading);
+                          },
+                        );
+
+                      },
+                    );
+
+                  }else{
+
+                    //initiate paystack checkout
+                  }
+
+                  //replaceNavigation(context: context, widget: const TicketSalesReceipt(), routeName: NamedRoutes.ticketSalesReceipt);
                 }
             ),
 

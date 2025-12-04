@@ -15,6 +15,7 @@ import 'package:winit_agent/ui/pages/splash.dart';
 import 'package:winit_agent/router.dart' as router;
 
 import 'core/constants/app_constants.dart';
+import 'core/data/services/geolocator_service.dart';
 import 'core/data/view_models/utility/lga_details_vm.dart';
 
 void main() async{
@@ -53,8 +54,8 @@ class _MyAppState extends ConsumerState<MyApp> {
     //FirebaseMessagingUtils.requestPushNotificationPermission();
 
     //location permission
-    // final locationService = locator<GeoLocatorService>();
-    // locationService.requestPermission();
+    final locationService = locator<GeoLocatorService>();
+    locationService.requestPermission();
 
     super.initState();
   }

@@ -94,22 +94,14 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/customer/create";
   static searchCustomers({required String? phone}) =>
       "${dotenv.env['AGENT']}/customer/search?phone=$phone";
-
-
-
-
-  static fetchSingleGame({required String? gameId}) =>
-      "${dotenv.env['GUEST']}/game/$gameId";
-  static getTicketsByOrderId({required String? orderId}) =>
-      "${dotenv.env['GAMES']}/order/$orderId/tickets";
-  static fetchMyGames({required int? pageNumber}) =>
-      "${dotenv.env['GAMES']}/by_orders?page=$pageNumber";
-  static fetchGameTicketStatus({required String? id, required int? pageNumber}) =>
-      "${dotenv.env['GAMES']}/order/$id/ticket_status?page=$pageNumber";
-
   //payment
-  static var fetchPaymentBreakdown =
-      "${dotenv.env['GAMES']}/checkout/summary";
+  static var fetchPaymentSummary =
+      "${dotenv.env['AGENT']}/game/summary";
+  static var purchaseFromAccount =
+      "${dotenv.env['AGENT']}/games/purchase-with-account";
+
+
+
   static var initiateCheckout =
       "${dotenv.env['GAMES']}/checkout";
 

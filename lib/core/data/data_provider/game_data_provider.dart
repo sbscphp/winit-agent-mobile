@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:winit_agent/core/data/models/data/purchase_data.dart';
+import 'package:winit_agent/core/data/models/payment_summary.dart';
+
 import '../../constants/api_routes.dart';
 import '../../utilities/utilities.dart';
 import '../enum/request_type.dart';
@@ -76,13 +79,45 @@ class GameDataProvider{
     return completer.future;
   }
 
+  //fetch payment breakdown
+  Future<ApiResponse<PaymentSummary>> fetchPaymentSummary({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse<PaymentSummary>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.post, ApiRoutes.fetchPaymentSummary,
+          useAuth: true,
+          body: jsonEncode(details)
+      );
+      var result = ApiResponse<PaymentSummary>.fromJson(
+        response,
+            (data) => PaymentSummary.fromJson(data as Map<String, dynamic>),
+      );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
 
-
-
-
-
-
-
+  //purchase from account(wallet)
+  Future<ApiResponse<PurchaseData>> purchaseFromWallet({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse<PurchaseData>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.post, ApiRoutes.purchaseFromAccount,
+          useAuth: true,
+          body: jsonEncode(details)
+      );
+      var result = ApiResponse<PurchaseData>.fromJson(
+        response,
+            (data) => PurchaseData.fromJson(data as Map<String, dynamic>),
+      );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
 
 
 }
