@@ -7,8 +7,8 @@ class ApiRoutes {
   //onboarding
   static var register =
       "${dotenv.env['AUTH']}/signup";
-  static var completeNinLivenessCheck =
-      "${dotenv.env['AGENT']}/onboarding/nin-verify";
+  static var getNinValidity =
+      "${dotenv.env['AGENT']}/onboarding/nin-identity-verify";
   // static var bvnVerification =
   //     "${dotenv.env['AGENT']}/onboarding/bvn-verify";
   static var bvnVerification =

@@ -7,6 +7,7 @@ import 'package:winit_agent/core/data/models/data/bvn_data.dart';
 import 'package:winit_agent/core/data/models/data/login_data.dart';
 import 'package:winit_agent/core/data/network_manager/network_manager.dart';
 import '../../models/api_response.dart';
+import '../../models/user.dart';
 
 
 
@@ -34,16 +35,17 @@ class OnboardingDataProvider{
   }
 
   //Complete NIN liveness check
-  Future<ApiResponse> completeNinLiveness({required Map<String, dynamic> details}) async {
-    var completer = Completer<ApiResponse>();
+  Future<ApiResponse<User>> getNinValidity() async {
+    var completer = Completer<ApiResponse<User>>();
     try {
       Map<String, dynamic> response = await NetworkManager()
-          .networkRequestManager(RequestType.post, ApiRoutes.completeNinLivenessCheck,
-        body: jsonEncode(details)
+          .networkRequestManager(RequestType.get, ApiRoutes.getNinValidity,
+          useAuth: true,
       );
-      var result = ApiResponse.fromJson(
-          response,
-          null);
+      var result = ApiResponse<User>.fromJson(
+        response,
+            (data) => User.fromJson(data as Map<String, dynamic>),
+      );
       completer.complete(result);
     } catch (e) {
       completer.completeError(e);

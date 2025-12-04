@@ -42,7 +42,9 @@ class Landing extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomAssetViewer(asset: AppAsset.landingImage, height: 210.h, width: double.infinity,),
+                        SizedBox(
+                          width: double.infinity,
+                            child: CustomAssetViewer(asset: AppAsset.landingImage, height: 250.h, width: double.infinity,)),
                         SizedBox(height: 83.h,),
                         SizedBox(
                           height: 180.h,

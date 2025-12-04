@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_dimension.dart';
@@ -9,6 +10,7 @@ import 'package:winit_agent/ui/widgets/onboarding/identity_details.dart';
 import 'package:winit_agent/ui/widgets/onboarding/identity_verification_notes.dart';
 import 'package:winit_agent/ui/widgets/onboarding/identity_verification_title.dart';
 import '../../../../../core/constants/color_path.dart';
+import '../../../../../core/data/view_models/onboarding/identity_verification_vm.dart';
 import '../../../../widgets/custom_appbar.dart';
 import '../../../../widgets/custom_button.dart';
 
@@ -49,13 +51,18 @@ class _BvnRequirementState extends State<BvnRequirement> {
                           highlightedTextColor: ColorPath.piperBrown
                       ),
                       SizedBox(height: 24.h,),
-                      IdentityDetails(
-                          title: 'NIN Identity Validation Completed',
-                          subtitle: 'Personal information as retrieved \nfrom your NIN',
-                          fullName: 'Adekunle, Ibrahim Olamide',
-                          gender:  'Male',
-                          phone: '+234 90 4747 2791',
-                          dob: 'June 20, 2000'
+                      Consumer(
+                        builder: (context, ref, child){
+                          final vm = ref.read(identificationViewModel);
+                          return IdentityDetails(
+                              title: 'NIN Identity Validation Completed',
+                              subtitle: 'Personal information as retrieved \nfrom your NIN',
+                              fullName: '${vm.nFirstname} ${vm.nLastname}',
+                              gender:  vm.nGender,
+                              phone: vm.nPhone,
+                              dob: vm.nDob
+                          );
+                        },
                       ),
                       SizedBox(height: 24.h,),
                       IdentityVerificationNotes(

@@ -17,6 +17,8 @@ import '../../../../../core/constants/app_dimension.dart';
 import '../../../../../core/constants/color_path.dart';
 import '../../../../../core/data/enum/view_state.dart';
 import '../../../../../core/data/view_models/onboarding/identity_verification_vm.dart';
+import '../../../../widgets/alert_dialogs/base_dialog.dart';
+import '../../../../widgets/alert_dialogs/nin_liveliness_score.dart';
 import '../../../../widgets/custom_appbar.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/onboarding/identity_verification_notes.dart';
@@ -40,16 +42,30 @@ class _NinLivelinessCheckState extends ConsumerState<NinLivelinessCheck> {
 
   void _verificationResult({required IdentityVerificationVm vm}) async {
     Qoreidsdk.onResult((result) async {
-      print(result);
-      await vm.completeNinVerification(photo: samplePics);
+      await vm.getNinValidity();
       if(vm.state == ViewState.retrieved){
-        pushAndClearNavigation(context: context, widget: const BvnRequirement(), routeName: NamedRoutes.bvnRequirement, clearRoute: NamedRoutes.login,);
+        if(vm.ninVerificationPassed){
+          baseDialog(
+            isDismissible: false,
+            context: context,
+            content: NinLivelinessScore(),
+            onClosed: () {},
+          );
+        }
+        else{
+          showFlushBar(
+              context: context,
+              message: vm.message,
+              success: false
+          );
+        }
+      }else{
+        showFlushBar(
+            context: context,
+            message: vm.message,
+            success:false
+        );
       }
-      showFlushBar(
-        context: context,
-        message: vm.message,
-        success: vm.state == ViewState.retrieved
-      );
 
     });
   }
@@ -58,7 +74,7 @@ class _NinLivelinessCheckState extends ConsumerState<NinLivelinessCheck> {
     // Launch Qoreid app
     final profileVm = ref.read(profileViewModel);
     QoreidData data = QoreidData(
-        clientId: "${dotenv.env['CLIENT_ID']}", //required
+        clientId:"${dotenv.env['CLIENT_ID']}", //required
         flowId: 0,
         customerReference: profileVm.userId, //required
         productCode: "${dotenv.env['PRODUCT_CODE']}", //required required for collection

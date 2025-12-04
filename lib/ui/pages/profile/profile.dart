@@ -8,11 +8,13 @@ import 'package:winit_agent/core/data/view_models/profile/account_closure_vm.dar
 import 'package:winit_agent/core/data/view_models/profile/transaction_pin_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/authentication/login.dart';
+import 'package:winit_agent/ui/pages/onboarding/identity_verification/nin/nin_liveliness_check.dart';
 import 'package:winit_agent/ui/pages/profile/account_closure/account_closure.dart';
 import 'package:winit_agent/ui/pages/profile/agent_information/agent_information.dart';
 import 'package:winit_agent/ui/pages/profile/manage_bank_accounts/manage_bank_accounts.dart';
 import 'package:winit_agent/ui/pages/profile/referral_management/referral_management.dart';
 import 'package:winit_agent/ui/pages/profile/transaction_pin/transaction_pin.dart';
+import 'package:winit_agent/ui/widgets/alert_dialogs/nin_liveliness_score.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
@@ -118,7 +120,8 @@ class _ProfileState extends ConsumerState<Profile> {
                   asset:AppAsset.legal,
                   label:'Legal',
                   subtitle: 'Privacy Policy, Terms of Use, Cookies etc. ',
-                  onPressed: (){}
+                  onPressed: (){
+                  }
               ),
               SizedBox(height: 24.h,),
               ProfileOption(

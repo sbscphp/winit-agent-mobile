@@ -45,6 +45,7 @@ class ProfileVm extends BaseState{
   String get phone2 => Utilities.formatSavedUserPhoneNumber(phoneNumber: _user?.otherPhoneNumber ?? '');
   String get firstname => _user?.firstname ?? 'N/A';
   String get lastname => _user?.lastname ?? 'N/A';
+  String get gender => _user?.gender ?? 'N/A';
   String get email => _user?.email ?? '';
   String get email2 => _user?.otherEmail ?? '';
   String get userId => _user?.uuid ?? '';

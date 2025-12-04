@@ -4,6 +4,7 @@ class User {
   final String? uniqueID;
   final String? temporaryId;
   final String? phoneNumber;
+  String? phone;
   final dynamic avatar;
   final dynamic firstname;
   final dynamic lastname;
@@ -27,6 +28,9 @@ class User {
   final dynamic parentName;
   final List<String>? roles;
   final List<String>? permissions;
+  final String? matchStatus;
+  final dynamic matchPercentage;
+  final bool? passThreshold;
 
   User({
     this.uuid,
@@ -34,6 +38,7 @@ class User {
     this.uniqueID,
     this.temporaryId,
     this.phoneNumber,
+    this.phone,
     this.avatar,
     this.firstname,
     this.lastname,
@@ -57,6 +62,9 @@ class User {
     this.parentName,
     this.roles,
     this.permissions,
+    this.matchStatus,
+    this.matchPercentage,
+    this.passThreshold,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -65,6 +73,7 @@ class User {
     uniqueID: json["uniqueID"],
     temporaryId: json["temporary_id"],
     phoneNumber: json["phone_number"],
+    phone: json["phone"],
     avatar: json["avatar"],
     firstname: json["firstname"],
     lastname: json["lastname"],
@@ -88,6 +97,9 @@ class User {
     parentName: json["parent_name"],
     roles: json["roles"] == null ? [] : List<String>.from(json["roles"]!.map((x) => x)),
     permissions: json["permissions"] == null ? [] : List<String>.from(json["permissions"]!.map((x) => x)),
+    matchStatus: json["match_status"],
+    matchPercentage: json["match_percentage"],
+    passThreshold: json["pass_threshold"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -96,6 +108,7 @@ class User {
     "uniqueID": uniqueID,
     "temporary_id": temporaryId,
     "phone_number": phoneNumber,
+    "phone": phone,
     "avatar": avatar,
     "firstname": firstname,
     "lastname": lastname,
@@ -119,5 +132,8 @@ class User {
     "parent_name": parentName,
     "roles": roles == null ? [] : List<dynamic>.from(roles!.map((x) => x)),
     "permissions": permissions == null ? [] : List<dynamic>.from(permissions!.map((x) => x)),
+    "match_status": matchStatus,
+    "match_percentage": matchPercentage,
+    "pass_threshold": passThreshold,
   };
 }

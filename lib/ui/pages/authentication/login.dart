@@ -9,6 +9,7 @@ import 'package:winit_agent/core/constants/color_path.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/enum/otp_type.dart';
 import 'package:winit_agent/core/data/view_models/authentication/login_vm.dart';
+import 'package:winit_agent/core/data/view_models/onboarding/identity_verification_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/bank_account_details_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
@@ -341,6 +342,7 @@ class _LoginState extends ConsumerState<Login> {
         pushNavigation(context: context, widget: const NinRequirement(), routeName: NamedRoutes.ninRequirement);
         break;
       case 'nin_verification':
+        ref.read(identificationViewModel).ninData = vm.loginData?.user?.personalInformation;
         pushNavigation(context: context, widget: const BvnRequirement(), routeName: NamedRoutes.bvnRequirement);
         break;
       case 'bvn_verification':
