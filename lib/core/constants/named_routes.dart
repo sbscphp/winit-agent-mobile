@@ -62,6 +62,7 @@ class NamedRoutes {
   static const selectPaymentChannel = '/selectPaymentChannel';
   static const orderConfirmation = '/orderConfirmation';
   static const paymentCheckout = '/paymentCheckout';
+  static const paymentFailed = '/paymentFailed';
 
 
   //in-app webview

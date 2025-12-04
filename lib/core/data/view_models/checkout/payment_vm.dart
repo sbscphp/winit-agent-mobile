@@ -8,6 +8,7 @@ import '../../enum/view_state.dart';
 import '../../models/data/checkout_data.dart';
 import '../../models/payment_method.dart';
 import '../../models/payment_summary.dart';
+import '../../services/geolocator_service.dart';
 import '../../states/base_state.dart';
 
 
@@ -134,48 +135,49 @@ class PaymentVm extends BaseState {
   }
 
   //initiate checkout
-  // initiateCheckout(
-  //     {required String gameId}) async {
-  //
-  //   setSecondState(ViewState.busy);
-  //
-  //   final pos = await locator<GeoLocatorService>().getCurrentLocation();
-  //
-  //   final details = {
-  //     "game_id": gameId,
-  //     "platform": "mobile",
-  //     "payment_method": selectedPaymentMethod?.slug?.toLowerCase(), //flutterwave, paystack
-  //     "payment_channel": selectedPaymentType?.toLowerCase(), //ussd, card, bank transfer
-  //     "quantity": quantity,
-  //     "amount": amountToPay,
-  //   };
-  //
-  //   if(promoCodeApplied != null){
-  //     details['promo_code'] = promoCodeApplied;
-  //   }
-  //
-  //   if(refAmountUsed != null){
-  //     details['referral_balance_amount'] = refAmountUsed;
-  //   }
-  //
-  //   if(pos != null){
-  //     details['geolocation'] = {
-  //       "lat": pos.latitude,
-  //       "lng": pos.longitude
-  //     };
-  //   }
-  //
-  //
-  //   await _paymentDp.initiateCheckout(details: details).then(
-  //           (response) async {
-  //         _message = response.message ?? defaultSuccessMessage;
-  //         checkoutData = response.data;
-  //         setSecondState(ViewState.retrieved);
-  //       }, onError: (e) {
-  //     _message = Utilities.formatMessage(e.toString(), isSuccess: false);
-  //     setSecondState(ViewState.error);
-  //   });
-  // }
+  initiatePayStackCheckout(
+      {
+        required String gameId,
+        required int quantity,
+        required String pin,
+        required String customerId,
+        required String paymentChannel
+      }) async {
+
+    setSecondState(ViewState.busy);
+
+    final pos = await locator<GeoLocatorService>().getCurrentLocation();
+
+    final details = {
+      "game_id": gameId, //ac56fd63-4230-4b77-9847-e456a71efd27 local //7942a042-d879-47f8-bd8b-0c726f04f063 server
+      "transaction_pin": pin,
+      "customer_id": customerId,
+      "platform": "mobile", //web,mobile,pos,others
+      "merchant_id": "", //optional //if pos
+      "payment_method": "paystack", //paystack,flutterwave
+      "payment_channel": paymentChannel, //ussd, card, bank transfer, bank
+      "quantity": quantity,
+    };
+
+
+    if(pos != null){
+      details['geolocation'] = {
+        "lat": pos.latitude,
+        "lng": pos.longitude
+      };
+    }
+
+
+    await _gameDp.initiatePayStackCheckout(details: details).then(
+            (response) async {
+          _message = response.message ?? defaultSuccessMessage;
+          checkoutData = response.data;
+          setSecondState(ViewState.retrieved);
+        }, onError: (e) {
+      _message = Utilities.formatMessage(e.toString(), isSuccess: false);
+      setSecondState(ViewState.error);
+    });
+  }
 
 
   resetPaymentVariables(){

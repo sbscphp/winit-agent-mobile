@@ -9,6 +9,7 @@ import 'package:winit_agent/core/data/view_models/checkout/payment_vm.dart';
 import 'package:winit_agent/core/data/view_models/games/customer_details_vm.dart';
 import 'package:winit_agent/core/data/view_models/games/selected_game_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/transaction_pin_vm.dart';
+import 'package:winit_agent/ui/pages/games/payment_checkout.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/data/enum/view_state.dart';
@@ -156,26 +157,27 @@ class PaymentBreakdown extends ConsumerWidget {
                   buttonText: 'Pay ₦${Utilities.formatAmount(
                       amount: vm.amountToPay,
                       addDecimal: true
-                  )}',showLoader: orderDetailsVm.state == ViewState.busy,
+                  )}',showLoader: orderDetailsVm.state == ViewState.busy || vm.secondState == ViewState.busy,
                   onPressed: () {
 
-                    if(vm.checkoutType == CheckoutType.wallet){
-                      //purchase from account
-                      controllableBaseDialog(
-                        context: context,
-                        routeName: NamedRoutes.pinDialog,
-                        onClosed: () {
-                        },
-                        builder: (context, setDismissible) {
-                          return EnterTransactionPin(
-                            visitingRoute: NamedRoutes.pinDialog,
-                            subtitle: 'Enter your four (4) Digit Transaction pin to complete this transaction',
-                            buttonText: 'Complete Payment',
-                            onDone: (success) async{
-                              // setDismissible(true);
-                              final selectedGameVm = ref.read(selectedGameViewModel);
-                              final pinVm = ref.read(transactionPinViewModel);
-                              final customerDetailsVm = ref.read(customerDetailsViewModel);
+
+                    controllableBaseDialog(
+                      context: context,
+                      routeName: NamedRoutes.pinDialog,
+                      onClosed: () {
+                      },
+                      builder: (context, setDismissible) {
+                        return EnterTransactionPin(
+                          visitingRoute: NamedRoutes.pinDialog,
+                          subtitle: 'Enter your four (4) Digit Transaction pin to complete this transaction',
+                          buttonText: 'Complete Payment',
+                          onDone: (success) async{
+                            // setDismissible(true);
+                            final selectedGameVm = ref.read(selectedGameViewModel);
+                            final pinVm = ref.read(transactionPinViewModel);
+                            final customerDetailsVm = ref.read(customerDetailsViewModel);
+
+                            if(vm.checkoutType == CheckoutType.wallet){
 
                               await orderDetailsVm.purchaseFromAccount(
                                   gameId: selectedGameVm.gameId,
@@ -194,19 +196,43 @@ class PaymentBreakdown extends ConsumerWidget {
                                   success: orderDetailsVm.state == ViewState.retrieved
                               );
 
-                            },
-                            onLoading: (loading) {
-                              setDismissible(!loading);
-                            },
-                          );
+                            }else{
 
-                        },
-                      );
+                              await vm.initiatePayStackCheckout(
+                                  gameId: selectedGameVm.gameId,
+                                  quantity: selectedGameVm.quantity,
+                                  pin: pinVm.currentPin ?? '',
+                                  customerId: customerDetailsVm.isProcessedNewUser ? customerDetailsVm.newUserId : customerDetailsVm.returningUserId,
+                                  paymentChannel: vm.selectedPaymentType ?? ''
+                              );
 
-                    }else{
+                              if(vm.secondState == ViewState.retrieved){
+                                https://win-it-web.vercel.app//payment-success
+                                pushNavigation(context: context, widget: const PaymentCheckout(), routeName: NamedRoutes.paymentCheckout);
+                              }else{
+                                showFlushBar(
+                                    context: context,
+                                    message: vm.message,
+                                    success: false
+                                );
 
-                      //initiate paystack checkout
-                    }
+                              }
+
+
+                            }
+
+
+
+
+
+                          },
+                          onLoading: (loading) {
+                            setDismissible(!loading);
+                          },
+                        );
+
+                      },
+                    );
 
                     //replaceNavigation(context: context, widget: const TicketSalesReceipt(), routeName: NamedRoutes.ticketSalesReceipt);
                   }

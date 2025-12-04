@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:winit_agent/core/data/models/data/checkout_data.dart';
 import 'package:winit_agent/core/data/models/data/purchase_data.dart';
 import 'package:winit_agent/core/data/models/payment_summary.dart';
 
@@ -107,6 +108,45 @@ class GameDataProvider{
           .networkRequestManager(RequestType.post, ApiRoutes.purchaseFromAccount,
           useAuth: true,
           body: jsonEncode(details)
+      );
+      var result = ApiResponse<PurchaseData>.fromJson(
+        response,
+            (data) => PurchaseData.fromJson(data as Map<String, dynamic>),
+      );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
+  //initiate pay-stack checkout
+  Future<ApiResponse<CheckoutData>> initiatePayStackCheckout({required Map<String, dynamic> details}) async {
+    var completer = Completer<ApiResponse<CheckoutData>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.post, ApiRoutes.initiatePayStackCheckout,
+          useAuth: true,
+          body: jsonEncode(details)
+      );
+      var result = ApiResponse<CheckoutData>.fromJson(
+        response,
+            (data) => CheckoutData.fromJson(data as Map<String, dynamic>),
+      );
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
+  //fetch ticket details
+  Future<ApiResponse<PurchaseData>> fetchTicketDetails({required String? id}) async {
+    var completer = Completer<ApiResponse<PurchaseData>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.get, ApiRoutes.fetchTicketDetails(id: id),
+          useAuth: true,
       );
       var result = ApiResponse<PurchaseData>.fromJson(
         response,

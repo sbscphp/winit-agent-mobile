@@ -71,7 +71,24 @@ class OrderDetailsVm extends BaseState {
     });
   }
 
+  //fetch ticket details
+  fetchTicketDetails(
+      {
+        required String? id,
+      }) async {
 
+    setSecondState(ViewState.busy);
+
+    await _gameDp.fetchTicketDetails(id: id).then(
+            (response) async {
+          _message = response.message ?? defaultSuccessMessage;
+          purchaseData = response.data;
+          setSecondState(ViewState.retrieved);
+        }, onError: (e) {
+      _message = Utilities.formatMessage(e.toString(), isSuccess: false);
+      setSecondState(ViewState.error);
+    });
+  }
 
 
 

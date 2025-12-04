@@ -99,11 +99,14 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/game/summary";
   static var purchaseFromAccount =
       "${dotenv.env['AGENT']}/game/purchase-with-account";
+  static var initiatePayStackCheckout =
+      "${dotenv.env['AGENT']}/game/purchase-with-checkout";
+  static fetchTicketDetails({required String? id}) =>
+      "${dotenv.env['AGENT']}/game/order/$id/tickets";
 
 
 
-  static var initiateCheckout =
-      "${dotenv.env['GAMES']}/checkout";
+
 
 
 

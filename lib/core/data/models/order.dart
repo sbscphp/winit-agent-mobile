@@ -1,5 +1,7 @@
 import 'package:winit_agent/core/data/models/ticket.dart';
 
+import 'game.dart';
+
 class Order {
   final String? uuid;
   final String? uniqueId;
@@ -28,6 +30,7 @@ class Order {
   final DateTime? drawDate;
   final DateTime? gameEndDate;
   final List<Ticket>? tickets;
+  final Game? game;
 
   Order({
     this.uuid,
@@ -57,6 +60,7 @@ class Order {
     this.drawDate,
     this.gameEndDate,
     this.tickets,
+    this.game
   });
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
@@ -87,6 +91,7 @@ class Order {
     drawDate: json["draw_date"] == null ? null : DateTime.parse(json["draw_date"]),
     gameEndDate: json["game_end_date"] == null ? null : DateTime.parse(json["game_end_date"]),
     tickets: json["tickets"] == null ? [] : List<Ticket>.from(json["tickets"]!.map((x) => Ticket.fromJson(x))),
+    game: json["game"] == null ? null : Game.fromJson(json["discount"]),
   );
 
   Map<String, dynamic> toJson() => {
