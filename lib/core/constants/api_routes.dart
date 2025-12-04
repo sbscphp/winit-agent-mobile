@@ -98,7 +98,7 @@ class ApiRoutes {
   static var fetchPaymentSummary =
       "${dotenv.env['AGENT']}/game/summary";
   static var purchaseFromAccount =
-      "${dotenv.env['AGENT']}/games/purchase-with-account";
+      "${dotenv.env['AGENT']}/game/purchase-with-account";
 
 
 

@@ -34,6 +34,12 @@ class CustomerDetailsVm extends BaseState{
     notifyListeners();
   }
 
+  //user type being processed
+  bool isProcessedNewUser = true;
+
+  String get newUserId => createdCustomer?.uuid ?? '';
+  String get returningUserId => _selectedCustomer?.uuid ?? '';
+
   //create customer
   createCustomer({
     required String firstname,

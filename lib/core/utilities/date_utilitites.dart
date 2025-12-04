@@ -190,6 +190,10 @@ ${DateFormat.yMMMd().format(date)} ${DateFormat.jms().format(date)}''';
     return DateFormat('EEEE, MMMM d, y.').format(date!);
   }
 
+  static String dayDateMonthYear({DateTime? date}) {
+    return DateFormat('EEEE, d MMMM, y').format(date!);
+  }
+
   ///converts to month, day and year
   static String monthDayYear({DateTime? date}) {
     if(date == null)return DateFormat.yMMMMd().format(DateTime.now());

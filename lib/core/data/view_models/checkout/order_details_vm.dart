@@ -22,6 +22,15 @@ class OrderDetailsVm extends BaseState {
   //order details
   PurchaseData? purchaseData;
 
+  //values
+  DateTime get ticketPurchaseDate => purchaseData?.order?.createdAt ?? DateTime.now();
+  String get transactionId => purchaseData?.order?.transactionId ?? 'N/A';
+  String get agentId => purchaseData?.order?.merchantId ?? 'N/A';
+  String get gameName => purchaseData?.order?.merchantId ?? 'N/A'; //todo: ask juwon
+  int get ticketCount => purchaseData?.order?.ticketsCount ?? 0;
+  double get paidAmount => double.tryParse(purchaseData?.order?.paidAmount?.toString() ?? '0') ?? 0;
+
+
   //fetch payment breakdown
   purchaseFromAccount(
       {

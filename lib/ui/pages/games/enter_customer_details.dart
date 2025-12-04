@@ -214,6 +214,8 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
                   if(_controller.index == 0){
 
                     //new customer
+                    customerDetailsVm.isProcessedNewUser = true;
+
                     final validate = _formKey.currentState!.validate();
                     if(validate){
                       if(_dob.text.isEmpty){
@@ -329,6 +331,7 @@ class _EnterCustomerDetailsState extends ConsumerState<EnterCustomerDetails> wit
                   }
                   else{
                     //returning customer
+                    customerDetailsVm.isProcessedNewUser = false;
 
                     //check if a customer has been selected
                     if(customerDetailsVm.selectedCustomer == null){

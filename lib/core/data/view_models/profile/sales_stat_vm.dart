@@ -33,9 +33,9 @@ class SalesStatVm extends BaseState{
 
 
   //fetch sales stat
-  fetchSalesStat() async {
+  fetchSalesStat({bool showLoader = true}) async {
 
-    setState(ViewState.busy);
+    if(showLoader)setState(ViewState.busy);
 
     await _profileDp
         .fetchSalesStat()
