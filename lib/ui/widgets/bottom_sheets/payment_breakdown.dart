@@ -5,8 +5,6 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/enum/checkout_type.dart';
 import 'package:winit_agent/core/data/view_models/checkout/payment_vm.dart';
-import 'package:winit_agent/core/utilities/navigator.dart';
-import 'package:winit_agent/ui/pages/games/ticket_sales_receipt.dart';
 import '../../../core/constants/color_path.dart';
 import '../../../core/utilities/utilities.dart';
 import '../alert_dialogs/base_dialog.dart';

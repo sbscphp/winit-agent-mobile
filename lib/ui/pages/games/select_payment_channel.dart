@@ -9,7 +9,6 @@ import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_divider.dart';
 import 'package:winit_agent/ui/widgets/games/game_appbar_title.dart';
 import '../../../core/constants/app_dimension.dart';
-import '../../../core/constants/color_path.dart';
 import '../../../core/utilities/utilities.dart';
 import '../../widgets/bottom_sheets/base_bottom_sheet.dart';
 import '../../widgets/custom_appbar.dart';
