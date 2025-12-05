@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:winit_agent/core/data/data_provider/auth_data_provider/auth_data_provider.dart';
 import 'package:winit_agent/core/data/data_provider/game_data_provider.dart';
+import 'package:winit_agent/core/data/data_provider/notification_data_provider.dart';
 import 'package:winit_agent/core/data/data_provider/onboarding_data_provider/onboarding_data_provider.dart';
 import 'package:winit_agent/core/data/data_provider/profile_data_provider/profile_data_provider.dart';
 import 'package:winit_agent/core/data/data_provider/referral_data_provider.dart';
@@ -23,6 +24,7 @@ void setupLocator() {
   locator.registerLazySingleton<UtilityDataProvider>(() => UtilityDataProvider());
   locator.registerLazySingleton<ReferralDataProvider>(() => ReferralDataProvider());
   locator.registerLazySingleton<GameDataProvider>(() => GameDataProvider());
+  locator.registerLazySingleton<NotificationDataProvider>(() => NotificationDataProvider());
 
 
 

@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/data/view_models/notification/notification_filters_vm.dart';
+import 'package:winit_agent/core/data/view_models/notification/notification_settings_vm.dart';
+import 'package:winit_agent/core/data/view_models/notification/notifications_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/notifications/notification_settings.dart';
+import 'package:winit_agent/ui/widgets/listview_items/notification_item.dart';
 
 import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/app_dimension.dart';
 import '../../../core/constants/color_path.dart';
+import '../../../core/data/enum/view_state.dart';
 import '../../../core/utilities/date_utilitites.dart';
 import '../../widgets/action_icon.dart';
+import '../../widgets/app_loader.dart';
 import '../../widgets/bottom_sheets/base_bottom_sheet.dart';
 import '../../widgets/bottom_sheets/filter_options.dart';
 import '../../widgets/clickable.dart';
@@ -17,18 +24,76 @@ import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_svg.dart';
 import '../../widgets/empty_state.dart';
+import '../../widgets/error_state.dart';
+import '../../widgets/show_flush_bar.dart';
 import '../../widgets/winit_container.dart';
 
-class Notifications extends StatefulWidget {
+class Notifications extends ConsumerStatefulWidget {
   const Notifications({super.key});
 
   @override
-  State<Notifications> createState() => _NotificationsState();
+  ConsumerState<Notifications> createState() => _NotificationsState();
 }
 
-class _NotificationsState extends State<Notifications> {
+class _NotificationsState extends ConsumerState<Notifications> {
+
+  late ScrollController _scrollController, _filterScrollController;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _filterScrollController = ScrollController();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(notificationsViewModel).fetchNotifications();
+      ref.read(notificationSettingsViewModel).fetchNotificationSettings();
+    });
+    _scrollListener();
+    _filterScrollListener();
+    super.initState();
+  }
+
+  _scrollListener() {
+    final vm = ref.read(notificationsViewModel);
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        //check paginated state
+        if(vm.paginatedState != ViewState.error){
+          //check if data is not being currently fetched and also check total records
+          if (vm.paginatedState != ViewState.busy && vm.notifications.length < vm.totalRecords) {
+            //fetch more notifications
+            vm.fetchNotifications(
+                firstCall: false
+            );
+          }
+        }
+      }
+    });
+  }
+
+  _filterScrollListener() {
+    final vm = ref.read(notificationFiltersViewModel);
+    _filterScrollController.addListener(() {
+      if (_filterScrollController.position.pixels ==
+          _filterScrollController.position.maxScrollExtent) {
+        //check paginated state
+        if(vm.paginatedState != ViewState.error){
+          //check if data is not being currently fetched and also check total records
+          if (vm.paginatedState != ViewState.busy && vm.filteredResults.length < vm.totalRecords) {
+            //fetch more notifications(filters)
+            vm.fetchFilteredResults(
+                firstCall: false
+            );
+          }
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final vm = ref.watch(notificationsViewModel);
+    final notificationFiltersVm = ref.watch(notificationFiltersViewModel);
     return Scaffold(
       appBar: customAppBar(
           context: context,
@@ -44,16 +109,16 @@ class _NotificationsState extends State<Notifications> {
                 ),
                 children: [
                   TextSpan(
-                    text: 'Notifications',
+                    text: notificationFiltersVm.showFilteredList ? notificationFiltersVm.title():'Notifications',
                   ),
                   TextSpan(
-                    text: '(60)',
+                    text: notificationFiltersVm.showFilteredList ? '(${notificationFiltersVm.totalRecords})':'(${vm.totalRecords})',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: ColorPath.turquoiseGreen
                     ),
                   ),
-            
+
                 ],
               ),
             ),
@@ -72,16 +137,18 @@ class _NotificationsState extends State<Notifications> {
                   content: FilterOptions(
                     label: 'Filter Notification',
                     subtitle: 'Filter notification with ease',
-                    options: [
-                      'Show All',
-                      'General Notification',
-                      'Game Ticket Purchase',
-                      'Wallet Notification',
-                      'Commission',
-                      'Bonus Income'
-                    ],
-                    selectedOption: (value){
-                      //todo: fetch filtered data
+                    options: notificationFiltersVm.notificationFilterOptions,
+                    initialValue: notificationFiltersVm.selectedFilter,
+                    selectedOption: (value)async{
+                      notificationFiltersVm.selectedFilter = value;
+                      if(notificationFiltersVm.selectedFilter.toLowerCase() != 'show all'){
+                        await notificationFiltersVm.fetchFilteredResults();
+                        showFlushBar(
+                            context: context,
+                            message: notificationFiltersVm.message,
+                            success: notificationFiltersVm.state == ViewState.retrieved
+                        );
+                      }
                     },
                   ),
                 );
@@ -94,78 +161,151 @@ class _NotificationsState extends State<Notifications> {
             horizontal: AppDimension.paddingLeft,
             vertical: 32.h
         ),
-        child: 1 + 1 == 2 ? ListView.separated(
-          itemCount: 5,
-          shrinkWrap: true,
-          padding: EdgeInsets.zero,
-          itemBuilder: (BuildContext context, int index) {
-            return Clickable(
-              onPressed: (){
-              },
-              child: WinitContainer(
-                child: Column(
+        child: Builder(
+          builder: (context) {
+            if(notificationFiltersVm.showFilteredList){
+
+              if(notificationFiltersVm.state == ViewState.busy){
+                return Center(
+                  child: AppLoader(),
+                );
+              }
+
+              if(notificationFiltersVm.state == ViewState.retrieved){
+
+                if(notificationFiltersVm.filteredResults.isEmpty){
+                  return Center(
+                    child:EmptyState(
+                      asset: AppAsset.emptyState,
+                      title: 'No Results',
+                      subtitle: 'no results ',
+                    ),
+                  );
+                }
+
+                return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Game Purchase Commission remitted to wallet',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).colorScheme.textPrimary
+                    Expanded(
+                      child: ListView.separated(
+                        controller: _filterScrollController,
+                        itemCount: notificationFiltersVm.filteredResults.length,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        itemBuilder: (BuildContext context, int index) {
+                          final notification = notificationFiltersVm.filteredResults[index];
+                          return NotificationItem(notification: notification);
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: 16.h,);
+                        },
                       ),
                     ),
-                    SizedBox(height: 8.h,),
-                    Text(
-                      '₦ 200.00 Your subscription fee has been adjusted this month. Discount applied for early renewal.',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: Theme.of(context).colorScheme.textTertiary
-                      ),
-                    ),
-                    SizedBox(height: 8.h,),
-                    Row(
-                      children: [
-                        CustomAssetViewer(asset: AppAsset.calendar, height: 14.h, width: 14.w,),
-                        SizedBox(width: 4.w,),
-                        Text(
-                          DateUtilities.dayMonthYear(date: DateTime.now()),
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: Theme.of(context).colorScheme.textTertiary
+                    if(notificationFiltersVm.paginatedState == ViewState.busy)
+                      Padding(
+                        padding: EdgeInsets.only(top: 5.h),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: AppLoader(
+                            size: 16,
                           ),
                         ),
-                      ],
-                    ),
-
+                      ),
+                    if(notificationFiltersVm.paginatedState == ViewState.error)
+                      ErrorState(
+                          message: notificationFiltersVm.message,
+                          isPaginationType: true,
+                          onPressed: ()=>notificationFiltersVm.fetchFilteredResults(firstCall: false))
                   ],
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return SizedBox(height: 16.h,);
-          },
-        ):Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            EmptyState(
-              asset: AppAsset.emptyState,
-              title: 'No Notifications Yet',
-              subtitle: 'You currently have no notifications yet. ',
-            ),
-            SizedBox(height: 16.h,),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 39.5.w),
-              child: CustomButton(
-                  buttonText: 'Purchase Game Ticket',
-                  suffixIcon: AppAsset.ticketPurchase,
-                  onPressed: () {
+                );
+              }
 
-                  }
-              ),
-            )
-          ],
-        ),
+              if(notificationFiltersVm.state == ViewState.error){
+                return Center(
+                  child: ErrorState(
+                      message: notificationFiltersVm.message,
+                      onPressed: ()=>notificationFiltersVm.fetchFilteredResults()),
+                );
+              }
+
+              return const SizedBox.shrink();
+
+            }
+            else{
+
+              if(vm.state == ViewState.busy){
+                return Center(
+                  child: AppLoader(),
+                );
+              }
+
+              if(vm.state == ViewState.retrieved){
+
+                if(vm.notifications.isEmpty){
+                  return Center(
+                    child: EmptyState(
+                      asset: AppAsset.emptyState,
+                      title: 'No Notification Yet',
+                      subtitle: 'You currently have no notification yet. ',
+                    ),
+                  );
+                }
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: ListView.separated(
+                        controller: _scrollController,
+                        itemCount: vm.notifications.length,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        itemBuilder: (BuildContext context, int index) {
+                          final notification = vm.notifications[index];
+                          return NotificationItem(notification: notification);
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: 16.h,);
+                        },
+                      ),
+                    ),
+                    if(vm.paginatedState == ViewState.busy)
+                      Padding(
+                        padding: EdgeInsets.only(top: 5.h),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: AppLoader(
+                            size: 16,
+                          ),
+                        ),
+                      ),
+                    if(vm.paginatedState == ViewState.error)
+                      ErrorState(
+                          message: vm.message,
+                          isPaginationType: true,
+                          onPressed: ()=>vm.fetchNotifications(firstCall: false))
+                  ],
+                );
+              }
+
+              if(vm.state == ViewState.error){
+                return Center(
+                  child: ErrorState(
+                      message: vm.message,
+                      onPressed: ()=>vm.fetchNotifications()),
+                );
+              }
+
+              return const SizedBox.shrink();
+            }
+          }
+        )
       ),
     );
   }
+
+
+
+
+
 }

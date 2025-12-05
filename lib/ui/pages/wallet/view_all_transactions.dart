@@ -228,7 +228,8 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
 
               return const SizedBox.shrink();
 
-            }else{
+            }
+            else{
 
               if(vm.state == ViewState.busy){
                 return Center(

@@ -116,10 +116,13 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/referral/referred-users?limit=$paginationLimit&paginate=1&page=$pageNumber";
 
   //notification
+  static fetchNotifications({required int? pageNumber, String? filterParams}) =>
+      filterParams == null ? "${dotenv.env['AGENT']}/notification?page=$pageNumber&limit=$paginationLimit&paginate=1"
+          :"${dotenv.env['AGENT']}/notification?page=$pageNumber&limit=$paginationLimit&paginate=1&$filterParams";
+  static var fetchNotificationSettings =
+      "${dotenv.env['AGENT']}/settings/notification/fetch";
   static var updateNotificationSettings =
-      "${dotenv.env['NOTIFICATION']}/update";
-  static fetchNotifications({required int? pageNumber}) =>
-      "${dotenv.env['CUSTOMER']}/notifications?page=$pageNumber";
+      "${dotenv.env['AGENT']}/settings/notification/update";
   static markNotificationAsRead({required String? id}) =>
       "${dotenv.env['CUSTOMER']}/notifications/$id/read";
 
