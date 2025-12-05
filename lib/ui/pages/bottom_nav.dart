@@ -7,6 +7,7 @@ import 'package:winit_agent/core/data/view_models/bottom_nav_view_model.dart';
 import 'package:winit_agent/ui/widgets/custom_bottom_nav.dart';
 
 import '../../core/data/enum/view_state.dart';
+import '../../core/utilities/firebase_messaging_utils.dart';
 
 class BottomNav extends ConsumerStatefulWidget {
   const BottomNav({super.key});
@@ -21,7 +22,7 @@ class _BottomNavState extends ConsumerState<BottomNav> {
   void initState() {
 
     //init push notification listeners
-    //FirebaseMessagingUtils.pushNotificationListenerInit(context: context, ref: ref);
+    FirebaseMessagingUtils.pushNotificationListenerInit(context: context);
 
     super.initState();
   }

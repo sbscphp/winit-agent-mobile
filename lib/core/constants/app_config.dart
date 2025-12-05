@@ -5,8 +5,10 @@ import 'package:winit_agent/core/data/enum/environment.dart';
 
 class AppConfig {
   static late Map<String, dynamic> _config;
+  static late Environment _currentEnv;
 
   static void setEnvironment(Environment env) {
+    _currentEnv = env;
     switch (env) {
       case Environment.dev:
         _config = _BaseUrlConfig.debugConstants;
@@ -22,6 +24,8 @@ class AppConfig {
         break;
     }
   }
+
+  static Environment get currentEnvironment => _currentEnv;
 
   static get baseUrl {
     return _config[_BaseUrlConfig.baseUrl];

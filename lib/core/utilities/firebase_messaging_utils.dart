@@ -29,7 +29,7 @@ class FirebaseMessagingUtils {
   }
 
   //push notification listeners
-  static pushNotificationListenerInit({required BuildContext context, required WidgetRef ref}) async {
+  static pushNotificationListenerInit({required BuildContext context}) async {
      initializeLocalNotification(context);
     ///subscribe to a topic
     FirebaseMessaging.instance

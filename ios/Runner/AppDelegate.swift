@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import FirebaseCore
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -8,7 +9,7 @@ import UIKit
        override func application(_ application: UIApplication,
                                didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-
+            FirebaseApp.configure()
            let controller = window?.rootViewController as! FlutterViewController
 
            GeneratedPluginRegistrant.register(with: self)

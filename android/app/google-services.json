@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "101257066524",
+    "project_id": "winit-agent-project",
+    "storage_bucket": "winit-agent-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101257066524:android:3c213ad4366f7f9fdf87d9",
+        "android_client_info": {
+          "package_name": "com.hopegainltd.winitagent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD2dw2e06q-XTaMkyKuPvwoq_4hOGCVEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

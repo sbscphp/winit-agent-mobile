@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/utilities/date_utilitites.dart';
 import 'package:winit_agent/ui/widgets/close_icon.dart';
 import 'package:winit_agent/ui/widgets/status_tag.dart';
 import '../../../core/constants/app_asset.dart';
@@ -455,6 +456,16 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   }
 
   ticketPurchase(BuildContext context){
+    final gameName = widget.transaction.gameName ?? 'N/A';
+    final date = DateUtilities.abbrevMonthDayYear(widget.transaction.createdAt?.toString() ?? DateTime.now().toString());
+    final time = DateUtilities.formatTimeAMPM(dateTime: widget.transaction.createdAt ?? DateTime.now());
+    final reference = widget.transaction.referenceId ?? 'N/A';
+    final ticketCount = double.tryParse(widget.transaction.ticketCount?.toString() ?? '0') ?? 0;
+    final amount = double.tryParse(widget.transaction.amount?.toString() ?? '0') ?? 0;
+    final paidVia = widget.transaction.paidVia ?? 'N/A';
+    final isPaidViaWallet = paidVia.toLowerCase() == 'agent_wallet';
+    final walletAccountNumber = widget.transaction.bankAccount?.accountNumber ?? '';
+    final status = widget.transaction.status ?? '';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -473,7 +484,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             SizedBox(width: 20.w,),
             Flexible(
               child: Text(
-                  'Win 4BD Flat (ID:2003)',
+                  gameName,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Theme.of(context).colorScheme.textPrimary
@@ -496,7 +507,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ),
             SizedBox(width: 20.w,),
             Text(
-                'Jan 25 2025',
+                date,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).colorScheme.textPrimary
@@ -516,7 +527,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ),
             SizedBox(width: 20.w,),
             Text(
-                '11:00AM',
+                time,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).colorScheme.textPrimary
@@ -537,7 +548,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             SizedBox(width: 20.w,),
             Expanded(
               child: Text(
-                '678393',
+                reference,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).colorScheme.textPrimary
@@ -560,7 +571,10 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ),
             SizedBox(width: 20.w,),
             Text(
-                '25',
+                Utilities.formatAmount(
+                  amount: ticketCount,
+                  addDecimal: false
+                ),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).colorScheme.textPrimary
@@ -581,7 +595,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             SizedBox(width: 20.w,),
             Flexible(
               child: NairaDisplay(
-                amount: 202222,
+                amount: amount,
                 fontSize: 14.sp,
                 color:Theme.of(context).colorScheme.textPrimary,
                 fontWeight: FontWeight.w600,
@@ -603,7 +617,9 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             SizedBox(width: 20.w,),
             Expanded(
               child: Text(
-                'Wallet ${Utilities.maskCharacters(subject: '203546677', startIndex: 2, endIndex: 6)}',
+                isPaidViaWallet ?
+                'Wallet ${Utilities.maskCharacters(subject:walletAccountNumber, startIndex: 2, endIndex: 5)}'
+                :paidVia,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).colorScheme.textPrimary
@@ -628,7 +644,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ),
             SizedBox(width: 20.w,),
             Expanded(
-              child: StatusTag(status: 'successful', returnOnlyText: true, useEndAlignment: true,),
+              child: StatusTag(status: status, returnOnlyText: true, useEndAlignment: true,),
             ),
           ],
         ),

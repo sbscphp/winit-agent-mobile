@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:winit_agent/core/constants/app_config.dart';
 import 'package:winit_agent/core/constants/app_constants.dart';
+import 'package:winit_agent/core/data/enum/environment.dart';
 import 'package:winit_agent/core/data/models/grouped_list.dart';
 
 class Utilities {
@@ -71,29 +73,42 @@ class Utilities {
 
   //converts incoming string to human readable message
   static String formatMessage(String incomingMessage, {bool isSuccess = true}) {
-    debugPrint('incoming raw message:::$incomingMessage>>>');
+    debugPrint('incoming raw message: $incomingMessage');
+
     if (incomingMessage.isEmpty) {
       return isSuccess ? defaultSuccessMessage : defaultErrorMessage;
     }
 
-    // if (incomingMessage
-    //         .toLowerCase()
-    //         .contains("cannot read properties of undefined") ||
-    //     incomingMessage.toLowerCase().contains("validation error") ||
-    //     incomingMessage.toLowerCase().contains("null") ||
-    //     incomingMessage.toLowerCase().contains("database") ||
-    //     incomingMessage.toLowerCase().contains("_") ||
-    //     incomingMessage.toLowerCase().contains("subtype") ||
-    //     incomingMessage.toLowerCase().contains("formatexception") ||
-    //     incomingMessage.toLowerCase().contains("string") ||
-    //     incomingMessage.toLowerCase().contains("mysql error") ||
-    //     //incomingMessage.toLowerCase().contains("v1") ||
-    //     incomingMessage.toLowerCase().contains("er-bad-field-error")) {
-    //   return "An Error Occurred. Please try again";
-    // }
+    final env = AppConfig.currentEnvironment;
 
-    return incomingMessage;
+    //Skip filtering for non-production environments
+    if (env != Environment.prod) return incomingMessage;
+
+    //Normalize once for efficient reuse
+    final msg = incomingMessage.toLowerCase();
+
+    //Check if the message contains any unwanted pattern
+    final hasErrorPattern =
+    errorPatterns.any((pattern) => msg.contains(pattern));
+
+    return hasErrorPattern
+        ? 'An Error Occurred. Please try again'
+        : incomingMessage;
   }
+
+  //non-human readable error patterns for messages from the backend/in-app
+  static List<String> errorPatterns = [
+    'cannot read properties of undefined',
+    'validation error',
+    'null',
+    'database',
+    '_',
+    'subtype',
+    'formatexception',
+    'string',
+    'mysql error',
+    'er-bad-field-error',
+  ];
 
   //hide keyboard
   static hideKeyboard(BuildContext context) => FocusScope.of(context).unfocus();

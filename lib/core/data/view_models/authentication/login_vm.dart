@@ -8,6 +8,8 @@ import 'package:winit_agent/core/utilities/secure_storage/secure_storage_utils.d
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/locator.dart';
 
+import '../../../utilities/firebase_messaging_utils.dart';
+
 class LoginVm extends BaseState{
 
   //auth data provider
@@ -36,10 +38,14 @@ class LoginVm extends BaseState{
   }) async {
 
     setState(ViewState.busy);
+
+    final token = await FirebaseMessagingUtils.getFirebaseToken();
+
     final details = {
-      "username": loginChoice, //local - mainagent1@yopmail.com, server - superagent@yopmail.com
-      "password":pwd, // password, P@ssw0rd
-      "remember_me": true
+      "username": loginChoice,
+      "password":pwd,
+      "remember_me": true,
+      "agent_fcm_token": token,
     };
 
     await _authDp
