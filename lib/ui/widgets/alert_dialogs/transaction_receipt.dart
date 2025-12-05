@@ -651,7 +651,6 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   }
 
   walletTopUp(BuildContext context){
-    final gameName = widget.transaction.gameName ?? 'N/A';
     final date = DateUtilities.abbrevMonthDayYear(widget.transaction.createdAt?.toString() ?? DateTime.now().toString());
     final time = DateUtilities.formatTimeAMPM(dateTime: widget.transaction.createdAt ?? DateTime.now());
     final reference = widget.transaction.referenceId ?? 'N/A';
