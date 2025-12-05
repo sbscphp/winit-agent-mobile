@@ -59,7 +59,7 @@ class AccountSecurity extends ConsumerWidget {
             ProfileOption(
                 asset:AppAsset.pin,
                 label:'Change Password',
-                subtitle: 'change your password',
+                subtitle: 'Change your account password',
                 onPressed: (){
                   pushNavigation(context: context, widget: const ChangePassword(), routeName: NamedRoutes.changePassword);
                 }

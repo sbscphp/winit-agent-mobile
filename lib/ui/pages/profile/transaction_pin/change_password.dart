@@ -6,6 +6,7 @@ import 'package:winit_agent/core/data/view_models/authentication/password_vm.dar
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/authentication/login.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
+import 'package:winit_agent/ui/widgets/text_fields/custom_text_field.dart';
 
 import '../../../../core/constants/app_asset.dart';
 import '../../../../core/constants/app_dimension.dart';
@@ -18,6 +19,7 @@ import '../../../widgets/clickable.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_svg.dart';
+import '../../../widgets/screen_title.dart';
 import '../../../widgets/show_flush_bar.dart';
 import '../../../widgets/text_fields/onboarding_text_field.dart';
 
@@ -62,7 +64,11 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          OnboardingTextField(
+                          ScreenTitle(title: 'Change Password',
+                              subtitle: 'Enter your old password to continue'
+                          ),
+                          SizedBox(height: 24.h,),
+                          CustomTextField(
                             label: 'Current Password',
                             hintText: 'Enter Current Password',
                             obscure: _hidePwd,
@@ -85,7 +91,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
                             ),
                           ),
                           SizedBox(height: 24.h,),
-                          OnboardingTextField(
+                          CustomTextField(
                             label: 'New Password',
                             hintText: 'Enter New Password',
                             obscure: _hideNewPwd,
@@ -113,9 +119,9 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
                             child: PasswordRequirement(),
                           ),
                           SizedBox(height: 24.h,),
-                          OnboardingTextField(
-                            label: 'Confirm Password',
-                            hintText: 'Confirm Password',
+                          CustomTextField(
+                            label: 'Confirm New Password',
+                            hintText: 'Confirm New Password',
                             obscure: _hideConfirmPwd,
                             controller: _confirmPwd,
                             validator: (value) => FieldValidator.compareAndConfirm(value, source: _newPwd.text, errorMessage: "Your Passwords don't match"),

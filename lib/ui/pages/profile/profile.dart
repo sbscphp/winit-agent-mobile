@@ -85,7 +85,7 @@ class _ProfileState extends ConsumerState<Profile> {
               ProfileOption(
                   asset:AppAsset.pin,
                   label:'Account Security',
-                  subtitle: 'Security for your Account',
+                  subtitle: 'Secure your account with ease',
                   onPressed: (){
                     pushNavigation(context: context, widget: const AccountSecurity(), routeName: NamedRoutes.accountSecurity);
                   }
