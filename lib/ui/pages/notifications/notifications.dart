@@ -148,6 +148,8 @@ class _NotificationsState extends ConsumerState<Notifications> {
                             message: notificationFiltersVm.message,
                             success: notificationFiltersVm.state == ViewState.retrieved
                         );
+                      }else{
+                        notificationFiltersVm.showFilteredList = false;
                       }
                     },
                   ),

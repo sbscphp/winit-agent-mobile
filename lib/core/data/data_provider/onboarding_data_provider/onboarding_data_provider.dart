@@ -63,7 +63,7 @@ class OnboardingDataProvider{
       );
       var result = ApiResponse<IdentityResultData>.fromJson(
           response,
-          null);
+            (data) => IdentityResultData.fromJson(data as Map<String, dynamic>),);
       completer.complete(result);
     } catch (e) {
       completer.completeError(e);
@@ -80,7 +80,7 @@ class OnboardingDataProvider{
       );
       var result = ApiResponse<BankAccount>.fromJson(
           response,
-          null);
+              (data) => BankAccount.fromJson(data as Map<String, dynamic>));
       completer.complete(result);
     } catch (e) {
       completer.completeError(e);

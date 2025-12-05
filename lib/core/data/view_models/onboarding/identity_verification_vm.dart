@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/data/data_provider/onboarding_data_provider/onboarding_data_provider.dart';
@@ -36,7 +38,7 @@ class IdentityVerificationVm extends BaseState{
 
   String get bvnFirstname => _identityResultData?.returnedData?.firstname ?? 'N/A';
   String get bvnLastname => _identityResultData?.returnedData?.lastname ?? 'N/A';
-  String get bvnPhone => Utilities.formatSavedUserPhoneNumber(phoneNumber: _identityResultData?.returnedData?.phoneNumber ?? '');
+  String get bvnPhone => Utilities.formatSavedUserPhoneNumber(phoneNumber: _identityResultData?.returnedData?.phone ?? '');
   String get bvnGender => _identityResultData?.returnedData?.gender ?? 'N/A';
   String get bvnDob => _identityResultData?.returnedData?.birthdate ?? 'N/A';
 
@@ -49,7 +51,7 @@ class IdentityVerificationVm extends BaseState{
   //nin data with bvn
   String get ninFirstname => _identityResultData?.ninDetails?.firstname ?? 'N/A';
   String get ninLastname => _identityResultData?.ninDetails?.lastname ?? 'N/A';
-  String get ninPhone => Utilities.formatSavedUserPhoneNumber(phoneNumber: _identityResultData?.ninDetails?.phoneNumber ?? '');
+  String get ninPhone => Utilities.formatSavedUserPhoneNumber(phoneNumber: _identityResultData?.ninDetails?.phone ?? '');
   String get ninGender => _identityResultData?.ninDetails?.gender ?? 'N/A';
   String get ninDob => _identityResultData?.ninDetails?.birthdate ?? 'N/A';
 
@@ -97,6 +99,7 @@ class IdentityVerificationVm extends BaseState{
       _message = response.message ?? defaultSuccessMessage;
       _identityResultData = response.data;
       _isBvnVerified = _identityResultData?.isMatch ?? false;
+      log('bvn data:::${_identityResultData?.toJson().toString()}>>>');
       setSecondState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);

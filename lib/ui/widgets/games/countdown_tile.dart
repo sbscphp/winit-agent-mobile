@@ -11,7 +11,8 @@ import '../countdown_circle.dart';
 
 class CountdownTile extends ConsumerStatefulWidget {
   final bool? initiallyExpanded;
-  const CountdownTile({super.key, this.initiallyExpanded = true});
+  final ValueChanged<bool> onTimerElapsed;
+  const CountdownTile({super.key, this.initiallyExpanded = true, required this.onTimerElapsed});
 
   @override
   ConsumerState<CountdownTile> createState() => _CountdownTileState();

@@ -371,14 +371,16 @@ class _HomeState extends ConsumerState<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Total Ticket Sold',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: ColorPath.troutGrey
+                        FittedBox(
+                          child: Text(
+                            'Total Ticket Sold',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: ColorPath.troutGrey
+                            ),
                           ),
                         ),
                         SizedBox(height: 2.h,),
@@ -415,14 +417,16 @@ class _HomeState extends ConsumerState<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Commission Balance',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: ColorPath.troutGrey
+                        FittedBox(
+                          child: Text(
+                            'Commission Balance',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: ColorPath.troutGrey
+                            ),
                           ),
                         ),
                         SizedBox(height: 2.h,),
@@ -450,14 +454,16 @@ class _HomeState extends ConsumerState<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Performance Commission',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: ColorPath.troutGrey
+                        FittedBox(
+                          child: Text(
+                            'Performance Commission',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: ColorPath.troutGrey
+                            ),
                           ),
                         ),
                         SizedBox(height: 2.h,),
@@ -484,14 +490,16 @@ class _HomeState extends ConsumerState<Home> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        '${Utilities.ordinal(salesVm.position)} in $lga',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: ColorPath.troutGrey
+                      FittedBox(
+                        child: Text(
+                          '${Utilities.ordinal(salesVm.position)} in $lga',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: ColorPath.troutGrey
+                          ),
                         ),
                       ),
                       SizedBox(height: 2.h,),

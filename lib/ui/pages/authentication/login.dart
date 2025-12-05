@@ -358,6 +358,8 @@ class _LoginState extends ConsumerState<Login> {
         pushNavigation(context: context, widget: const Terms(), routeName: NamedRoutes.terms);
         break;
       case 'verification_completed':
+      case 'transaction_pin':
+      default:
         pushNavigation(context: context, widget: const BottomNav(), routeName: NamedRoutes.bottomNav);
     }
 

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -174,14 +175,14 @@ class SelectedGameVm extends BaseState{
   initPriceAndQuantity(){
     _quantity = selectedTicket?.number ?? 1;
     _amount = double.tryParse(selectedTicket?.discountPrice?.toString() ?? '0') ?? 0;
+    log('selected game:::${game?.toJson().toString()}>>>');
   }
 
   //calculates price based on quantity selected by user
   calculatePrice(){
 
-    double price = 0;
-
-    final refTicket = tickets.firstWhere((ticket) => ticket.number == 1);
+    //final refTicket = tickets.firstWhere((ticket) => ticket.number == 1);
+    final refTicket = tickets[0];
     double unitPrice = double.tryParse(refTicket.originalPrice?.toString() ?? '0') ?? 0;
 
     //check discount type

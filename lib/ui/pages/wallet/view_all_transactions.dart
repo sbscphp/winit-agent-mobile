@@ -128,6 +128,8 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                             message: transactionFiltersVm.message,
                           success: transactionFiltersVm.state == ViewState.retrieved
                         );
+                      }else{
+                        transactionFiltersVm.showFilteredList = false;
                       }
                     },
                   ),
