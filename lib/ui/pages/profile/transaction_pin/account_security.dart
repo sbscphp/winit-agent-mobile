@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/profile/transaction_pin/change_password.dart';
 import 'package:winit_agent/ui/pages/profile/transaction_pin/forgot_transaction_pin.dart';
 import 'package:winit_agent/ui/pages/profile/transaction_pin/set_transaction_pin.dart';
 
@@ -12,8 +13,8 @@ import '../../../../core/constants/app_dimension.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/profile/profile_option.dart';
 
-class TransactionPin extends ConsumerWidget {
-  const TransactionPin({super.key});
+class AccountSecurity extends ConsumerWidget {
+  const AccountSecurity({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,7 +22,7 @@ class TransactionPin extends ConsumerWidget {
     return Scaffold(
       appBar: customAppBar(
         context: context,
-        title: 'Transaction PIN',
+        title: 'Account Security',
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
@@ -43,15 +44,26 @@ class TransactionPin extends ConsumerWidget {
                   ), routeName: NamedRoutes.setTransactionPin);
                 }
             ),
-            SizedBox(height: 24.h,),
-            if(vm.hasTransactionPin)ProfileOption(
-                asset:AppAsset.pin,
-                label:'Forget Transaction PiN?',
-                subtitle: 'Forget transaction PIN? Reset today',
-                onPressed: (){
-                  pushNavigation(context: context, widget: const ForgotTransactionPin(), routeName: NamedRoutes.forgotTransactionPin);
-                }
+            if(vm.hasTransactionPin)Padding(
+              padding:EdgeInsets.only(top: 24.h),
+              child: ProfileOption(
+                  asset:AppAsset.pin,
+                  label:'Forget Transaction PiN?',
+                  subtitle: 'Forget transaction PIN? Reset today',
+                  onPressed: (){
+                    pushNavigation(context: context, widget: const ForgotTransactionPin(), routeName: NamedRoutes.forgotTransactionPin);
+                  }
+              ),
             ),
+            SizedBox(height: 24.h,),
+            ProfileOption(
+                asset:AppAsset.pin,
+                label:'Change Password',
+                subtitle: 'change your password',
+                onPressed: (){
+                  pushNavigation(context: context, widget: const ChangePassword(), routeName: NamedRoutes.changePassword);
+                }
+            )
           ],
         ),
       ),

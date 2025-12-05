@@ -204,7 +204,7 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                                   'Transaction PIN updated successfully!',
                                   buttonText: 'Close',
                                   onPressed: () {
-                                    popUntilNavigation(context: context, route: NamedRoutes.transactionPin);
+                                    popUntilNavigation(context: context, route: NamedRoutes.accountSecurity);
                                   },
                                 ),
                               );

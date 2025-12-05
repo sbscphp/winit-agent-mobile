@@ -12,7 +12,7 @@ import 'package:winit_agent/ui/pages/profile/account_closure/account_closure.dar
 import 'package:winit_agent/ui/pages/profile/agent_information/agent_information.dart';
 import 'package:winit_agent/ui/pages/profile/manage_bank_accounts/manage_bank_accounts.dart';
 import 'package:winit_agent/ui/pages/profile/referral_management/referral_management.dart';
-import 'package:winit_agent/ui/pages/profile/transaction_pin/transaction_pin.dart';
+import 'package:winit_agent/ui/pages/profile/transaction_pin/account_security.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
@@ -84,10 +84,10 @@ class _ProfileState extends ConsumerState<Profile> {
               SizedBox(height: 24.h,),
               ProfileOption(
                   asset:AppAsset.pin,
-                  label:'Transaction Pin',
-                  subtitle: 'Setup transaction PIN for your Account',
+                  label:'Account Security',
+                  subtitle: 'Security for your Account',
                   onPressed: (){
-                    pushNavigation(context: context, widget: const TransactionPin(), routeName: NamedRoutes.transactionPin);
+                    pushNavigation(context: context, widget: const AccountSecurity(), routeName: NamedRoutes.accountSecurity);
                   }
               ),
               SizedBox(height: 24.h,),

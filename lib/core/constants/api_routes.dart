@@ -82,6 +82,8 @@ class ApiRoutes {
       "${dotenv.env['AGENT']}/settings/closure/account/close";
   static var deleteAccount =
       "${dotenv.env['AGENT']}/settings/delete-account";
+  static var updatePassword =
+      "${dotenv.env['AGENT']}/settings/update-password";
 
 
 

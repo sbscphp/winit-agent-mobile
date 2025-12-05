@@ -41,7 +41,7 @@ class NamedRoutes {
 
   //profile
   static const verifyBankDetails = '/verifyBankDetails';
-  static const transactionPin = '/transactionPin';
+  static const accountSecurity = '/accountSecurity';
   static const setTransactionPin = '/setTransactionPin';
   static const forgotTransactionPin = '/forgotTransactionPin';
   static const manageBankAccounts = '/manageBankAccounts';
@@ -52,6 +52,7 @@ class NamedRoutes {
   static const agentInformation = '/agentInformation';
   static const personalDetails = '/personalDetails';
   static const businessDetails = '/businessDetails';
+  static const changePassword = '/changePassword';
 
   //notification
   static const notificationSettings = '/notificationSettings';
