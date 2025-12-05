@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_bluetooth_printer/flutter_bluetooth_printer_library.dart';
 import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 import 'package:flutter/foundation.dart';
@@ -71,6 +72,43 @@ class ReceiptUtils{
         context: context,
         message: e.toString(),
       );
+    }
+  }
+
+  static Future<void> printReceipt({
+    required BuildContext context,
+    required ReceiptController? controller,
+    required ValueChanged<bool> onDone
+  }) async {
+    try {
+      //Let the user select a device
+      final device = await FlutterBluetoothPrinter.selectDevice(context);
+
+      if (device == null) {
+        //Navigator.pop(context); // hide loading
+        showFlushBar(context: context, message: 'No printer selected', success: false);
+        onDone(false);
+        return;
+      }
+
+      //Send the print job and await completion
+      await controller?.print(address: device.address);
+
+      //Navigator.pop(context); // hide loading
+      showFlushBar(
+        context: context,
+        success: true,
+        message: 'Receipt sent to printer',
+      );
+      onDone(true);
+    } catch (e) {
+     // Navigator.pop(context); // hide loading
+      showFlushBar(
+        context: context,
+        message: 'Print error: $e',
+        success: false
+      );
+      onDone(false);
     }
   }
 
