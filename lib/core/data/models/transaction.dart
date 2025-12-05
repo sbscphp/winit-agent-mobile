@@ -67,7 +67,7 @@ class Transaction {
   final dynamic withdrawalMethod;
   final String? withdrawalStatus;
   final dynamic withdrawalGateway;
-  final dynamic withdrawnInto;
+  final BankAccount? withdrawnInto;
   final dynamic destinationAccountUuid;
   final dynamic bonusAmount;
   final dynamic bonusReference;
@@ -221,7 +221,7 @@ class Transaction {
     withdrawalMethod: json["withdrawal_method"],
     withdrawalStatus: json["withdrawal_status"],
     withdrawalGateway: json["withdrawal_gateway"],
-    withdrawnInto: json["withdrawn_into"],
+    withdrawnInto: json["withdrawn_into"] == null ? null : BankAccount.fromJson(json["withdrawn_into"]),
     destinationAccountUuid: json["destination_account_uuid"],
     bonusAmount: json["bonus_amount"],
     bonusReference: json["bonus_reference"],
@@ -297,7 +297,7 @@ class Transaction {
     "withdrawal_method": withdrawalMethod,
     "withdrawal_status": withdrawalStatus,
     "withdrawal_gateway": withdrawalGateway,
-    "withdrawn_into": withdrawnInto,
+    "withdrawn_into": withdrawnInto?.toJson(),
     "destination_account_uuid": destinationAccountUuid,
     "bonus_amount": bonusAmount,
     "bonus_reference": bonusReference,
