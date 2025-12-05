@@ -50,12 +50,16 @@ class StatusTag extends StatelessWidget {
       case 'completed':
       case 'verified':
       case 'successful':
+      case 'redeemed':
         return ColorPath.scandalGreen;
       case 'pending':
       case 'in-progress':
+      case 'invited':
+      case 'pending_purchase':
         return ColorPath.barleyOrange; //dawnBrown
       case 'failed':
       case 'rejected':
+      case 'ignored':
         return ColorPath.pippinPink;
       default:
         return Colors.white;
@@ -69,12 +73,16 @@ class StatusTag extends StatelessWidget {
       case 'completed':
       case 'verified':
       case 'successful':
+      case 'redeemed':
         return ColorPath.hazeGreen;
       case 'pending':
       case 'in-progress':
+      case 'invited':
+      case 'pending_purchase':
         return ColorPath.vesuBrown;
       case 'failed':
       case 'rejected':
+      case 'ignored':
         return ColorPath.ribbonRed;
       default:
         return Colors.white;
