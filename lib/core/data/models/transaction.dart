@@ -30,7 +30,7 @@ class Transaction {
   final String? paymentGateway;
   final dynamic paymentChannel;
   final dynamic paymentReference;
-  //final BankAccount? walletInto;
+  final BankAccount? walletInfo;
   //final String? bankAccountId;
   final BankAccount? bankAccount;
   final dynamic ticketCount;
@@ -106,7 +106,7 @@ class Transaction {
     this.paymentGateway,
     this.paymentChannel,
     this.paymentReference,
-    //this.walletInto,
+    this.walletInfo,
     //this.bankAccountId,
     this.bankAccount,
     this.ticketCount,
@@ -184,7 +184,7 @@ class Transaction {
     paymentGateway: json["payment_gateway"],
     paymentChannel: json["payment_channel"],
     paymentReference: json["payment_reference"],
-    //walletInto: json["wallet_into"] == null ? null : BankAccount.fromJson(json["wallet_into"]),
+    walletInfo: json["wallet_info"] == null ? null : BankAccount.fromJson(json["wallet_info"]),
     //bankAccountId: json["bank_account_id"],
     bankAccount: json["bank_account"] == null ? null : BankAccount.fromJson(json["bank_account"]),
     ticketCount: json["ticket_count"],
@@ -261,7 +261,7 @@ class Transaction {
     "payment_gateway": paymentGateway,
     "payment_channel": paymentChannel,
     "payment_reference": paymentReference,
-    //"wallet_into": walletInto?.toJson(),
+    "wallet_info": walletInfo?.toJson(),
     "bank_account": bankAccount?.toJson(),
     "ticket_count": ticketCount,
     "unit_bought": unitBought,

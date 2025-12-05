@@ -90,6 +90,14 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   }
 
   commission(BuildContext context){
+    final gameName = widget.transaction.gameName ?? 'N/A';
+    final date = DateUtilities.abbrevMonthDayYear(widget.transaction.createdAt?.toString() ?? DateTime.now().toString());
+    final time = DateUtilities.formatTimeAMPM(dateTime: widget.transaction.createdAt ?? DateTime.now());
+    final reference = widget.transaction.referenceId ?? 'N/A';
+    final commissionPercentage = widget.transaction.commissionPercentage ?? 'N/A';
+    final commissionAmount = double.tryParse(widget.transaction.commissionAmount?.toString() ?? '0') ?? 0;
+    final walletAccountNumber = widget.transaction.walletInfo?.accountNumber ?? 'N/A';
+    final status = widget.transaction.status ?? 'N/A';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -105,7 +113,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ),
             SizedBox(width: 20.w,),
             Text(
-              'Jan 25 2025',
+              date,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: Theme.of(context).colorScheme.textPrimary
@@ -125,7 +133,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ),
             SizedBox(width: 20.w,),
             Text(
-                '11:00AM',
+                time,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).colorScheme.textPrimary
@@ -146,7 +154,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             SizedBox(width: 20.w,),
             Expanded(
               child: Text(
-                  '678393',
+                  reference,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Theme.of(context).colorScheme.textPrimary
@@ -169,7 +177,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ),
             SizedBox(width: 20.w,),
             Text(
-                '2%',
+                '$commissionPercentage%',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).colorScheme.textPrimary
@@ -190,7 +198,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             SizedBox(width: 20.w,),
             Flexible(
               child: NairaDisplay(
-                amount: 202222,
+                amount: commissionAmount,
                 fontSize: 14.sp,
                 color:Theme.of(context).colorScheme.textPrimary,
                 fontWeight: FontWeight.w600,
@@ -214,7 +222,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             SizedBox(width: 20.w,),
             Expanded(
               child: Text(
-                  'Win 4BD Flat (ID:2003)',
+                  gameName,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Theme.of(context).colorScheme.textPrimary
@@ -238,7 +246,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             SizedBox(width: 20.w,),
             Expanded(
               child: Text(
-                'Wallet ${Utilities.maskCharacters(subject: '203546677', startIndex: 2, endIndex: 6)}',
+                'Wallet ${Utilities.maskCharacters(subject: walletAccountNumber, startIndex: 2, endIndex: 5)}',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).colorScheme.textPrimary
@@ -263,7 +271,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ),
             SizedBox(width: 20.w,),
             Expanded(
-              child: StatusTag(status: 'successful', returnOnlyText: true, useEndAlignment: true,),
+              child: StatusTag(status: status, returnOnlyText: true, useEndAlignment: true,),
             ),
           ],
         ),
@@ -1163,7 +1171,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   }
 
   String _receiptTile(){
-    switch(widget.transaction.transactionType?.toLowerCase()){
+    switch(widget.transaction.transactionType?.toLowerCase()){ //widget.transaction.transactionType?.toLowerCase()
       case 'topup':
         return 'Wallet Top Up';
       case 'purchase':
@@ -1184,7 +1192,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   }
 
   Widget _transactionDetails(BuildContext context){
-    switch(widget.transaction.transactionType?.toLowerCase()){
+    switch('commission'){ //widget.transaction.transactionType?.toLowerCase()
       case 'topup':
         return walletTopUp(context);
       case 'purchase':
