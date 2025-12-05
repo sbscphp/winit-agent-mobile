@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/data/enum/checkout_type.dart';
 import 'package:winit_agent/core/data/view_models/checkout/order_details_vm.dart';
 import 'package:winit_agent/core/data/view_models/checkout/payment_vm.dart';
+import 'package:winit_agent/core/data/view_models/notification/notifications_vm.dart';
 import 'package:winit_agent/core/data/view_models/wallet/wallet_vm.dart';
 import 'package:winit_agent/core/utilities/date_utilitites.dart';
 import 'package:winit_agent/ui/widgets/app_loader.dart';
@@ -59,6 +60,7 @@ class _TicketSalesReceiptState extends ConsumerState<TicketSalesReceipt> {
     final wVm = ref.read(walletVm);
     final filterTransactionsVm = ref.read(transactionFiltersViewModel);
     final statsVm = ref.read(salesStatViewModel);
+    final notificationVm = ref.read(notificationsViewModel);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       wVm.fetchWalletSummary(showLoader: false).then((value){
         if(wVm.state == ViewState.retrieved){
@@ -68,6 +70,7 @@ class _TicketSalesReceiptState extends ConsumerState<TicketSalesReceipt> {
       });
       filterTransactionsVm.fetchPurchaseTransactions(showLoader: false);
       statsVm.fetchSalesStat(showLoader: false);
+      notificationVm.fetchNotifications(refreshUi: false);
     });
   }
 
