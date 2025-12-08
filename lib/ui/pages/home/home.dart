@@ -62,42 +62,48 @@ class _HomeState extends ConsumerState<Home> {
           leadingIcon: ProfileImage(),
           title: 'Home',
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-            horizontal: AppDimension.paddingLeft,
-            vertical: 32.h
-        ),
-        child:Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            salesStats(context),
-            SizedBox(height: 24.h,),
-            Consumer(
-              builder: (context, ref, child){
-                final gamesVm = ref.watch(allGamesViewModel);
-                return ListHeader(
-                  label: 'Live Games ',
-                  subtitle: 'Play and buy Ticket for live games today',
-                  showAllVisible: gamesVm.state == ViewState.retrieved && gamesVm.allGames.isNotEmpty,
-                  onPressed: (){
-                    final container =
-                    ProviderScope.containerOf(context);
+      body: RefreshIndicator.adaptive(
+        onRefresh: () => _refreshHome(),
+        backgroundColor: Colors.white,
+        color: Theme.of(context).colorScheme.brandColor,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(
+              horizontal: AppDimension.paddingLeft,
+              vertical: 32.h
+          ),
+          child:Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              salesStats(context),
+              SizedBox(height: 24.h,),
+              Consumer(
+                builder: (context, ref, child){
+                  final gamesVm = ref.watch(allGamesViewModel);
+                  return ListHeader(
+                    label: 'Live Games ',
+                    subtitle: 'Play and buy Ticket for live games today',
+                    showAllVisible: gamesVm.state == ViewState.retrieved && gamesVm.allGames.isNotEmpty,
+                    onPressed: (){
+                      final container =
+                      ProviderScope.containerOf(context);
 
-                    final bottomNavVm =
-                    container.read(bottomNavViewModel);
+                      final bottomNavVm =
+                      container.read(bottomNavViewModel);
 
-                    bottomNavVm.updateIndex(0);
-                  },
-                );
-              },
-            ),
-            SizedBox(height: 16.h,),
-            games(context),
-            SizedBox(height: 24.h,),
-            recentPurchaseTransactions(context)
+                      bottomNavVm.updateIndex(0);
+                    },
+                  );
+                },
+              ),
+              SizedBox(height: 16.h,),
+              games(context),
+              SizedBox(height: 24.h,),
+              recentPurchaseTransactions(context)
 
 
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -561,5 +567,10 @@ class _HomeState extends ConsumerState<Home> {
         );
       });
     }
+  }
+
+  Future<void> _refreshHome() async {
+    ref.read(salesStatViewModel).fetchSalesStat(showLoader: false);
+    ref.read(transactionFiltersViewModel).fetchPurchaseTransactions(showLoader: false);
   }
 }

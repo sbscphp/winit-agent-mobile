@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/view_models/wallet/transaction_filters_vm.dart';
 import 'package:winit_agent/core/data/view_models/wallet/wallet_transactions_vm.dart';
 import 'package:winit_agent/ui/widgets/app_loader.dart';
@@ -170,35 +171,41 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: ListView.separated(
-                        controller: _filterScrollController,
-                        itemCount: transactionFiltersVm.filteredResults.length,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (BuildContext context, int index) {
-                          final transaction = transactionFiltersVm.filteredResults[index];
-                          final desc = transaction.description ?? 'N/A';
-                          final date = transaction.createdAt ?? DateTime.now();
-                          final amount = double.tryParse(transaction.amount?.toString() ?? '0') ?? 0;
-                          final status = transaction.status ?? '';
-                          return Clickable(
-                            onPressed: (){
-                              baseDialog(
-                                context: context,
-                                content: TransactionReceipt(transaction: transaction,),
-                              );
-                            },
-                            child: TransactionItem(
-                                label: desc,
-                                date: date,
-                                amount: amount,
-                                status: status
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(height: 16.h,);
-                        },
+                      child: RefreshIndicator.adaptive(
+                        onRefresh: () => _refreshTransactions(),
+                        backgroundColor: Colors.white,
+                        color: Theme.of(context).colorScheme.brandColor,
+                        child: ListView.separated(
+                          controller: _filterScrollController,
+                          itemCount: transactionFiltersVm.filteredResults.length,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (BuildContext context, int index) {
+                            final transaction = transactionFiltersVm.filteredResults[index];
+                            final desc = transaction.description ?? 'N/A';
+                            final date = transaction.createdAt ?? DateTime.now();
+                            final amount = double.tryParse(transaction.amount?.toString() ?? '0') ?? 0;
+                            final status = transaction.status ?? '';
+                            return Clickable(
+                              onPressed: (){
+                                baseDialog(
+                                  context: context,
+                                  content: TransactionReceipt(transaction: transaction,),
+                                );
+                              },
+                              child: TransactionItem(
+                                  label: desc,
+                                  date: date,
+                                  amount: amount,
+                                  status: status
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 16.h,);
+                          },
+                        ),
                       ),
                     ),
                     if(transactionFiltersVm.paginatedState == ViewState.busy)
@@ -255,35 +262,41 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: ListView.separated(
-                        controller: _scrollController,
-                        itemCount: vm.transactions.length,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (BuildContext context, int index) {
-                          final transaction = vm.transactions[index];
-                          final desc = transaction.description ?? 'N/A';
-                          final date = transaction.createdAt ?? DateTime.now();
-                          final amount = double.tryParse(transaction.amount?.toString() ?? '0') ?? 0;
-                          final status = transaction.status ?? '';
-                          return Clickable(
-                            onPressed: (){
-                              baseDialog(
-                                context: context,
-                                content: TransactionReceipt(transaction: transaction,),
-                              );
-                            },
-                            child: TransactionItem(
-                                label: desc,
-                                date: date,
-                                amount: amount,
-                                status: status
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(height: 16.h,);
-                        },
+                      child: RefreshIndicator.adaptive(
+                        onRefresh: () => _refreshTransactions(),
+                        backgroundColor: Colors.white,
+                        color: Theme.of(context).colorScheme.brandColor,
+                        child: ListView.separated(
+                          controller: _scrollController,
+                          itemCount: vm.transactions.length,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (BuildContext context, int index) {
+                            final transaction = vm.transactions[index];
+                            final desc = transaction.description ?? 'N/A';
+                            final date = transaction.createdAt ?? DateTime.now();
+                            final amount = double.tryParse(transaction.amount?.toString() ?? '0') ?? 0;
+                            final status = transaction.status ?? '';
+                            return Clickable(
+                              onPressed: (){
+                                baseDialog(
+                                  context: context,
+                                  content: TransactionReceipt(transaction: transaction,),
+                                );
+                              },
+                              child: TransactionItem(
+                                  label: desc,
+                                  date: date,
+                                  amount: amount,
+                                  status: status
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 16.h,);
+                          },
+                        ),
                       ),
                     ),
                     if(vm.paginatedState == ViewState.busy)
@@ -320,5 +333,15 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
         ),
       ),
     );
+  }
+
+  Future<void> _refreshTransactions() async {
+    final filterTransactionsVm = ref.read(transactionFiltersViewModel);
+    final transactionsVm = ref.read(walletTransactionsViewModel);
+    if(filterTransactionsVm.showFilteredList){
+      filterTransactionsVm.fetchFilteredResults(refreshUi: false);
+    }else{
+      transactionsVm.fetchTransactions(refreshUi: false);
+    }
   }
 }

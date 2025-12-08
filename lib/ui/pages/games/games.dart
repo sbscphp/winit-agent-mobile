@@ -125,22 +125,27 @@ class _GamesState extends ConsumerState<Games> {
 
             return Column(
               children: [
-                SingleChildScrollView(
-                  controller: _scrollController,
-                  padding: EdgeInsets.only(left: AppDimension.paddingLeft, right: AppDimension.paddingRight, top: AppDimension.paddingTop),
-                  child: StaggeredGrid.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 16.h,
-                    crossAxisSpacing: 16.w,
-                    children: List.generate(vm.allGames.length, (index) {
-                      final game = vm.allGames[index];
-                      return GameItem(
-                        index: index,
-                        fromExploreScreen: true,
-                        game: game,
-                      );
+                RefreshIndicator.adaptive(
+                  onRefresh: () => _refreshGames(),
+                  backgroundColor: Colors.white,
+                  color: Theme.of(context).colorScheme.brandColor,
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    padding: EdgeInsets.only(left: AppDimension.paddingLeft, right: AppDimension.paddingRight, top: AppDimension.paddingTop),
+                    child: StaggeredGrid.count(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 16.h,
+                      crossAxisSpacing: 16.w,
+                      children: List.generate(vm.allGames.length, (index) {
+                        final game = vm.allGames[index];
+                        return GameItem(
+                          index: index,
+                          fromExploreScreen: true,
+                          game: game,
+                        );
 
-                    }),
+                      }),
+                    ),
                   ),
                 ),
                 if(vm.paginatedState == ViewState.busy)
@@ -175,6 +180,10 @@ class _GamesState extends ConsumerState<Games> {
       )
 
     );
+  }
+
+  Future<void> _refreshGames() async {
+    ref.read(allGamesViewModel).fetchAllGames(refreshUi: false);
   }
 
 }
