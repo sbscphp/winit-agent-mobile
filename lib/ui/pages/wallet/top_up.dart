@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/models/payment_method.dart';
+import 'package:winit_agent/core/data/view_models/checkout/payment_vm.dart';
+import 'package:winit_agent/core/data/view_models/wallet/wallet_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/action_completed.dart';
 import 'package:winit_agent/ui/widgets/list_header.dart';
@@ -18,14 +21,14 @@ import '../../widgets/custom_svg.dart';
 import '../../widgets/naira_display.dart';
 import '../../widgets/text_fields/wallet_action_text_field.dart';
 
-class TopUp extends StatefulWidget {
+class TopUp extends ConsumerStatefulWidget {
   const TopUp({super.key});
 
   @override
-  State<TopUp> createState() => _TopUpState();
+  ConsumerState<TopUp> createState() => _TopUpState();
 }
 
-class _TopUpState extends State<TopUp> {
+class _TopUpState extends ConsumerState<TopUp> {
 
   final  _amount = TextEditingController();
   final _focusNode = FocusNode();
@@ -47,6 +50,8 @@ class _TopUpState extends State<TopUp> {
 
   @override
   Widget build(BuildContext context) {
+    final vm = ref.watch(walletVm);
+    final paymentVm = ref.watch(paymentViewModel);
     return Scaffold(
       appBar: customAppBar(
         context: context,
@@ -126,12 +131,13 @@ class _TopUpState extends State<TopUp> {
                       ),
                       SizedBox(height: 16.h,),
                       ListView.separated(
-                        itemCount: 1,
+                        itemCount: paymentVm.paymentMethods.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext context, int index) {
-                          return PaymentMethodItem(paymentMethod: PaymentMethod(),);
+                          final paymentMethod = paymentVm.paymentMethods[index];
+                          return PaymentMethodItem(paymentMethod: paymentMethod,);
                         },
                         separatorBuilder: (context, index) {
                           return SizedBox(height: 24.h,);
@@ -179,8 +185,8 @@ class _TopUpState extends State<TopUp> {
                       SizedBox(height: 16.h,),
                       CopyDetails(
                           label: 'Wallet Account No.',
-                          subtitle: 'Jide Ticket LLC ',
-                          detailToCopy: '0069000592'
+                          subtitle: vm.walletAccountName,
+                          detailToCopy: vm.walletAccountNumber
                       ),
                       SizedBox(height: 16.h,),
                       WinitContainer(
