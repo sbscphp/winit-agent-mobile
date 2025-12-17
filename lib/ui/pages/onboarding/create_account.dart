@@ -102,6 +102,7 @@ class _CreateAccountState extends ConsumerState<CreateAccount> {
                     label: 'Referral code (if any)',
                     hintText: 'Enter Referral code',
                     controller: _ref,
+                    isCompulsory: false,
                     keyboardType: TextInputType.text,
                   ),
                   SizedBox(height: 24.h,),
