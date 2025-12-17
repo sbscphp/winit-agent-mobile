@@ -130,7 +130,9 @@ class TransactionFiltersVm extends BaseState{
   }
 
   String title(){
-    switch(selectedFilter.toLowerCase()){
+    int filterIndex = transactionFilterOptions.indexOf(selectedFilter);
+    final refWord = filterValues[filterIndex];
+    switch(refWord.toLowerCase()){
       case 'topup':
         return 'Wallet Top Up';
       case 'purchase':

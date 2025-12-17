@@ -89,25 +89,27 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
         context: context,
         centerTitle: false,
         useCustomTitleWidget: true,
-        titleWidget: RichText(
-          text: TextSpan(
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
-            children: [
-              TextSpan(
-                text: transactionFiltersVm.showFilteredList ? transactionFiltersVm.title():'Wallet Transaction ',
+        titleWidget: FittedBox(
+          child: RichText(
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
               ),
-              TextSpan(
-                text: transactionFiltersVm.showFilteredList ? '(${transactionFiltersVm.totalRecords})':'(${vm.totalRecords})',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: ColorPath.turquoiseGreen
+              children: [
+                TextSpan(
+                  text: transactionFiltersVm.showFilteredList ? transactionFiltersVm.title():'Wallet Transaction ',
                 ),
-              ),
-
-            ],
+                TextSpan(
+                  text: transactionFiltersVm.showFilteredList ? '(${transactionFiltersVm.totalRecords})':'(${vm.totalRecords})',
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: ColorPath.turquoiseGreen
+                  ),
+                ),
+          
+              ],
+            ),
           ),
         ),
           actions: [
