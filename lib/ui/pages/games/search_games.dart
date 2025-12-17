@@ -112,44 +112,47 @@ class _SearchGamesState extends ConsumerState<SearchGames> {
                         ),
                       );
                     }
-                    return Column(
-                      children: [
-                        Expanded(
-                            child: GridView.builder(
-                              controller: _scrollController,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: 8,
-                                gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 15.h,
-                                  crossAxisSpacing: 16.w,
-                                  mainAxisExtent: 190.h,
+                    return Expanded(
+                      child: Column(
+                        children: [
+                          Expanded(
+                              child: GridView.builder(
+                                controller: _scrollController,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: vm.searchResults.length,
+                                  gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 15.h,
+                                    crossAxisSpacing: 16.w,
+                                    mainAxisExtent: 190.h,
+                                  ),
+                                  itemBuilder: (BuildContext context, int index) {
+                                  final game = vm.searchResults[index];
+                                    return GameItem(
+                                      index: index,
+                                      returnSmallCard: true,
+                                      game: game,
+                                    );
+                                  })),
+                          if(vm.paginatedState == ViewState.busy)
+                            Padding(
+                              padding: EdgeInsets.only(top: 5.h),
+                              child: const Align(
+                                alignment: Alignment.center,
+                                child: AppLoader(
+                                  size: 16,
                                 ),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GameItem(
-                                    index: index,
-                                    returnSmallCard: true,
-                                    game: Game(),
-                                  );
-                                })),
-                        if(vm.paginatedState == ViewState.busy)
-                          Padding(
-                            padding: EdgeInsets.only(top: 5.h),
-                            child: const Align(
-                              alignment: Alignment.center,
-                              child: AppLoader(
-                                size: 16,
                               ),
                             ),
-                          ),
-                        if(vm.paginatedState == ViewState.error)
-                          ErrorState(
-                              message: vm.message,
-                              isPaginationType: true,
-                              onPressed: ()=>vm.fetchSearchResults(firstCall: false, keyWord: _keyWord.text.trim()))
-                      ],
+                          if(vm.paginatedState == ViewState.error)
+                            ErrorState(
+                                message: vm.message,
+                                isPaginationType: true,
+                                onPressed: ()=>vm.fetchSearchResults(firstCall: false, keyWord: _keyWord.text.trim()))
+                        ],
+                      ),
                     );
                   }
 

@@ -1,5 +1,6 @@
 class BusinessInformation {
   final dynamic tinNumber;
+  final dynamic rcNumber;
   final dynamic businessPhone;
   final dynamic businessPhoneNumber2;
   final dynamic businessEmail;
@@ -14,6 +15,7 @@ class BusinessInformation {
 
   BusinessInformation({
     this.tinNumber,
+    this.rcNumber,
     this.businessPhone,
     this.businessPhoneNumber2,
     this.businessEmail,
@@ -29,6 +31,7 @@ class BusinessInformation {
 
   factory BusinessInformation.fromJson(Map<String, dynamic> json) => BusinessInformation(
     tinNumber: json["tin_number"],
+    rcNumber: json["rc_number"],
     businessPhone: json["business_phone"],
     businessPhoneNumber2: json["business_phone_number_2"],
     businessEmail: json["business_email"],
@@ -44,6 +47,7 @@ class BusinessInformation {
 
   Map<String, dynamic> toJson() => {
     "tin_number": tinNumber,
+    "rc_number": rcNumber,
     "business_phone": businessPhone,
     "business_phone_number_2": businessPhoneNumber2,
     "business_email": businessEmail,

@@ -15,6 +15,7 @@ import '../../../../core/constants/color_path.dart';
 import '../../../../core/constants/named_routes.dart';
 import '../../../../core/data/enum/view_state.dart';
 import '../../../../core/utilities/input_formatters/nigerian_phone_number_formatter.dart';
+import '../../../../core/utilities/input_formatters/nigerian_rc_number_formatter.dart';
 import '../../../../core/utilities/navigator.dart';
 import '../../../../core/utilities/utilities.dart';
 import '../../../../core/utilities/validator.dart';
@@ -42,6 +43,7 @@ class _BusinessDetailsState extends ConsumerState<BusinessDetails> {
 
   final _formKey = GlobalKey<FormState>();
   final _tin = TextEditingController();
+  final _rc = TextEditingController();
   final _phone1 = TextEditingController();
   final _phone2 = TextEditingController();
   final _email1 = TextEditingController();
@@ -88,6 +90,7 @@ class _BusinessDetailsState extends ConsumerState<BusinessDetails> {
 
   _initTextControllers(ProfileVm vm){
     _tin.text = vm.tinNumber;
+    _rc.text = vm.rcNumber;
     _phone1.text = vm.bizPhone;
     _phone2.text = vm.bizPhone2;
     _email1.text = vm.bizEmail;
@@ -184,6 +187,20 @@ class _BusinessDetailsState extends ConsumerState<BusinessDetails> {
                         ),
                         SizedBox(height: 16.h,),
                         OnboardingTextField(
+                          label: 'RC Number',
+                          hintText: 'Enter RC Number',
+                          controller: _rc,
+                          validator: FieldValidator.validate,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            NigerianRCNumberFormatter(),
+                          ],
+                          onChanged: (value){
+                            print(value);
+                          },
+                        ),
+                        SizedBox(height: 16.h,),
+                        OnboardingTextField(
                           label: 'Business Phone Number',
                           hintText: 'Enter Phone Number',
                           isCompulsory: false,
@@ -269,6 +286,7 @@ class _BusinessDetailsState extends ConsumerState<BusinessDetails> {
                                     bizAddress: _address.text,
                                     bizLandmark: _landmark.text,
                                     tinNumber: _tin.text,
+                                    rcNumber: _rc.text,
                                     otherAgents: _otherAgents.text,
                                     posAgents: _posAgents,
                                     lotteryAgents: _lotteryAgents
@@ -292,7 +310,7 @@ class _BusinessDetailsState extends ConsumerState<BusinessDetails> {
                                         subtitle:
                                         'New Changes Saved and Updated',
                                         onPressed: () {
-                                          popNavigation(context: context);
+                                          popUntilNavigation(context: context, route: NamedRoutes.agentInformation);
                                         },
                                       ),
                                     );

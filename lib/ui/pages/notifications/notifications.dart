@@ -185,18 +185,23 @@ class _NotificationsState extends ConsumerState<Notifications> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: ListView.separated(
-                        controller: _filterScrollController,
-                        itemCount: notificationFiltersVm.filteredResults.length,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (BuildContext context, int index) {
-                          final notification = notificationFiltersVm.filteredResults[index];
-                          return NotificationItem(notification: notification);
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(height: 16.h,);
-                        },
+                      child: RefreshIndicator.adaptive(
+                        onRefresh: () => _refreshNotifications(),
+                        backgroundColor: Colors.white,
+                        color: Theme.of(context).colorScheme.brandColor,
+                        child: ListView.separated(
+                          controller: _filterScrollController,
+                          itemCount: notificationFiltersVm.filteredResults.length,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (BuildContext context, int index) {
+                            final notification = notificationFiltersVm.filteredResults[index];
+                            return NotificationItem(notification: notification);
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 16.h,);
+                          },
+                        ),
                       ),
                     ),
                     if(notificationFiltersVm.paginatedState == ViewState.busy)
@@ -253,18 +258,23 @@ class _NotificationsState extends ConsumerState<Notifications> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: ListView.separated(
-                        controller: _scrollController,
-                        itemCount: vm.notifications.length,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (BuildContext context, int index) {
-                          final notification = vm.notifications[index];
-                          return NotificationItem(notification: notification);
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(height: 16.h,);
-                        },
+                      child: RefreshIndicator.adaptive(
+                        onRefresh: () => _refreshNotifications(),
+                        backgroundColor: Colors.white,
+                        color: Theme.of(context).colorScheme.brandColor,
+                        child: ListView.separated(
+                          controller: _scrollController,
+                          itemCount: vm.notifications.length,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (BuildContext context, int index) {
+                            final notification = vm.notifications[index];
+                            return NotificationItem(notification: notification);
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 16.h,);
+                          },
+                        ),
                       ),
                     ),
                     if(vm.paginatedState == ViewState.busy)
@@ -300,6 +310,16 @@ class _NotificationsState extends ConsumerState<Notifications> {
         )
       ),
     );
+  }
+
+  Future<void> _refreshNotifications() async {
+    final vm = ref.read(notificationsViewModel);
+    final notificationFilterVm = ref.read(notificationFiltersViewModel);
+    if(notificationFilterVm.showFilteredList){
+      notificationFilterVm.fetchFilteredResults(refreshUi: false);
+    }else{
+      vm.fetchNotifications(refreshUi: false);
+    }
   }
 
 

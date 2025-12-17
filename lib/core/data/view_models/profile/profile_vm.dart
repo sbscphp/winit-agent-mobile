@@ -58,6 +58,7 @@ class ProfileVm extends BaseState{
 
   //business info
   String get tinNumber => _businessInformation?.tinNumber ?? '';
+  String get rcNumber => _businessInformation?.rcNumber ?? '';
   String get bizPhone => Utilities.formatSavedUserPhoneNumber(phoneNumber: _businessInformation?.businessPhone ?? '');
   String get bizPhone2 => Utilities.formatSavedUserPhoneNumber(phoneNumber: _businessInformation?.businessPhoneNumber2 ?? '');
   String get bizEmail => _businessInformation?.businessEmail ?? '';
@@ -149,6 +150,7 @@ class ProfileVm extends BaseState{
     required String bizAddress,
     required String bizLandmark,
     required String tinNumber,
+    required String rcNumber,
     required String otherAgents,
     required List<String> posAgents,
     required List<String> lotteryAgents
@@ -164,6 +166,7 @@ class ProfileVm extends BaseState{
 
     final Map<String, dynamic> details = {
       "tin_number": tinNumber,
+      "rc_number": rcNumber.replaceAll(' ', '_'),
       "business_phone": Utilities.cleanPhoneNumber(phoneNumber: bizPhone1),
       "business_email": bizEmail1,
       "business_email_2": bizEmail2,
