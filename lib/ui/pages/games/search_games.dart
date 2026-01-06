@@ -70,7 +70,7 @@ class _SearchGamesState extends ConsumerState<SearchGames> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SearchField(
-              hintText: 'Enter Game name',
+              hintText: 'Enter Raffle name',
               keyboardType: TextInputType.text,
               onChanged: (value){
                 debouncer.performAction(action: () async {
@@ -107,7 +107,7 @@ class _SearchGamesState extends ConsumerState<SearchGames> {
                             child: EmptyState(
                               asset: AppAsset.emptyState,
                               title: 'No Search Result',
-                              subtitle: 'Enter a new keyword to search for Games',
+                              subtitle: 'Enter a new keyword to search for Raffles',
                             )
                         ),
                       );

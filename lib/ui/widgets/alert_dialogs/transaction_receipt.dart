@@ -216,7 +216,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
           children: [
             Expanded(
               child: Text(
-                'Commission earned Via (Game)',
+                'Commission earned Via (Raffle)',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w400,
                     color: Theme.of(context).colorScheme.textTertiary

@@ -81,8 +81,8 @@ class _HomeState extends ConsumerState<Home> {
                 builder: (context, ref, child){
                   final gamesVm = ref.watch(allGamesViewModel);
                   return ListHeader(
-                    label: 'Live Games ',
-                    subtitle: 'Play and buy Ticket for live games today',
+                    label: 'Live Raffles ',
+                    subtitle: 'Play and buy Ticket for live raffles today',
                     showAllVisible: gamesVm.state == ViewState.retrieved && gamesVm.allGames.isNotEmpty,
                     onPressed: (){
                       final container =

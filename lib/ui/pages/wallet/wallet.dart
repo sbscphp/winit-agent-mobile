@@ -146,7 +146,7 @@ class _WalletState extends ConsumerState<Wallet> {
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 39.5.w),
                                   child: CustomButton(
-                                      buttonText: 'Purchase Game Ticket',
+                                      buttonText: 'Purchase Raffle Ticket',
                                       suffixIcon: AppAsset.ticketPurchase,
                                       onPressed: () {
                                         final bottomNavVm = ref.read(bottomNavViewModel);

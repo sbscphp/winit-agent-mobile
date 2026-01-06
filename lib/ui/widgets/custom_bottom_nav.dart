@@ -38,7 +38,7 @@ class CustomBottomNav extends StatelessWidget {
                 //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  navItem(context, 0, 'Games', AppAsset.games),
+                  navItem(context, 0, 'Raffles', AppAsset.games),
                   //navItem(context, 0, 'Games', AppAsset.games),
                   SizedBox(width: 4.w),
                   navItem(context, 1, 'My Wallet', AppAsset.myWallet),
