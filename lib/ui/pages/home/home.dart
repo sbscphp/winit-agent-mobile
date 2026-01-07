@@ -145,8 +145,8 @@ class _HomeState extends ConsumerState<Home> {
             return Center(
                 child: EmptyState(
                   asset: AppAsset.emptyState,
-                  title: 'No Game Yet',
-                  subtitle: 'There are currently no games yet to Purchase Raffle ticket for',
+                  title: 'No Raffle Yet',
+                  subtitle: 'There are currently no raffles yet to Purchase ticket for',
                 )
             );
           }
@@ -196,7 +196,7 @@ class _HomeState extends ConsumerState<Home> {
       children: [
         ListHeader(
           label: '',
-          subtitle: 'List of your most Game purchase.',
+          subtitle: 'List of your most Raffle purchase.',
           titleWidget: RichText(
             textAlign: TextAlign.left,
             text: TextSpan(
@@ -209,7 +209,7 @@ class _HomeState extends ConsumerState<Home> {
                   text: 'Most Recent:',
                 ),
                 TextSpan(
-                  text: ' Game Purchase',
+                  text: ' Raffle Purchase',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w800,
                       color: Theme.of(context).colorScheme.textSecondary

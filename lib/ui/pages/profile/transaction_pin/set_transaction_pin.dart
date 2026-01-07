@@ -286,7 +286,7 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                                   assetSize: 80,
                                   subtitle:
                                   'Transaction PIN set successfully! You can now use your PIN to authorise and secure all transactions on your WinIt Agent account.',
-                                  buttonText: 'Explore Games',
+                                  buttonText: 'Explore Raffles',
                                   onPressed: () {
                                     ref.read(bottomNavViewModel).updateIndex(0);
                                     popUntilNavigation(context: context, route: NamedRoutes.bottomNav);

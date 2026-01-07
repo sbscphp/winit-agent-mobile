@@ -68,7 +68,7 @@ class _PaymentFailedState extends ConsumerState<PaymentFailed> {
                     ),
                     SizedBox(height: 8.h,),
                     Text(
-                      'So sorry, your payment for this game ticket(s) failed',
+                      'So sorry, your payment for this raffle ticket(s) failed',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w400,
                           color: Theme.of(context).colorScheme.textPrimary

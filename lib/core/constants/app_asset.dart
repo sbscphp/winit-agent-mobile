@@ -79,6 +79,7 @@ class AppAsset {
   static const String edit2 = '$_iconDirectory/edit_2.svg';
   static const String email2 = '$_iconDirectory/email.svg';
   static const String phone = '$_iconDirectory/phone.svg';
+  static const String copy2 = '$_iconDirectory/copy_2.svg';
 
 
   //bottom nav

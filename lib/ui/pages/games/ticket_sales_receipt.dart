@@ -152,7 +152,7 @@ class _TicketSalesReceiptState extends ConsumerState<TicketSalesReceipt> {
                                   SizedBox(height: 16.h,),
                                   receiptDetails(label: 'Agent ID', value: vm.agentId),
                                   SizedBox(height: 16.h,),
-                                  receiptDetails(label: 'Game Details', value: vm.gameName),
+                                  receiptDetails(label: 'Raffle Details', value: vm.gameName),
                                   SizedBox(height: 16.h,),
                                   receiptDetails(label: 'Number of Ticket (s)', value: '${vm.ticketCount} ${vm.ticketCount > 1 ? 'Entries':'Entry'}'),
                                   SizedBox(height: 24.h,),
@@ -199,7 +199,7 @@ class _TicketSalesReceiptState extends ConsumerState<TicketSalesReceipt> {
                                         ),
                                         SizedBox(height: 8.h,),
                                         Text(
-                                          'After Ticket purchase, we have sent you an SMS & email so you can sign up on the platform to get your Ticket Entries and track game. As a returning Customer, you can check your WinIT App to see ticket entries. ',
+                                          'After Ticket purchase, we have sent you an SMS & email so you can sign up on the platform to get your Ticket Entries and track raffle. As a returning Customer, you can check your WinIT App to see ticket entries. ',
                                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                               fontWeight: FontWeight.w500,
                                               fontStyle: FontStyle.italic,
@@ -261,7 +261,7 @@ class _TicketSalesReceiptState extends ConsumerState<TicketSalesReceipt> {
                               SizedBox(height: 16.h,),
                               receiptDetails(label: 'Agent ID', value: vm.agentId),
                               SizedBox(height: 16.h,),
-                              receiptDetails(label: 'Game Details', value: vm.gameName),
+                              receiptDetails(label: 'Raffle Details', value: vm.gameName),
                               SizedBox(height: 16.h,),
                               receiptDetails(label: 'Number of Ticket (s)', value: '${vm.ticketCount} ${vm.ticketCount > 1 ? 'Entries':'Entry'}'),
                               SizedBox(height: 24.h,),
@@ -308,7 +308,7 @@ class _TicketSalesReceiptState extends ConsumerState<TicketSalesReceipt> {
                                     ),
                                     SizedBox(height: 8.h,),
                                     Text(
-                                      'After Ticket purchase, we have sent you an SMS & email so you can sign up on the platform to get your Ticket Entries and track game. As a returning Customer, you can check your WinIT App to see ticket entries. ',
+                                      'After Ticket purchase, we have sent you an SMS & email so you can sign up on the platform to get your Ticket Entries and track raffle. As a returning Customer, you can check your WinIT App to see ticket entries. ',
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                           fontWeight: FontWeight.w500,
                                           fontStyle: FontStyle.italic,
@@ -423,7 +423,7 @@ class _TicketSalesReceiptState extends ConsumerState<TicketSalesReceipt> {
                                   SizedBox(height: 16.h,),
                                   receiptDetails(label: 'Agent ID', value: vm.agentId),
                                   SizedBox(height: 16.h,),
-                                  receiptDetails(label: 'Game Details', value: vm.gameName),
+                                  receiptDetails(label: 'Raffle Details', value: vm.gameName),
                                   SizedBox(height: 16.h,),
                                   receiptDetails(label: 'Number of Ticket (s)', value: '${vm.ticketCount} ${vm.ticketCount > 1 ? 'Entries':'Entry'}'),
                                   SizedBox(height: 24.h,),
@@ -470,7 +470,7 @@ class _TicketSalesReceiptState extends ConsumerState<TicketSalesReceipt> {
                                         ),
                                         SizedBox(height: 8.h,),
                                         Text(
-                                          'After Ticket purchase, we have sent you an SMS & email so you can sign up on the platform to get your Ticket Entries and track game. As a returning Customer, you can check your WinIT App to see ticket entries. ',
+                                          'After Ticket purchase, we have sent you an SMS & email so you can sign up on the platform to get your Ticket Entries and track raffle. As a returning Customer, you can check your WinIT App to see ticket entries. ',
                                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                               fontWeight: FontWeight.w500,
                                               fontStyle: FontStyle.italic,
@@ -532,7 +532,7 @@ class _TicketSalesReceiptState extends ConsumerState<TicketSalesReceipt> {
                               SizedBox(height: 16.h,),
                               receiptDetails(label: 'Agent ID', value: vm.agentId),
                               SizedBox(height: 16.h,),
-                              receiptDetails(label: 'Game Details', value: vm.gameName),
+                              receiptDetails(label: 'Raffle Details', value: vm.gameName),
                               SizedBox(height: 16.h,),
                               receiptDetails(label: 'Number of Ticket (s)', value: '${vm.ticketCount} ${vm.ticketCount > 1 ? 'Entries':'Entry'}'),
                               SizedBox(height: 24.h,),
@@ -579,7 +579,7 @@ class _TicketSalesReceiptState extends ConsumerState<TicketSalesReceipt> {
                                     ),
                                     SizedBox(height: 8.h,),
                                     Text(
-                                      'After Ticket purchase, we have sent you an SMS & email so you can sign up on the platform to get your Ticket Entries and track game. As a returning Customer, you can check your WinIT App to see ticket entries. ',
+                                      'After Ticket purchase, we have sent you an SMS & email so you can sign up on the platform to get your Ticket Entries and track raffle. As a returning Customer, you can check your WinIT App to see ticket entries. ',
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                           fontWeight: FontWeight.w500,
                                           fontStyle: FontStyle.italic,
