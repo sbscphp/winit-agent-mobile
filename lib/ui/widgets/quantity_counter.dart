@@ -119,6 +119,7 @@ class _QuantityCounterState extends State<QuantityCounter> {
               debouncer.performAction(action: () async {
                 setState(() {
                   if(_quantity.text.isEmpty || value == '0')_quantity.text = '1';
+                  if((int.tryParse(_quantity.text) ?? 0) > widget.upperLimit)_quantity.text = widget.upperLimit.toString();
                   _quantity.selection = TextSelection.fromPosition(
                     TextPosition(offset: _quantity.text.length),
                   );
