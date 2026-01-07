@@ -65,7 +65,7 @@ class _WalletState extends ConsumerState<Wallet> {
           context: context,
           centerTitle: true,
           leadingIcon: ProfileImage(),
-          title: 'Explore',
+          title: 'My Wallet',
           actions: [
             if(vm.state == ViewState.retrieved)ActionIcon(label: 'Quick Actions', asset: AppAsset.walletActions,
               onPressed: (){
