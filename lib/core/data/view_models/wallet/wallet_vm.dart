@@ -35,7 +35,9 @@ class WalletVm extends BaseState{
 
   String get walletAccountName => platformAccount?.accountDetails?.accountName ?? 'N/A';
   String get walletAccountNumber => platformAccount?.accountDetails?.accountNumber ?? 'N/A';
+  String get bankName => platformAccount?.accountDetails?.bankName ?? 'N/A';
   String get walletId => platformAccount?.accountDetails?.uuid ?? '';
+
 
 
 
