@@ -20,6 +20,7 @@ import '../../../../core/constants/color_path.dart';
 import '../../../../core/utilities/input_formatters/nigerian_phone_number_formatter.dart';
 import '../../../../core/utilities/validator.dart';
 import '../../../core/data/enum/view_state.dart';
+import '../../../core/data/view_models/profile/profile_vm.dart';
 import '../../../core/utilities/utilities.dart';
 import '../../widgets/clickable.dart';
 import '../../widgets/custom_appbar.dart';
@@ -180,6 +181,7 @@ class _CreateAccountState extends ConsumerState<CreateAccount> {
                           );
 
                           if(vm.state == ViewState.retrieved){
+                            ref.read(profileViewModel).loginData = vm.loginData;
                             //ref.read(onboardingViewModel).updateOnboardingStep(val: vm.loginData?.user?.registrationStep);
                             replaceNavigation(context: context, widget: Otp(otpType: OtpType.createAccount, identifier: Utilities.cleanPhoneNumber(phoneNumber: _phone.text)), routeName: NamedRoutes.otp);
                           }else{
