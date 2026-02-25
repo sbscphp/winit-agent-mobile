@@ -151,7 +151,7 @@ class _HomeState extends ConsumerState<Home> {
             );
           }
           return SizedBox(
-            height: 200.h,
+            height: 220.h,
             child: ListView.separated(
               itemCount: gamesVm.allGames.length,
               scrollDirection: Axis.horizontal,

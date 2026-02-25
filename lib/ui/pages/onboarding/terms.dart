@@ -103,6 +103,13 @@ class _TermsState extends ConsumerState<Terms> {
                                     fontFamily: 'MontserratAlternates',
                                     margin: Margins.only(top: 16, bottom: 8),
                                   ),
+                                  "h3": Style(
+                                    fontSize: FontSize(14.sp),
+                                    fontWeight: FontWeight.w700,
+                                    color: ColorPath.blueBlue,
+                                    fontFamily: 'MontserratAlternates',
+                                    margin: Margins.only(top: 16, bottom: 8),
+                                  ),
                                   "p": Style(
                                     fontSize: FontSize(14),
                                     fontWeight: FontWeight.w400,
