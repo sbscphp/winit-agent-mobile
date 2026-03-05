@@ -206,11 +206,11 @@ class ProfileVm extends BaseState{
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
       _businessInformation = response.data?.businessInformation;
-      print('number returned::::${_businessInformation?.tinNumber}>>>>');
+      //print('number returned::::${_businessInformation?.tinNumber}>>>>');
       setState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);
-      log('full error:::$_message');
+      //log('full error:::$_message');
       setState(ViewState.error);
     });
   }

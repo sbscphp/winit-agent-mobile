@@ -28,7 +28,8 @@ import '../onboarding/onboarding_successful.dart';
 class Otp extends ConsumerStatefulWidget {
   final OtpType otpType;
   final String identifier;
-  const Otp({super.key, required this.otpType, required this.identifier});
+  final bool isEmail;
+  const Otp({super.key, required this.otpType, required this.identifier, required this.isEmail});
 
   @override
   ConsumerState<Otp> createState() => _OtpState();
@@ -104,7 +105,7 @@ class _OtpState extends ConsumerState<Otp> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ScreenTitle(title: vm.otpTitle(otpType: widget.otpType),
-                                      subtitle: vm.otpSubtitle(otpType: widget.otpType)
+                                      subtitle: vm.otpSubtitle(otpType: widget.otpType, isEmail: widget.isEmail)
                                   ),
                                   SizedBox(height: 37.h,),
                                   CustomTextField(

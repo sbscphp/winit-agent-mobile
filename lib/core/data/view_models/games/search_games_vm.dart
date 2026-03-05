@@ -62,7 +62,7 @@ class SearchGamesVm extends BaseState{
         setPaginatedState(ViewState.retrieved);
       }
       pageNumber++;
-      debugPrint("length of search results::::${_searchResults.length}>>>");
+      //debugPrint("length of search results::::${_searchResults.length}>>>");
     }, onError: (e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);
       if(firstCall){

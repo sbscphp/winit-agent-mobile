@@ -76,6 +76,7 @@ dependencies:
   flutter_html: ^3.0.0
   image_gallery_saver_plus: ^4.0.1
   flutter_bluetooth_printer: ^2.20.0
+  upgrader: ^12.3.0
 
 
 

@@ -80,7 +80,7 @@ class NotificationFiltersVm extends BaseState{
         setPaginatedState(ViewState.retrieved);
       }
       pageNumber++;
-      debugPrint("length of filtered notifications::::${_filteredResults.length}>>>");
+      //debugPrint("length of filtered notifications::::${_filteredResults.length}>>>");
     }, onError: (e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);
       if(firstCall){

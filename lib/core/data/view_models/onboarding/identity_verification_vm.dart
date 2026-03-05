@@ -99,7 +99,7 @@ class IdentityVerificationVm extends BaseState{
       _message = response.message ?? defaultSuccessMessage;
       _identityResultData = response.data;
       _isBvnVerified = _identityResultData?.isMatch ?? false;
-      log('bvn data:::${_identityResultData?.toJson().toString()}>>>');
+      //log('bvn data:::${_identityResultData?.toJson().toString()}>>>');
       setSecondState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);

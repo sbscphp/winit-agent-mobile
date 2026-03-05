@@ -183,7 +183,7 @@ class _CreateAccountState extends ConsumerState<CreateAccount> {
                           if(vm.state == ViewState.retrieved){
                             ref.read(profileViewModel).loginData = vm.loginData;
                             //ref.read(onboardingViewModel).updateOnboardingStep(val: vm.loginData?.user?.registrationStep);
-                            replaceNavigation(context: context, widget: Otp(otpType: OtpType.createAccount, identifier: Utilities.cleanPhoneNumber(phoneNumber: _phone.text)), routeName: NamedRoutes.otp);
+                            replaceNavigation(context: context, widget: Otp(otpType: OtpType.createAccount, identifier: Utilities.cleanPhoneNumber(phoneNumber: _phone.text), isEmail: false,), routeName: NamedRoutes.otp);
                           }else{
                             showFlushBar(
                                 context: context,

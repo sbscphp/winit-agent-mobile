@@ -85,6 +85,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   final validate = _formKey.currentState!.validate();
                   if(validate){
                     pushNavigation(context: context, widget: Otp(
+                        isEmail: widget.isEmail,
                         otpType: OtpType.forgotPassword,
                         identifier: widget.isEmail
                       ? _choice.text

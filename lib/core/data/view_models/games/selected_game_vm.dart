@@ -175,7 +175,7 @@ class SelectedGameVm extends BaseState{
   initPriceAndQuantity(){
     _quantity = selectedTicket?.number ?? 1;
     _amount = double.tryParse(selectedTicket?.discountPrice?.toString() ?? '0') ?? 0;
-    log('selected game:::${game?.toJson().toString()}>>>');
+    //log('selected game:::${game?.toJson().toString()}>>>');
   }
 
   //calculates price based on quantity selected by user

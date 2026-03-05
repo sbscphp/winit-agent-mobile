@@ -42,7 +42,7 @@ class BanksVm extends BaseState{
       _message = response.message ?? defaultSuccessMessage;
       _banks = response.data ?? [];
       _filteredBanks = List.of(_banks);
-      print('bank length::::${_banks.length}>>>>');
+      //print('bank length::::${_banks.length}>>>>');
       setState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);

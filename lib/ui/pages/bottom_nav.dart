@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:upgrader/upgrader.dart';
 import 'package:winit_agent/core/data/view_models/authentication/logout_vm.dart';
 import 'package:winit_agent/core/data/view_models/bottom_nav_view_model.dart';
 import 'package:winit_agent/ui/widgets/custom_bottom_nav.dart';
@@ -82,8 +85,13 @@ class _BottomNavState extends ConsumerState<BottomNav> {
             body: SafeArea(
                 top: false,
                 bottom: false,
-                child: IndexedStack(
-                    index: vm.currentIndex, children: vm.children)),
+                child: UpgradeAlert(
+                  dialogStyle: Platform.isAndroid
+                      ? UpgradeDialogStyle.material
+                      : UpgradeDialogStyle.cupertino,
+                  child: IndexedStack(
+                      index: vm.currentIndex, children: vm.children),
+                )),
           ),
       ),
     );

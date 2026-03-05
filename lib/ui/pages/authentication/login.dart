@@ -334,7 +334,9 @@ class _LoginState extends ConsumerState<Login> {
       case 'registration':
         pushNavigation(context: context, widget: Otp(
             otpType: OtpType.createAccount,
-            identifier: Utilities.cleanPhoneNumber(phoneNumber: vm.phone)),
+            identifier: Utilities.cleanPhoneNumber(phoneNumber: vm.phone),
+            isEmail: false,
+        ),
             routeName: NamedRoutes.otp
         );
         break;

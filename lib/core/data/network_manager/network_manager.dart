@@ -46,7 +46,7 @@ class NetworkManager {
           bool useGuestToken = options.extra["useGuestToken"] ?? false;
           if (useAuth) {
             String? token = await SecureStorageUtils.retrieveToken();
-            print('token:::$token>>>');
+            //print('token:::$token>>>');
             if (token != null && token.isNotEmpty) {
               options.headers["Authorization"] = "Bearer $token";
             }
@@ -109,7 +109,7 @@ class NetworkManager {
     final baseUrl = AppConfig.baseUrl;
     final url = '$baseUrl$requestUrl';
 
-    print("Url: $url, Body: $body, Query: $queryParameters, useAuth: $useAuth");
+    //print("Url: $url, Body: $body, Query: $queryParameters, useAuth: $useAuth");
 
     try {
       Response response;

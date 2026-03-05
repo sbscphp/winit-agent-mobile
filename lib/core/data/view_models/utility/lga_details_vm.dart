@@ -29,7 +29,7 @@ class LgaDetailsVm extends BaseState{
     await _utilityDp.fetchLgaDetails().then((response) async{
       _message = response.message ?? defaultSuccessMessage;
       _lgas = response.data ?? [];
-      print('length::::${_lgas.length}>>>>');
+      //print('length::::${_lgas.length}>>>>');
       setState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);
