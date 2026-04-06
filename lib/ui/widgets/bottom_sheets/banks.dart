@@ -104,6 +104,7 @@ class Banks extends ConsumerWidget {
                               return Clickable(
                                 onPressed: (){
                                   onDone(bank);
+                                  vm.defaultFilterList();
                                   popNavigation(context: context);
                                 },
                                 child: Container(

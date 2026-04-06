@@ -89,8 +89,11 @@ class _VerifyBankDetailsState extends ConsumerState<VerifyBankDetails> {
                               content: Banks(
                                 onDone: (value){
                                   _selectedBank = value.name;
-                                  dummyBanks.add(_selectedBank ?? '');
+                                  if(!dummyBanks.contains(_selectedBank ?? '')){
+                                    dummyBanks.add(_selectedBank ?? '');
+                                  }
                                   _accountNumber.clear();
+                                  _accountName.clear();
                                   vm.selectedBank = value;
                                 },
                               ),
@@ -118,6 +121,7 @@ class _VerifyBankDetailsState extends ConsumerState<VerifyBankDetails> {
                             LengthLimitingTextInputFormatter(10),
                           ],
                           onChanged: (value)async{
+                            _accountName.clear();
                             if(value.trim().length == 10){
                               print('here');
                               Utilities.hideKeyboard(context);

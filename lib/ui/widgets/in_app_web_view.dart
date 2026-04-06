@@ -5,6 +5,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
+import '../../core/constants/app_constants.dart';
+import 'error_state.dart';
+
 class InAppWebView extends StatefulWidget {
   final String url;
   final String title;
@@ -18,6 +21,8 @@ class InAppWebView extends StatefulWidget {
 class _InAppWebViewState extends State<InAppWebView> {
   late final WebViewController _controller;
   bool _isLoading = true;
+  bool _hasError = false;
+  String? _errorMessage;
 
 
 
@@ -31,16 +36,27 @@ class _InAppWebViewState extends State<InAppWebView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: customAppBar(
-          title: widget.title,
-          context: context,
-          // textColor: ColorPath.shaftBlack
-        ),
-       body: _isLoading ?
+      appBar: customAppBar(
+        title: widget.title,
+        context: context,
+        // textColor: ColorPath.shaftBlack
+      ),
+      body: _isLoading ?
       const Center(
         child: AppLoader(size: 80,),
       )
-      : WebViewWidget(controller: _controller),
+          : _hasError ? Center(
+        child: ErrorState(
+            message: _errorMessage ?? defaultErrorMessage,
+            onPressed: (){
+              setState(() {
+                _hasError = false;
+                _isLoading = true;
+              });
+              _controller.loadRequest(Uri.parse(widget.url));
+            }),
+      ):
+      WebViewWidget(controller: _controller),
     );
   }
 
@@ -72,8 +88,19 @@ class _InAppWebViewState extends State<InAppWebView> {
               _isLoading = false;
             });
           },
+          onHttpError:(HttpResponseError e){
+            setState(() {
+              _isLoading = false;
+              _hasError = true;
+              _errorMessage = 'HTTP error: ${e.response?.statusCode}';
+            });
+          } ,
           onWebResourceError: (WebResourceError error) {
-
+            setState(() {
+              _isLoading = false;
+              _hasError = true;
+              _errorMessage = error.description;
+            });
           },
         ),
       )

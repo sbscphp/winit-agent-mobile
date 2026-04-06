@@ -7,11 +7,13 @@ import 'package:winit_agent/core/data/enum/checkout_type.dart';
 import 'package:winit_agent/ui/pages/games/payment_failed.dart';
 import 'package:winit_agent/ui/pages/games/ticket_sales_receipt.dart';
 
+import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/named_routes.dart';
 import '../../../core/data/view_models/checkout/payment_vm.dart';
 import '../../../core/utilities/navigator.dart';
 import '../../widgets/app_loader.dart';
 import '../../widgets/custom_appbar.dart';
+import '../../widgets/error_state.dart';
 
 class PaymentCheckout extends ConsumerStatefulWidget {
   const PaymentCheckout({super.key});
@@ -23,7 +25,9 @@ class PaymentCheckout extends ConsumerStatefulWidget {
 
 class _PaymentCheckoutState extends ConsumerState<PaymentCheckout> {
   late final WebViewController _controller;
-  bool isLoading = false;
+  bool _isLoading = true;
+  bool _hasError = false;
+  String? _errorMessage;
 
   @override
   void initState() {
@@ -41,11 +45,22 @@ class _PaymentCheckoutState extends ConsumerState<PaymentCheckout> {
           //   const HomeIcon()
           // ]
       ),
-      body: isLoading ? const Center(
-        child: AppLoader(),
-      ):WebViewWidget(
-        controller: _controller,
-      ),
+      body: _isLoading ?
+      const Center(
+        child: AppLoader(size: 80,),
+      )
+          : _hasError ? Center(
+        child: ErrorState(
+            message: _errorMessage ?? defaultErrorMessage,
+            onPressed: (){
+              setState(() {
+                _hasError = false;
+                _isLoading = true;
+              });
+              _controller.loadRequest(Uri.parse(ref.read(paymentViewModel).authUrl));
+            }),
+      ):
+      WebViewWidget(controller: _controller),
     );
   }
 
@@ -89,17 +104,15 @@ class _PaymentCheckoutState extends ConsumerState<PaymentCheckout> {
               print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
               if(change.url!.contains(vm.callbackUrl)){
                 setState(() {
-                  isLoading = true;
+                  _isLoading = true;
                 });
-                print('is loading value at callback: $isLoading>>>');
                 return;
               }
               if(change.url!.contains(vm.successRedirectUrl)){
                 if(mounted){
                   setState(() {
-                    isLoading = false;
+                    _isLoading = false;
                   });
-                  print('is loading value at nav: $isLoading>>>');
                   //nav user to ticket screen
                   replaceNavigation(context: context, widget: const TicketSalesReceipt(checkoutType: CheckoutType.paystack,), routeName: NamedRoutes.ticketSalesReceipt);
                 }
@@ -108,7 +121,7 @@ class _PaymentCheckoutState extends ConsumerState<PaymentCheckout> {
               if(change.url!.contains(vm.failureRedirectUrl)){
                 if(mounted){
                   setState(() {
-                    isLoading = false;
+                    _isLoading = false;
                   });
                   //nav user to order/payment failed screen
                   replaceNavigation(context: context, widget: const PaymentFailed(), routeName: NamedRoutes.paymentFailed);
