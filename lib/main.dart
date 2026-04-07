@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:freerasp/freerasp.dart';
 import 'package:winit_agent/core/constants/app_config.dart';
 import 'package:winit_agent/core/constants/app_theme/app_theme.dart';
 import 'package:winit_agent/core/data/enum/environment.dart';
@@ -17,7 +18,9 @@ import 'package:winit_agent/ui/pages/splash.dart';
 import 'package:winit_agent/router.dart' as router;
 
 import 'core/constants/app_constants.dart';
+import 'core/constants/named_routes.dart';
 import 'core/data/services/geolocator_service.dart';
+import 'core/data/services/security_service.dart';
 import 'core/data/view_models/utility/lga_details_vm.dart';
 import 'core/utilities/firebase_messaging_utils.dart';
 
@@ -38,6 +41,8 @@ void main() async{
   //await CountryUtils.readCountryJson();
   SecureStorageInit.initSecureStorage();
   setupLocator();
+  // Initialize security logic
+  await locator<SecurityService>().init();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -117,4 +122,16 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   }
 }
+
+// _handleSecurityThreat() {
+//   WidgetsBinding.instance.addPostFrameCallback((_) {
+//     NavigationService navigationService = locator<NavigationService>();
+//     if (navigationService.navigationKey.currentState != null) {
+//       navigationService.clearAllRoutes(
+//         routeName: NamedRoutes.securityPrompt,
+//       );
+//     }
+//   });
+//
+// }
 

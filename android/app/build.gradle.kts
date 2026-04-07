@@ -6,6 +6,15 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+import java.util.Properties
+        import java.io.FileInputStream
+
+val keystorePropertiesFile = rootProject.projectDir.resolve("key.properties")
+val keystoreProperties = Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace = "com.hopegainltd.winitagent"
     compileSdk = flutter.compileSdkVersion
@@ -36,17 +45,65 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String?
+            keyPassword = keystoreProperties["keyPassword"] as String?
+            storeFile = keystoreProperties["storeFile"]?.let { file(it) }
+            storePassword = keystoreProperties["storePassword"] as String?
+        }
+    }
+
 
     buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+        getByName("debug") {
             signingConfig = signingConfigs.getByName("debug")
+            isMinifyEnabled = false
+            isShrinkResources = false
+        }
+
+        getByName("release") {
+            // This is the VAPT fix
+            isMinifyEnabled = true
+            isShrinkResources = true
+
+            // SAFE CHECK: This tries to find "release", but falls back to "debug"
+            // if you haven't set up your production keystore yet.
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
+
             proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"),
+                getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+//        debug {
+//            // TODO: Add your own signing config for the release build.
+//            // Signing with the debug keys for now, so `flutter run --release` works.
+//            signingConfig = signingConfigs.getByName("debug")
+//            proguardFiles(
+//                getDefaultProguardFile("proguard-android.txt"),
+//                "proguard-rules.pro"
+//            )
+//        }
+//        release {
+//            // TODO: Add your own signing config for the release build.
+//            // Signing with the debug keys for now, so `flutter run --release` works.
+//            /*signingConfig = signingConfigs.getByName("debug")
+//            proguardFiles(
+//                getDefaultProguardFile("proguard-android.txt"),
+//                "proguard-rules.pro"
+//            )*/
+//            isMinifyEnabled = true
+//            isShrinkResources = true
+//
+//            // Ensure this points to your release config, not debug
+//            signingConfig = signingConfigs.getByName("release")
+//
+//            proguardFiles(
+//                getDefaultProguardFile("proguard-android-optimize.txt"),
+//                "proguard-rules.pro"
+//            )
+//        }
     }
 }
 

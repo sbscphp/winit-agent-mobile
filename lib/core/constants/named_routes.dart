@@ -24,6 +24,7 @@ class NamedRoutes {
   static const chooseOption = '/chooseOption';
   static const forgotPassword = '/forgotPassword';
   static const passwordAction = '/passwordAction';
+  static const securityPrompt = '/securityPrompt';
 
   //bottom-nav
   static const bottomNav = '/bottomNav';

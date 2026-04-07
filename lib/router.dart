@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:winit_agent/ui/pages/authentication/login.dart';
+import 'package:winit_agent/ui/pages/security_prompt.dart';
 
 import 'core/constants/named_routes.dart';
 
@@ -11,6 +12,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(
         routeName: settings.name!,
         viewToShow: const Login(),
+      );
+    case NamedRoutes.securityPrompt:
+      return _getPageRoute(
+        routeName: settings.name!,
+        viewToShow: const SecurityPrompt(),
       );
     //todo::add more routes
     default:
