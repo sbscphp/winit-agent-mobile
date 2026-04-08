@@ -50,4 +50,5 @@ app.*.map.json
 # Envied & Secrets
 .env
 .env.*
-lib/core/config/env.g.dart
+*.g.dart
+
