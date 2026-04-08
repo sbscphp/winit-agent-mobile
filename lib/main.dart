@@ -34,7 +34,6 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   await Firebase.initializeApp();
-  await dotenv.load(fileName: ".env");
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   AppConfig.setEnvironment(Environment.staging);
