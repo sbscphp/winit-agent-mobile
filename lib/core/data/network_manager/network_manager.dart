@@ -3,21 +3,26 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:http_certificate_pinning/http_certificate_pinning.dart';
 import 'package:winit_agent/core/utilities/extensions/num_extension.dart';
 
 import '../../../locator.dart';
 import '../../constants/app_config.dart';
+import '../../constants/env/env.dart';
 import '../../constants/named_routes.dart';
 import '../../utilities/secure_storage/secure_storage_utils.dart';
 import '../../utilities/utilities.dart';
 import '../enum/request_type.dart';
 import '../services/navigation_service.dart';
 
-
-/////A WORK IN PROGRESS //////////
-
 class NetworkManager {
   static final NetworkManager _instance = NetworkManager._internal();
+
+  //Updated with your Winit staging and AWS Root hashes
+  static final List<String> _allowedFingerprints = [
+    Env.stagingFingerprint,
+    Env.awsRootFingerprint,
+  ];
 
   static BaseOptions options = BaseOptions(
     connectTimeout: const Duration(seconds: 30),
@@ -37,27 +42,18 @@ class NetworkManager {
 
   NetworkManager._internal() {
     client = Dio(options);
-
     client.interceptors.clear();
     client.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           bool useAuth = options.extra["useAuth"] ?? true;
-          bool useGuestToken = options.extra["useGuestToken"] ?? false;
           if (useAuth) {
             String? token = await SecureStorageUtils.retrieveToken();
-            //print('token:::$token>>>');
+            print('token:::$token>>>');
             if (token != null && token.isNotEmpty) {
               options.headers["Authorization"] = "Bearer $token";
             }
           }
-          // if (useGuestToken) {
-          //   String? guestToken = await SecureStorageUtils.retrieveGuestToken();
-          //   print('guest token:::$guestToken>>>');
-          //   if (guestToken != null && guestToken.isNotEmpty) {
-          //     options.headers["X-Guest-Cart-ID"] = guestToken;
-          //   }
-          // }
           return handler.next(options);
         },
         onError: (DioException error, handler) async {
@@ -66,7 +62,7 @@ class NetworkManager {
           final useAuth = requestOptions.extra["useAuth"] ?? true;
 
           if (useAuth && response?.statusCode == 401) {
-            if (!requestOptions.path.contains('/auth/refresh')) { //todo: update route
+            if (!requestOptions.path.contains('/auth/refresh')) {
               try {
                 final refreshToken = await SecureStorageUtils.retrieveRefreshToken();
                 final refreshResponse = await client.post(
@@ -105,13 +101,28 @@ class NetworkManager {
         bool retrieveResponse = false,
         bool retrieveUnauthorizedResponse = false,
       }) async {
-    Map<String, dynamic> apiResponse;
     final baseUrl = AppConfig.baseUrl;
     final url = '$baseUrl$requestUrl';
 
-    //print("Url: $url, Body: $body, Query: $queryParameters, useAuth: $useAuth");
+
+   // print("Url: $url, Body: $body, Query: $queryParameters, useAuth: $useAuth");
+
+    //SSL PINNING CHECK
+    try {
+      final String secure = await HttpCertificatePinning.check(
+        serverURL: baseUrl,
+        sha: SHA.SHA256,
+        allowedSHAFingerprints: _allowedFingerprints,
+        timeout: 10,
+      );
+      log("🔒 SSL Pinning Status: $secure");
+    } catch (e) {
+      log("🚨 SSL PINNING FAILED: Connection rejected for security. Error: $e");
+      throw ("Secure connection could not be established. If you are using a proxy or VPN, please disable it and try again.");
+    }
 
     try {
+      Map<String, dynamic> apiResponse;
       Response response;
       final options = Options(extra: {"useAuth": useAuth, "useGuestToken": useGuestToken});
 
@@ -120,8 +131,6 @@ class NetworkManager {
           response = await client.get(url, queryParameters: queryParameters, options: options);
           break;
         case RequestType.post:
-          response = await client.post(url, data: body, queryParameters: queryParameters, options: options);
-          break;
         case RequestType.multiPartPost:
           response = await client.post(url, data: body, queryParameters: queryParameters, options: options);
           break;
@@ -134,14 +143,16 @@ class NetworkManager {
         case RequestType.delete:
           response = await client.delete(url, data: body, queryParameters: queryParameters, options: options);
           break;
-        }
+      }
 
       apiResponse = response.data;
-      log("${requestType.name} response: $apiResponse");
+      //log("${requestType.name} response: $apiResponse");
       return apiResponse;
     } on TimeoutException {
       throw ("Network timed out, please check your network connection and try again");
     } on DioException catch (e) {
+      //debugPrint('code: ${e.response?.statusCode}');
+
       if (e.type == DioExceptionType.receiveTimeout ||
           e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.connectionError) {
@@ -151,8 +162,6 @@ class NetworkManager {
       if (e.type == DioExceptionType.unknown && e.message?.contains('SocketException') == true) {
         throw ("No internet connection, please check your network connection and try again");
       }
-
-      debugPrint('code: ${e.response?.statusCode}');
 
       if (e.response != null) {
         final statusCode = e.response!.statusCode!;
@@ -170,10 +179,9 @@ class NetworkManager {
         } else if (statusCode.isBetween(402, 422)) {
           throw (responseData['message'] ?? "Invalid credentials");
         } else if (statusCode.isBetween(500, 599)) {
-          if (statusCode == 502) {
-            throw ("We are unable to process request at this time, please try again later");
-          }
-          throw (responseData['message'] ?? "Server error, please try again later");
+          throw (statusCode == 502
+              ? "We are unable to process request at this time, please try again later"
+              : responseData['message'] ?? "Server error, please try again later");
         } else {
           throw ("Unable to process request, ${responseData['message'] ?? 'Unknown error'}");
         }

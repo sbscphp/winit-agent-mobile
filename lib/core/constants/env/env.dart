@@ -4,6 +4,14 @@ part 'env.g.dart';
 
 @Envied(path: '.env', obfuscate: true)
 abstract class Env {
+
+  // --- CERT PINNING ---//
+  @EnviedField(varName: 'STAGING_FINGERPRINT', obfuscate: true)
+  static final String stagingFingerprint = _Env.stagingFingerprint;
+
+  @EnviedField(varName: 'AWS_ROOT_FINGERPRINT', obfuscate: true)
+  static final String awsRootFingerprint = _Env.awsRootFingerprint;
+
   // --- Environment Base URLs ---
   @EnviedField(varName: 'STAGING_BASE_URL')
   static final String stagingBaseUrl = _Env.stagingBaseUrl;
