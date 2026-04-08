@@ -2,10 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:freerasp/freerasp.dart';
 import 'package:winit_agent/core/constants/app_config.dart';
 import 'package:winit_agent/core/constants/app_theme/app_theme.dart';
 import 'package:winit_agent/core/data/enum/environment.dart';
@@ -16,9 +14,7 @@ import 'package:winit_agent/core/utilities/secure_storage/secure_storage_init.da
 import 'package:winit_agent/locator.dart';
 import 'package:winit_agent/ui/pages/splash.dart';
 import 'package:winit_agent/router.dart' as router;
-
 import 'core/constants/app_constants.dart';
-import 'core/constants/named_routes.dart';
 import 'core/data/services/geolocator_service.dart';
 import 'core/data/services/security_service.dart';
 import 'core/data/view_models/utility/lga_details_vm.dart';

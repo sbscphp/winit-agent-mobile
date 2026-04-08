@@ -1,8 +1,5 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:winit_agent/core/data/enum/environment.dart';
-
-import 'package:winit_agent/core/data/enum/environment.dart';
-import 'env/env.dart'; // Import your new Envied class
+import 'env/env.dart';
 
 class AppConfig {
   static late Map<String, dynamic> _config;
