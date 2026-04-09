@@ -63,14 +63,10 @@ android {
         }
 
         getByName("release") {
-            // This is the VAPT fix
             isMinifyEnabled = true
             isShrinkResources = true
-
             // SAFE CHECK: This tries to find "release", but falls back to "debug"
-            // if you haven't set up your production keystore yet.
             signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
-
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
