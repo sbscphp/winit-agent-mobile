@@ -21,7 +21,7 @@ class OtpVm extends BaseState {
   //otp data
   OtpData? otpData;
 
-  DateTime get endTime => DateTime.now().add(Duration(minutes: int.tryParse(otpData?.minutes ?? '5') ?? 5));
+  DateTime get endTime => DateTime.now().add(Duration(minutes: int.tryParse(otpData?.minutes?.toString() ?? '5') ?? 5));
   bool get isReturningUser => otpData?.returningUser ?? false;
   String get returningUserPhone => Utilities.formatSavedUserPhoneNumber(phoneNumber: otpData?.phoneNumber ?? '');
 
@@ -105,7 +105,7 @@ class OtpVm extends BaseState {
 
 
     await _otpDataProvider
-        .resendOtp(otpType: otpType, details: payload ?? details)
+        .resendOtp(otpType: otpType, details: payload ?? details, resetFlowId: otpData?.resetFlowId)
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
       otpData = response.data;
@@ -152,7 +152,7 @@ class OtpVm extends BaseState {
 
 
     await _otpDataProvider
-        .verifyOtp(otpType: otpType, details: payload ?? details, userId: otpData?.userId)
+        .verifyOtp(otpType: otpType, details: payload ?? details, resetFlowId: otpData?.resetFlowId)
         .then((response) {
       _message = response.message ?? defaultSuccessMessage;
       otpData = response.data;

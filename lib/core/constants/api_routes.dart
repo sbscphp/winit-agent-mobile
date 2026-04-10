@@ -19,11 +19,16 @@ class ApiRoutes {
   static String verifyRegistrationOtp = "${Env.auth}/verify-otp-registration";
 
   static String sendForgotPinOtp = "${Env.agent}/settings/forgot-transaction-pin/send-otp";
-  static String resendForgotPinOtp = "${Env.agent}/settings/forgot-transaction-pin/resend-otp";
+  //static String resendForgotPinOtp = "${Env.agent}/settings/forgot-transaction-pin/resend-otp";
+  static String resendForgotPinOtp({required String? resetFlowId}) =>
+      "${Env.agent}/settings/forgot-transaction-pin/resend-otp/$resetFlowId";
   static String verifyForgotPinOtp = "${Env.agent}/settings/forgot-transaction-pin/verify-otp";
 
   static String sendForgotPasswordOtp = "${Env.auth}/forgot-password/send-code";
-  static String resendForgotPasswordOtp = "${Env.auth}/forgot-password/resend-code";
+  //static String resendForgotPasswordOtp = "${Env.auth}/forgot-password/resend-code";
+
+  static String resendForgotPasswordOtp({required String? resetFlowId}) =>
+      "${Env.auth}/forgot-password/resend-code/$resetFlowId";
 
   static String verifyForgotPasswordOtp({required String? userId}) =>
       "${Env.auth}/forgot-password/confirm-code/$userId";

@@ -20,7 +20,7 @@ class PasswordVm extends BaseState{
   String get message => _message;
 
   final List<String> _pwdRequirements = [
-    "8 characters minimum",
+    "12 characters minimum",
     "Characters must include uppercase and lowercase.",
     "At least one digit and symbol (like !@#\$%^&*)"
   ];
@@ -86,7 +86,7 @@ class PasswordVm extends BaseState{
   //checks password requirement
   checkPassWordRequirement({required String password}){
 
-    final hasMinLength = password.trim().length > 7;
+    final hasMinLength = password.trim().length > 11;
     final hasUpperCase = password.contains(RegExp(r'[A-Z]'));
     final hasLowerCase = password.contains(RegExp(r'[a-z]'));
     final hasNumber = password.contains(RegExp(r'[0-9]'));

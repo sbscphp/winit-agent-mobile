@@ -49,7 +49,7 @@ class OtpDataProvider{
   }
 
   //resend otp
-  Future<ApiResponse<OtpData>> resendOtp({required OtpType otpType, required Map<String, dynamic> details}) async {
+  Future<ApiResponse<OtpData>> resendOtp({required OtpType otpType, required Map<String, dynamic> details, String? resetFlowId}) async {
     var completer = Completer<ApiResponse<OtpData>>();
     try {
       String apiRoute = '';
@@ -60,12 +60,12 @@ class OtpDataProvider{
 
       if(otpType == OtpType.forgotTransactionPin){
         //resend otp for forgot transaction pin
-        apiRoute = ApiRoutes.resendForgotPinOtp;
+        apiRoute = ApiRoutes.resendForgotPinOtp(resetFlowId: resetFlowId);
       }
 
       if(otpType == OtpType.forgotPassword){
         //resend otp for forgot password
-        apiRoute = ApiRoutes.resendForgotPasswordOtp;
+        apiRoute = ApiRoutes.resendForgotPasswordOtp(resetFlowId: resetFlowId);
       }
       if(otpType == OtpType.createCustomer){
         //resend otp for create customer
@@ -88,7 +88,7 @@ class OtpDataProvider{
     return completer.future;
   }
 
-  Future<ApiResponse<OtpData>> verifyOtp({required OtpType otpType, required Map<String, dynamic> details, String? userId}) async {
+  Future<ApiResponse<OtpData>> verifyOtp({required OtpType otpType, required Map<String, dynamic> details, String? resetFlowId}) async {
     var completer = Completer<ApiResponse<OtpData>>();
     try {
       String apiRoute = '';
@@ -104,7 +104,7 @@ class OtpDataProvider{
 
       if(otpType == OtpType.forgotPassword){
         //verify otp for forgot password
-        apiRoute = ApiRoutes.verifyForgotPasswordOtp(userId: userId);
+        apiRoute = ApiRoutes.verifyForgotPasswordOtp(userId: resetFlowId);
       }
       if(otpType == OtpType.createCustomer){
         //verify otp for create customer

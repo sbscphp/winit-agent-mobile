@@ -1,9 +1,9 @@
 class OtpData {
   final String? masked;
-  final String? userId;
+  final String? resetFlowId;
   final String? identifier;
   final bool? returningUser;
-  final String? minutes;
+  final dynamic minutes;
   final String? temporaryId;
   final String? phoneNumber;
   final bool? isVerified;
@@ -12,7 +12,7 @@ class OtpData {
   OtpData({
     this.masked,
     this.identifier,
-    this.userId,
+    this.resetFlowId,
     this.minutes,
     this.temporaryId,
     this.returningUser,
@@ -24,7 +24,7 @@ class OtpData {
   factory OtpData.fromJson(Map<String, dynamic> json) => OtpData(
     masked: json["masked"],
       identifier: json["identifier"],
-      userId: json["user_id"],
+      resetFlowId: json["reset_flow_id"],
     minutes: json["minutes"],
     temporaryId: json["temporary_id"],
     isVerified: json["is_verified"],
@@ -35,7 +35,7 @@ class OtpData {
 
   Map<String, dynamic> toJson() => {
     "masked": masked,
-    "user_id": userId,
+    "reset_flow_id": resetFlowId,
     "identifier": identifier,
     "minutes": minutes,
     "returning_user": returningUser,

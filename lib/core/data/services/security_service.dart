@@ -21,7 +21,7 @@ class SecurityService {
       androidConfig: AndroidConfig(
         packageName: 'com.hopegainltd.winitagent',
         // You'll need your release signing hash (Base64) from Google Play/Keystore
-        signingCertHashes: ['J6vcqAgtVLEW2LU3X5RKB6tHZhZ5v41VgSSfF9+KarI='],
+        signingCertHashes: ['J6vcqAgtVLEW2LU3X5RKB6tHZhZ5v41VgSSfF9+KarI='], //debug
       ),
       iosConfig: IOSConfig(
         bundleIds: ['com.hopegainltd.winitagent'],

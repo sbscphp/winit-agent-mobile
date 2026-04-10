@@ -105,7 +105,7 @@ class NetworkManager {
     final url = '$baseUrl$requestUrl';
 
 
-   // print("Url: $url, Body: $body, Query: $queryParameters, useAuth: $useAuth");
+   print("Url: $url, Body: $body, Query: $queryParameters, useAuth: $useAuth");
 
     //SSL PINNING CHECK
     try {
@@ -146,7 +146,7 @@ class NetworkManager {
       }
 
       apiResponse = response.data;
-      //log("${requestType.name} response: $apiResponse");
+      log("${requestType.name} response: $apiResponse");
       return apiResponse;
     } on TimeoutException {
       throw ("Network timed out, please check your network connection and try again");

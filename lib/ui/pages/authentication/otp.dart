@@ -244,7 +244,7 @@ class _OtpState extends ConsumerState<Otp> {
                               if(widget.otpType == OtpType.forgotPassword){
                                 replaceNavigation(context: context, widget: PasswordAction(
                                    fromForgotPassword: true,
-                                  userId: vm.otpData?.userId,
+                                  userId: vm.otpData?.resetFlowId,
                                 ), routeName: NamedRoutes.passwordAction);
                                 return;
 
