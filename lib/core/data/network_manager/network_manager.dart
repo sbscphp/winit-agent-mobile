@@ -14,15 +14,10 @@ import '../../utilities/secure_storage/secure_storage_utils.dart';
 import '../../utilities/utilities.dart';
 import '../enum/request_type.dart';
 import '../services/navigation_service.dart';
+import '../services/remote_config_service.dart';
 
 class NetworkManager {
   static final NetworkManager _instance = NetworkManager._internal();
-
-  //Updated with your Winit staging and AWS Root hashes
-  static final List<String> _allowedFingerprints = [
-    Env.stagingFingerprint,
-    Env.awsRootFingerprint,
-  ];
 
   static BaseOptions options = BaseOptions(
     connectTimeout: const Duration(seconds: 30),
@@ -112,7 +107,7 @@ class NetworkManager {
       final String secure = await HttpCertificatePinning.check(
         serverURL: baseUrl,
         sha: SHA.SHA256,
-        allowedSHAFingerprints: _allowedFingerprints,
+        allowedSHAFingerprints: locator<RemoteConfigService>().allowedFingerprints,
         timeout: 10,
       );
       log("🔒 SSL Pinning Status: $secure");

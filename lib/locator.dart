@@ -7,6 +7,7 @@ import 'package:winit_agent/core/data/data_provider/profile_data_provider/profil
 import 'package:winit_agent/core/data/data_provider/referral_data_provider.dart';
 import 'package:winit_agent/core/data/data_provider/wallet_data_provider.dart';
 import 'package:winit_agent/core/data/data_provider/utility_data_provider/utility_data_provider.dart';
+import 'package:winit_agent/core/data/services/remote_config_service.dart';
 import 'package:winit_agent/core/data/services/security_service.dart';
 import 'core/data/data_provider/auth_data_provider/otp_data_provider.dart';
 import 'core/data/services/geolocator_service.dart';
@@ -34,4 +35,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton<GeoLocatorService>(() => GeoLocatorService());
   locator.registerLazySingleton<SecurityService>(() => SecurityService());
+  locator.registerLazySingleton<RemoteConfigService>(() => RemoteConfigService());
 }

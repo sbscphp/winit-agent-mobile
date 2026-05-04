@@ -31,7 +31,7 @@ class SecurityService {
       isProd: true
     );
 
-    // 3. Define the callbacks
+    // 3. Define the callback
     final callback = ThreatCallback(
       onPrivilegedAccess: () => _handleThreat(),
       onHooks: () => _handleThreat(),

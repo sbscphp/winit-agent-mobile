@@ -16,6 +16,7 @@ import 'package:winit_agent/ui/pages/splash.dart';
 import 'package:winit_agent/router.dart' as router;
 import 'core/constants/app_constants.dart';
 import 'core/data/services/geolocator_service.dart';
+import 'core/data/services/remote_config_service.dart';
 import 'core/data/services/security_service.dart';
 import 'core/data/view_models/utility/lga_details_vm.dart';
 import 'core/utilities/firebase_messaging_utils.dart';
@@ -36,6 +37,7 @@ void main() async{
   //await CountryUtils.readCountryJson();
   SecureStorageInit.initSecureStorage();
   setupLocator();
+  await locator<RemoteConfigService>().initialize();
   // Initialize security logic
   await locator<SecurityService>().init();
   runApp(const ProviderScope(child: MyApp()));
