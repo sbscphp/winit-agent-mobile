@@ -9,7 +9,8 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import '../widgets/custom_button.dart';
 
 class SecurityPrompt extends StatelessWidget {
-  const SecurityPrompt({super.key});
+  final String appName;
+  const SecurityPrompt({super.key, required this.appName});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class SecurityPrompt extends StatelessWidget {
               ),
               SizedBox(height: 16.h,),
               Text(
-                'For your protection, Winit Agent cannot run on this device. Please use a device with standard security settings',
+                'For your protection, $appName cannot run on this device. Please use a device with standard security settings',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w400,
                     color: Theme.of(context).colorScheme.textSecondary

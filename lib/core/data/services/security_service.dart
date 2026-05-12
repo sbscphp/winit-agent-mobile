@@ -21,14 +21,17 @@ class SecurityService {
       androidConfig: AndroidConfig(
         packageName: 'com.hopegainltd.winitagent',
         // You'll need your release signing hash (Base64) from Google Play/Keystore
-        signingCertHashes: ['J6vcqAgtVLEW2LU3X5RKB6tHZhZ5v41VgSSfF9+KarI='], //debug
+        signingCertHashes: [
+          'DRr2l8dnWZmyQwGkh3TGhlfqkSd6cx2mXC1oR9mOMfk=', //debug
+          'HGZsLHQfTxq1HsT4ekIuG8Cha52ZJWe7088jVSGuMLw=' //release
+        ], //debug
       ),
       iosConfig: IOSConfig(
         bundleIds: ['com.hopegainltd.winitagent'],
         teamId: 'V47PC8YVZY',
       ),
       watcherMail: 'c.keshinro@hopegainltd.com', // For security reports
-      isProd: true
+      isProd: kReleaseMode
     );
 
     // 3. Define the callback

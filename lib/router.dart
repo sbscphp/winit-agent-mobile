@@ -16,7 +16,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case NamedRoutes.securityPrompt:
       return _getPageRoute(
         routeName: settings.name!,
-        viewToShow: const SecurityPrompt(),
+        viewToShow: const SecurityPrompt(
+          appName: 'Winit Agent',
+        ),
       );
     //todo::add more routes
     default:
