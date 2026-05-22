@@ -8,17 +8,18 @@ import 'core/constants/named_routes.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
-    case NamedRoutes.login:
-      return _getPageRoute(
-        routeName: settings.name!,
-        viewToShow: const Login(),
-      );
     case NamedRoutes.securityPrompt:
       return _getPageRoute(
         routeName: settings.name!,
         viewToShow: const SecurityPrompt(
           appName: 'Winit Agent',
         ),
+      );
+    case NamedRoutes.login:
+      final bool isExpired = (settings.arguments as bool?) ?? false;
+      return _getPageRoute(
+        routeName: settings.name!,
+        viewToShow: Login(sessionExpired: isExpired,),
       );
     //todo::add more routes
     default:

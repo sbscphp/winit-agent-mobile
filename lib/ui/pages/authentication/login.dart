@@ -37,7 +37,8 @@ import '../onboarding/terms.dart';
 
 
 class Login extends ConsumerStatefulWidget {
-  const Login({super.key});
+  final bool sessionExpired;
+  const Login({super.key, this.sessionExpired = false});
 
   @override
   ConsumerState<Login> createState() => _LoginState();
@@ -48,6 +49,15 @@ class _LoginState extends ConsumerState<Login> {
   final _pwd = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _hidePwd = true;
+
+  @override
+  void initState() {
+    if(widget.sessionExpired){
+      _sessionExpiredPrompt();
+    }
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -365,6 +375,19 @@ class _LoginState extends ConsumerState<Login> {
         pushNavigation(context: context, widget: const BottomNav(), routeName: NamedRoutes.bottomNav);
     }
 
+  }
+
+  _sessionExpiredPrompt(){
+    Utilities.unauthorizedFlag = false;
+    Future.delayed(const Duration(milliseconds: 800),
+            (){
+          showFlushBar(
+              context: context,
+              success: false,
+              message: 'Session Expired. Kindly Login',
+              duration: 5
+          );
+        });
   }
 
 }

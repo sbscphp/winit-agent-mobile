@@ -54,6 +54,7 @@ class LoginVm extends BaseState{
       _message = response.message ?? defaultSuccessMessage;
       loginData = response.data;
       await SecureStorageUtils.saveToken(token: loginData?.accessToken ?? '');
+      await SecureStorageUtils.saveRefreshToken(refreshToken: loginData?.refreshToken?.token ?? '');
       setState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);

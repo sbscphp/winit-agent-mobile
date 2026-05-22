@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:upgrader/upgrader.dart';
 import 'package:winit_agent/core/data/view_models/authentication/logout_vm.dart';
 import 'package:winit_agent/core/data/view_models/bottom_nav_view_model.dart';
+import 'package:winit_agent/core/data/view_models/wallet/wallet_transactions_vm.dart';
 import 'package:winit_agent/ui/widgets/custom_bottom_nav.dart';
 
 import '../../core/data/enum/view_state.dart';
@@ -23,6 +25,11 @@ class _BottomNavState extends ConsumerState<BottomNav> {
 
   @override
   void initState() {
+
+    final transactionsVm = ref.read(walletTransactionsViewModel);
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+     transactionsVm.fetchTransactions();
+    });
 
     //init push notification listeners
     FirebaseMessagingUtils.pushNotificationListenerInit(context: context);

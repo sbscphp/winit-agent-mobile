@@ -37,6 +37,7 @@ class ApiRoutes {
   static String verifyCreateCustomerOtp = "${Env.agent}/customer/confirm-otp-phone";
 
   static String login = "${Env.auth}/login";
+  static String refreshToken = "${Env.auth}/refresh";
 
   static String createPassword({required String? userId}) =>
       "${Env.auth}/forgot-password/create-password/$userId";

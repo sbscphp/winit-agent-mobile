@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http_certificate_pinning/http_certificate_pinning.dart';
+import 'package:winit_agent/core/constants/api_routes.dart';
 import 'package:winit_agent/core/utilities/extensions/num_extension.dart';
 
 import '../../../locator.dart';
@@ -30,6 +31,9 @@ class NetworkManager {
   );
 
   late final Dio client;
+  // Variables to manage concurrent 401 token refresh synchronization
+  bool _isRefreshing = false;
+  Completer<String?>? _refreshTokenCompleter;
 
   factory NetworkManager() {
     return _instance;
@@ -52,30 +56,119 @@ class NetworkManager {
           return handler.next(options);
         },
         onError: (DioException error, handler) async {
-          final response = error.response;
-          final requestOptions = error.requestOptions;
-          final useAuth = requestOptions.extra["useAuth"] ?? true;
+          // Intercept 401 Unauthorized status codes
+          if (error.response?.statusCode == 401) {
 
-          if (useAuth && response?.statusCode == 401) {
-            if (!requestOptions.path.contains('/auth/refresh')) {
-              try {
-                final refreshToken = await SecureStorageUtils.retrieveRefreshToken();
-                final refreshResponse = await client.post(
-                  '${AppConfig.baseUrl}/auth/refresh',
-                  data: {"refresh_token": refreshToken},
-                );
+            final useAuth = error.requestOptions.extra['useAuth'] ?? true;
 
-                final newAccessToken = refreshResponse.data['access_token'];
-                await SecureStorageUtils.saveToken(token: newAccessToken);
+            if (useAuth) {
 
-                final newRequestOptions = requestOptions..headers["Authorization"] = "Bearer $newAccessToken";
-                final clonedResponse = await client.fetch(newRequestOptions);
-                return handler.resolve(clonedResponse);
-              } catch (_) {
-                if (Utilities.unauthorizedFlag == false) {
-                  sessionExpired();
+              String? newAccessToken, newRefreshToken;
+
+              // --- CONCURRENT REQUEST LOCK ---
+              if (!_isRefreshing) {
+                // This is the first request to encounter the 401 error. Lock the thread door.
+                _isRefreshing = true;
+                _refreshTokenCompleter = Completer<String?>();
+                try {
+
+                  log("🔄 First 401 encountered. Initiating single refresh network call...");
+
+                  // Use an isolated Dio instance to prevent infinite recursive interception loops
+                  Dio refreshClient = Dio(BaseOptions(
+                    baseUrl: AppConfig.baseUrl,
+                    //validateStatus: (status) => status != null && status < 500,
+                  ));
+
+                  // 1. Retrieve refresh token from secure storage
+                  String? refreshToken = await SecureStorageUtils.retrieveRefreshToken();
+
+                  if (refreshToken == null) throw Exception("No refresh token stored to refresh.");
+
+                  // 2. Fire the refresh call passing the token directly inside the Authorization header
+                  var response = await refreshClient.post(
+                    ApiRoutes.refreshToken,
+                    options: Options(
+                      headers: {
+                        HttpHeaders.acceptHeader: 'application/json',
+                        HttpHeaders.contentTypeHeader: 'application/json',
+                        "Authorization": "Bearer $refreshToken",
+                        'Platform': 'mobile'
+                      },
+                    ),
+                  );
+
+                  log('full response::::::${response.data}>>>>');
+
+                  // 3. Extract the new token from your backend's specific JSON response footprint
+                  newAccessToken = response.data['data']['access_token'];
+                  newRefreshToken = response.data['data']['refresh_token']['token'];
+
+                  // 4. Save the fresh token over the old one in secure storage
+                  await SecureStorageUtils.saveToken(token: newAccessToken ?? '');
+                  await SecureStorageUtils.saveRefreshToken(refreshToken: newRefreshToken ?? '');
+
+                  log("✅ Token refresh successful. Releasing waiting requests.");
+
+                  // Satisfy the completer contract to broadcast token down the awaiting line
+                  _refreshTokenCompleter?.complete(newAccessToken);
+
                 }
-                return handler.reject(error);
+
+
+                // on DioException catch (e) {
+                //   final statusCode = e.response!.statusCode;
+                //   print('path:::::${e.requestOptions.path}>>>>${e.requestOptions.baseUrl}');
+                //   print('status code:::::$statusCode>>>>');
+                //   log('full error response::::${e.response}>>>>');
+                // }
+
+
+                catch (refreshError) {
+                  log("🚨 Refresh token process completely failed: $refreshError");
+                  _refreshTokenCompleter?.complete(null);
+
+                  if (Utilities.unauthorizedFlag == false) {
+                    sessionExpired();
+                  }
+
+                  return handler.next(error);
+                } finally {
+
+                  // Tear down flags to unlock the gate system for future cycles
+                  _isRefreshing = false;
+                  _refreshTokenCompleter = null;
+
+                }
+              }
+              else {
+
+                // Subsequent concurrent calls arriving while the master token call is in flight
+                log("⏳ Concurrent 401 hit detected. Parking request to await fresh token updates...");
+
+                // Suspend execution safely until the leader request wakes this up
+                newAccessToken = await _refreshTokenCompleter?.future;
+              }
+
+              // --- ORIGINAL REQUEST REPLAY ENGINE ---
+              if (newAccessToken != null) {
+                final requestOptions = error.requestOptions;
+                requestOptions.headers["Authorization"] = "Bearer $newAccessToken";
+
+                try {
+                  // Retry the network call with the fresh token
+                  final retryResponse = await client.fetch(requestOptions);
+                  return handler.resolve(retryResponse);
+                } on DioException catch (retryError) {
+                  log("🚨 The retried request failed down stream with status: ${retryError.response?.statusCode}");
+                  // Forward the error safely into your main networkRequestManager catch block
+                  return handler.next(retryError);
+                } catch (customError) {
+                  return handler.next(error);
+                }
+
+              } else {
+                return handler.next(error);
               }
             }
           }
@@ -192,8 +285,8 @@ class NetworkManager {
 sessionExpired() {
   Utilities.unauthorizedFlag = true;
   NavigationService navigationService = locator<NavigationService>();
-  navigationService.pushAndClearRoutes(
-   routeName: NamedRoutes.login,
-   clearRoute: NamedRoutes.onboarding
+  navigationService.pushAndClearAllRoutes(
+    routeName: NamedRoutes.login,
+    arguments: true,
   );
 }

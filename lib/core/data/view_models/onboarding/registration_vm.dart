@@ -5,6 +5,7 @@ import 'package:winit_agent/core/data/enum/view_state.dart';
 import 'package:winit_agent/core/data/models/bank_account.dart';
 import 'package:winit_agent/core/data/models/data/login_data.dart';
 import 'package:winit_agent/core/data/states/base_state.dart';
+import 'package:winit_agent/core/utilities/secure_storage/secure_storage_utils.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/locator.dart';
 
@@ -46,9 +47,13 @@ class RegistrationVm extends BaseState{
 
     await _onboardingDp
         .register(details: details)
-        .then((response) {
+        .then((response) async{
       _message = response.message ?? defaultSuccessMessage;
       loginData = response.data;
+      if(loginData?.accessToken != null){
+        await SecureStorageUtils.saveToken(token: loginData?.accessToken ?? '');
+        await SecureStorageUtils.saveRefreshToken(refreshToken: loginData?.refreshToken?.token ?? '');
+      }
       setState(ViewState.retrieved);
     }).catchError((e) {
       _message = Utilities.formatMessage(e.toString(), isSuccess: false);
