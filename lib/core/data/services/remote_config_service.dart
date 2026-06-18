@@ -8,6 +8,12 @@ class RemoteConfigService {
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
 
 
+  static const Set<String> _securityKeys = {
+    RemoteConfigConstants.allowedFingerprints,
+    RemoteConfigConstants.usePinning,
+  };
+
+
   //Internal list that defaults to your ENV values immediately
   List<String> _fingerprints = [
     Env.stagingFingerprint,
@@ -16,6 +22,10 @@ class RemoteConfigService {
 
   //Getter used by NetworkManager
   List<String> get allowedFingerprints => _fingerprints;
+
+  //pinning
+  bool _usePinning = true;
+  bool get usePinning => _usePinning;
 
 
   Future<void> initialize() async {
@@ -28,13 +38,35 @@ class RemoteConfigService {
 
       // Setup default (using comma-separated string to match Firebase format)
       await _remoteConfig.setDefaults({
-        RemoteConfigConstants.allowedFingerprints: Env.stagingFingerprint,
+        RemoteConfigConstants.allowedFingerprints : Env.stagingFingerprint,
       });
 
       await _remoteConfig.fetchAndActivate();
 
+      // await _remoteConfig.activate();
+      // await _remoteConfig.fetch();
+
+      _usePinning = _remoteConfig.getBool(RemoteConfigConstants.usePinning);
+      print('pinning:::$_usePinning .... ${_remoteConfig.getBool(RemoteConfigConstants.usePinning)}');
+
       // Update the local list after successful fetch
       _updateLocalList();
+
+      // 2. Listen for real-time updates while the app is running
+      _remoteConfig.onConfigUpdated.listen((RemoteConfigUpdate update) async {
+        log("🔔 Real-time Remote Config update detected!");
+
+        // 2. Check if any of the updated keys intersect with your security keys
+        final hasSecurityUpdates = update.updatedKeys.intersection(_securityKeys).isNotEmpty;
+
+        if (hasSecurityUpdates) {
+          log("🔒 Security keys changed. Activating and updating local state...");
+
+          // Bypasses the cache interval to apply changes immediately
+          await _remoteConfig.activate();
+          _updateLocalList();
+        }
+      });
 
       log("✅ Remote Config Initialized. Current Fingerprints: $_fingerprints");
     } catch (e) {
@@ -49,6 +81,8 @@ class RemoteConfigService {
       print('raw retrieved from firebase:::$raw>>>>');
       // Split comma-separated string and add the AWS Root as a permanent safety net
       final fetchedList = raw.split(',').map((e) => e.trim()).toList();
+
+      print("fetched list:::${fetchedList.toString()}>>>");
 
       if (!fetchedList.contains(Env.awsRootFingerprint)) {
         fetchedList.add(Env.awsRootFingerprint);

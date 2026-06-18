@@ -12,6 +12,7 @@ class ApiRoutes {
   static String completeOnboarding = "${Env.agent}/onboarding/complete-account";
 
   static String setTransactionPin = "${Env.agent}/onboarding/set-transaction-pin";
+  static String fetchSessionToken = "${Env.agent}/onboarding/qoreid/sdk-session";
 
   // --- Auth ---
   static String sendRegistrationOtp = "${Env.auth}/send-otp-registration";

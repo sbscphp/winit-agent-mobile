@@ -66,14 +66,15 @@ class _NinLivelinessCheckState extends ConsumerState<NinLivelinessCheck> {
     });
   }
 
-  void _startLivenessCheck() async {
+  void _startLivenessCheck(String sessionToken) async {
     // Launch Qoreid app
     final profileVm = ref.read(profileViewModel);
     QoreidData data = QoreidData(
-        clientId:"${dotenv.env['CLIENT_ID']}", //required
-        flowId: 0,
-        customerReference: profileVm.userId, //required
-        productCode: "${dotenv.env['PRODUCT_CODE']}", //required required for collection
+      sessionToken: sessionToken,
+        // clientId:"${dotenv.env['CLIENT_ID']}", //required
+        // flowId: 0,
+        // customerReference: profileVm.userId, //required
+        // productCode: "${dotenv.env['PRODUCT_CODE']}", //required required for collection
         addressData: {
           "state": "",
           "lga": "",
@@ -472,8 +473,18 @@ class _NinLivelinessCheckState extends ConsumerState<NinLivelinessCheck> {
                 ),
                 CustomButton(
                     buttonText: 'Start Liveliness Check',
-                    onPressed: (){
-                      _startLivenessCheck();
+                    onPressed: ()async{
+                      await vm.fetchSessionToken();
+                      if(vm.state == ViewState.retrieved){
+                        _startLivenessCheck(vm.sessionToken);
+                      }else{
+                        showFlushBar(
+                            context: context,
+                            message: vm.message,
+                          success: false
+                        );
+                      }
+
                     }
                 )
               ],

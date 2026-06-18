@@ -188,6 +188,7 @@ class NetworkManager {
         File? backFile,
         bool retrieveResponse = false,
         bool retrieveUnauthorizedResponse = false,
+        Map<String, dynamic>? extraHeaders,
       }) async {
     final baseUrl = AppConfig.baseUrl;
     final url = '$baseUrl$requestUrl';
@@ -195,24 +196,33 @@ class NetworkManager {
 
    print("Url: $url, Body: $body, Query: $queryParameters, useAuth: $useAuth");
 
-    //SSL PINNING CHECK
-    try {
-      final String secure = await HttpCertificatePinning.check(
-        serverURL: baseUrl,
-        sha: SHA.SHA256,
-        allowedSHAFingerprints: locator<RemoteConfigService>().allowedFingerprints,
-        timeout: 10,
-      );
-      log("🔒 SSL Pinning Status: $secure");
-    } catch (e) {
-      log("🚨 SSL PINNING FAILED: Connection rejected for security. Error: $e");
-      throw ("Secure connection could not be established. If you are using a proxy or VPN, please disable it and try again.");
+    final remoteService = locator<RemoteConfigService>();
+
+    if(remoteService.usePinning){
+      // SSL PINNING CHECK
+      try {
+        final String secure = await HttpCertificatePinning.check(
+          serverURL: baseUrl,
+          sha: SHA.SHA256,
+          allowedSHAFingerprints: remoteService.allowedFingerprints,
+          timeout: 10,
+        );
+        log("🔒 SSL Pinning Status: $secure");
+      } catch (e) {
+        if (e.toString().contains('NO_INTERNET')) {
+          log("📡 Network Error: No internet connection detected.");
+          throw ("No internet connection. Please check your network settings and try again.");
+        }
+
+        log("🚨 SSL PINNING FAILED: Connection rejected for security. Error: $e");
+        throw ("Secure connection could not be established. If you are using a proxy or VPN, please disable it and try again.");
+      }
     }
 
     try {
       Map<String, dynamic> apiResponse;
       Response response;
-      final options = Options(extra: {"useAuth": useAuth, "useGuestToken": useGuestToken});
+      final options = Options(extra: {"useAuth": useAuth, "useGuestToken": useGuestToken}, headers: extraHeaders);
 
       switch (requestType) {
         case RequestType.get:

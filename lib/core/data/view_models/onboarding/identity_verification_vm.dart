@@ -5,6 +5,7 @@ import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/data/data_provider/onboarding_data_provider/onboarding_data_provider.dart';
 import 'package:winit_agent/core/data/enum/view_state.dart';
 import 'package:winit_agent/core/data/models/data/bvn_data.dart';
+import 'package:winit_agent/core/data/models/data/qore_data.dart';
 import 'package:winit_agent/core/data/states/base_state.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/locator.dart';
@@ -26,6 +27,9 @@ class IdentityVerificationVm extends BaseState{
 
   //bvn data
   IdentityResultData? _identityResultData;
+
+  //qore data
+  QoreData? _qoreData;
 
   //nin data
   User? _ninData;
@@ -65,9 +69,26 @@ class IdentityVerificationVm extends BaseState{
   double get matchPercentage => double.tryParse(_ninData?.matchPercentage?.toString() ?? '0') ?? 0;
 
 
+  //qore data
+  String get sessionToken => _qoreData?.sdkSessionToken ?? '';
 
 
 
+
+  //fetch session token
+  fetchSessionToken() async {
+    setState(ViewState.busy);
+    await _onboardingDp
+        .fetchSessionToken()
+        .then((response) {
+      _message = response.message ?? defaultSuccessMessage;
+      _qoreData = response.data;
+      setState(ViewState.retrieved);
+    }).catchError((e) {
+      _message = Utilities.formatMessage(e.toString(), isSuccess: false);
+      setState(ViewState.error);
+    });
+  }
 
   //complete NIN verification
   getNinValidity() async {
