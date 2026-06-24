@@ -6,20 +6,39 @@ import 'package:winit_agent/core/constants/app_dimension.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/color_path.dart';
+import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/data/enum/otp_type.dart';
+import 'package:winit_agent/core/data/view_models/authentication/login_vm.dart';
+import 'package:winit_agent/core/data/view_models/onboarding/identity_verification_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/bank_account_details_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
+import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/core/utilities/validator.dart';
+import 'package:winit_agent/ui/pages/authentication/forgot_password/choose_option.dart';
+import 'package:winit_agent/ui/pages/authentication/otp.dart';
+import 'package:winit_agent/ui/pages/bottom_nav.dart';
+import 'package:winit_agent/ui/pages/onboarding/registration_requirements.dart';
+import 'package:winit_agent/ui/pages/profile/agent_information/business_details.dart';
+import 'package:winit_agent/ui/pages/profile/agent_information/personal_details.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
 import 'package:winit_agent/ui/widgets/clickable.dart';
 import 'package:winit_agent/ui/widgets/custom_appbar.dart';
 import 'package:winit_agent/ui/widgets/custom_button.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
-import 'package:winit_agent/ui/widgets/custom_text_field.dart';
+import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
+import 'package:winit_agent/ui/widgets/text_fields/custom_text_field.dart';
+import '../../../core/data/enum/view_state.dart';
+import '../../../core/utilities/utilities.dart';
+import '../onboarding/add_bank_details.dart';
+import '../onboarding/identity_verification/bvn/bvn_requirement.dart';
+import '../onboarding/identity_verification/nin/nin_requirement.dart';
+import '../onboarding/terms.dart';
 
 
 
 class Login extends ConsumerStatefulWidget {
-  final String? visitingRoute;
-  final String? destinationRoute;
-  const Login({super.key, this.visitingRoute, this.destinationRoute});
+  final bool sessionExpired;
+  const Login({super.key, this.sessionExpired = false});
 
   @override
   ConsumerState<Login> createState() => _LoginState();
@@ -32,20 +51,25 @@ class _LoginState extends ConsumerState<Login> {
   bool _hidePwd = true;
 
   @override
+  void initState() {
+    if(widget.sessionExpired){
+      _sessionExpiredPrompt();
+    }
+    super.initState();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    final hasVisitingRoute = widget.visitingRoute != null;
-    final hasDestinationRoute = widget.destinationRoute != null;
+    final vm = ref.watch(loginViewModel);
     return BusyOverlay(
-      show: false,
+      show: vm.state == ViewState.busy,
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: Scaffold(
           appBar: customAppBar(
               context: context,
               title: 'Login',
-              // actions: [
-              //   const AppBarLogo()
-              // ]
           ),
           body: Padding(
             padding: EdgeInsets.symmetric(vertical: AppDimension.paddingTop, horizontal: AppDimension.paddingLeft),
@@ -109,7 +133,7 @@ class _LoginState extends ConsumerState<Login> {
                            alignment: Alignment.centerRight,
                            child: Clickable(
                              onPressed: (){
-
+                              pushNavigation(context: context, widget: const ChooseOption(), routeName: NamedRoutes.chooseOption);
                              },
                              child: Text(
                                'Forgot Password?',
@@ -127,6 +151,34 @@ class _LoginState extends ConsumerState<Login> {
                                  buttonText: 'Login',
                                  suffixIcon: AppAsset.login,
                                  onPressed: () async{
+
+                                   Utilities.hideKeyboard(context);
+
+                                   await vm.login(
+                                       loginChoice: _loginChoice.text,
+                                       pwd: _pwd.text
+                                   );
+
+                                   if(vm.state == ViewState.retrieved){
+
+                                     //init login data in profile vm
+                                     ref.read(profileViewModel).loginData = vm.loginData;
+
+                                     //init bank account details
+                                     ref.read(bankAccountDetailsViewModel).accountInformation = vm.loginData?.user?.accountInformation;
+
+
+                                     //check onboarding step
+                                     handleRouting(vm: vm);
+
+                                   }else{
+                                     showFlushBar(
+                                         context: context,
+                                         message: vm.message,
+                                       success: false
+                                     );
+                                   }
+
                                  }
                              ),
                              SizedBox(height: 13.h,),
@@ -143,7 +195,12 @@ class _LoginState extends ConsumerState<Login> {
                                  SizedBox(width: 6.w,),
                                  Clickable(
                                    onPressed: (){
-
+                                     pushNavigation(
+                                         context: context,
+                                         widget: RegistrationRequirements(
+                                         ),
+                                         routeName: NamedRoutes.registrationRequirements
+                                     );
                                    },
                                    child: Text(
                                      'Sign Up',
@@ -279,6 +336,58 @@ class _LoginState extends ConsumerState<Login> {
         ),
       ),
     );
+  }
+
+  handleRouting({required LoginVm vm}){
+
+    switch(vm.onboardingStep){
+      case 'registration':
+        pushNavigation(context: context, widget: Otp(
+            otpType: OtpType.createAccount,
+            identifier: Utilities.cleanPhoneNumber(phoneNumber: vm.phone),
+            isEmail: false,
+        ),
+            routeName: NamedRoutes.otp
+        );
+        break;
+      case 'otp_verification':
+        pushNavigation(context: context, widget: const NinRequirement(), routeName: NamedRoutes.ninRequirement);
+        break;
+      case 'nin_verification':
+        ref.read(identificationViewModel).ninData = vm.loginData?.user?.personalInformation;
+        pushNavigation(context: context, widget: const BvnRequirement(), routeName: NamedRoutes.bvnRequirement);
+        break;
+      case 'bvn_verification':
+        pushNavigation(context: context, widget: const PersonalDetails(), routeName: NamedRoutes.personalDetails);
+        break;
+      case 'personal_information':
+        pushNavigation(context: context, widget: const BusinessDetails(), routeName: NamedRoutes.businessDetails);
+        break;
+      case 'business_information':
+        pushNavigation(context: context, widget: const AddBankDetails(), routeName: NamedRoutes.addBankDetails);
+        break;
+      case 'bank_information':
+        pushNavigation(context: context, widget: const Terms(), routeName: NamedRoutes.terms);
+        break;
+      case 'verification_completed':
+      case 'transaction_pin':
+      default:
+        pushNavigation(context: context, widget: const BottomNav(), routeName: NamedRoutes.bottomNav);
+    }
+
+  }
+
+  _sessionExpiredPrompt(){
+    Utilities.unauthorizedFlag = false;
+    Future.delayed(const Duration(milliseconds: 800),
+            (){
+          showFlushBar(
+              context: context,
+              success: false,
+              message: 'Session Expired. Kindly Login',
+              duration: 5
+          );
+        });
   }
 
 }

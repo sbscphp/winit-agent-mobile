@@ -28,6 +28,7 @@ customAppBar({
   final colorScheme = Theme.of(context).colorScheme;
   return AppBar(
     leadingWidth: leadingWidth,
+    //leadingWidth: MediaQuery.of(context).size.width / 5,
     automaticallyImplyLeading: showLeadingIcon,
     scrolledUnderElevation: 0,
     centerTitle: centerTitle,
@@ -35,7 +36,7 @@ customAppBar({
     title: useCustomTitleWidget ? titleWidget :
     title != null ?  Text(
         title,
-      style: textTheme.titleSmall?.copyWith(
+      style: textTheme.bodyLarge?.copyWith(
         fontSize: titleSize?.sp,
           fontWeight: titleFontWeight ?? FontWeight.w700,
           color: textColor ?? colorScheme.whiteText
@@ -44,6 +45,7 @@ customAppBar({
     leading: showLeadingIcon ? leadingIcon ?? LeadingIcon(
       onPressed: leadingIconOnPressed,
     ):null,
+
     toolbarHeight: hideTooBarHeight ? 0 : 72.h,
     // bottom: PreferredSize(
     //   preferredSize: Size.fromHeight(preferredHeight.h),

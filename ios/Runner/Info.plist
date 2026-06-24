@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -22,25 +24,41 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>https</string>
-        <string>http</string>
-    </array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+		<string>http</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	 <key>NSCameraUsageDescription</key>
-     <string>WinIt Agent requires access to the camera to take a picture to be used as your profile photo.</string>
-     <key>NSMicrophoneUsageDescription</key>
-     <string>WinIt Agent needs access to your microphone for voice</string>
-     <key>NSPhotoLibraryUsageDescription</key>
-     <string>WinIt Agent requires access to the photo library to select a picture to be used as your profile photo.</string>
-     <key>NSLocationWhenInUseUsageDescription</key>
-     <string>We need your location to provide better services</string>
-     <key>UIBackgroundModes</key>
-     <array>
-     <string>location</string>
-     </array>
+	<key>NSCameraUsageDescription</key>
+	<string>WinIt requires access to the camera to take a picture to be used as your profile photo.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need access to your location to provide you with location-based services, even when the app is in the background.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to provide better services</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>WinIt needs access to your microphone for voice</string>
+	<key>NSMotionUsageDescription</key>
+	<string>we need access to your motion to capture you for real</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>WinIt requires access to the photo library to select a picture to be used as your profile photo.</string>
+	<key>NSAppleMusicUsageDescription</key>
+    <string>WinIt requires access to your Apple Music library to provide enhanced user experiences.</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>WinIt requires Bluetooth access to connect to nearby devices securely.</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>WinIt requires Bluetooth access to detect and connect to compatible nearby devices.</string>
+    <key>NSContactsUsageDescription</key>
+    <string>WinIt may request access to your contacts to verify your identity and improve your experience.</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -58,9 +76,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
 </dict>
 </plist>

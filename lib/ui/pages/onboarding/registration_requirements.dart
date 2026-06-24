@@ -8,6 +8,7 @@ import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/custom_svg.dart';
 import 'package:winit_agent/ui/widgets/screen_title.dart';
+import 'package:winit_agent/ui/widgets/show_flush_bar.dart';
 
 import '../../../core/constants/app_asset.dart';
 import '../../../core/constants/color_path.dart';
@@ -24,6 +25,9 @@ class RegistrationRequirements extends StatefulWidget {
 }
 
 class _RegistrationRequirementsState extends State<RegistrationRequirements> {
+
+  bool _accept = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,79 +35,89 @@ class _RegistrationRequirementsState extends State<RegistrationRequirements> {
         context: context,
         title: 'WinIt Agent Account Setup',
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          horizontal: AppDimension.paddingLeft,
-          vertical: 22.h
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ScreenTitle(title: 'What You’ll Need to Get Started 🚀',
-                titleSize: 16.sp,
-                subtitle: 'Here’s a quick checklist of the tools and documents you’ll need before starting your onboarding process.'
-            ),
-            SizedBox(height: 30.h,),
-            requirement(title: 'Device & Internet Readiness',
-                subtitle: 'Have a smartphone or laptop with a stable internet connection to operate effectively on the WinIT platform.',
-                asset: AppAsset.login,
-              assetHeight: 84.h,
-              assetWidth: 85.55.w
-            ),
-            SizedBox(height: 16.h,),
-            requirement(title: 'National Identification Number',
-                titleColor: ColorPath.blueBlue,
-                bgColor: ColorPath.chalkBlue,
-                subtitle: 'Keep your NIN handy for quick identity verification during onboarding.',
-                swapPositions: true,
-                asset: AppAsset.login,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppDimension.paddingLeft,
+            vertical: 22.h
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ScreenTitle(title: 'What You’ll Need to Get Started 🚀',
+                  titleSize: 16.sp,
+                  subtitle: 'Here’s a quick checklist of the tools and documents you’ll need before starting your onboarding process.'
+              ),
+              SizedBox(height: 30.h,),
+              requirement(title: 'Device & Internet Readiness',
+                  subtitle: 'Have a smartphone or laptop with a stable internet connection to operate effectively on the WinIT platform.',
+                  asset: AppAsset.internet,
                 assetHeight: 84.h,
-                assetWidth: 79.46.w
-            ),
-            SizedBox(height: 16.h,),
-            requirement(title: 'Bank Verification Number',
-                titleColor: ColorPath.piperBrown,
-                bgColor: ColorPath.linenBrown,
-                subtitle: 'Your BVN is needed for Agent wallet setup and commission payments.',
-                asset: AppAsset.login,
-                assetHeight: 84.h,
-                assetWidth: 93.41.w
-            ),
-            SizedBox(height: 22.h,),
-            CustomButton(
-                buttonText: 'Start Now',
-                suffixIcon: AppAsset.chevronTopRight,
-                onPressed: () async{
-                  pushNavigation(context: context, widget: const CreateAccount(), routeName: NamedRoutes.createAccount);
-                }
-            ),
-            SizedBox(height: 16.h,),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomCheckBox(
-                    height: 24,
-                    width: 24,
-                    onchanged: (value){
-
-                    }
-                ),
-                SizedBox(width: 10.w,),
-                Expanded(
-                  child: Text(
-                    'I consent to the processing of my personal data for background checks and KYC verification (directly by Hope Gain Limited or her authorised third party) as required by law   I understand that the above is required to confirm the accuracy of the information I provided during signup',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: Theme.of(context).colorScheme.textSecondary
+                assetWidth: 85.55.w
+              ),
+              SizedBox(height: 16.h,),
+              requirement(title: 'National Identification Number',
+                  titleColor: ColorPath.blueBlue,
+                  bgColor: ColorPath.chalkBlue,
+                  subtitle: 'Keep your NIN handy for quick identity verification during onboarding.',
+                  swapPositions: true,
+                  asset: AppAsset.avatar,
+                  assetHeight: 84.h,
+                  assetWidth: 79.46.w
+              ),
+              SizedBox(height: 16.h,),
+              requirement(title: 'Bank Verification Number',
+                  titleColor: ColorPath.piperBrown,
+                  bgColor: ColorPath.linenBrown,
+                  subtitle: 'Your BVN is needed for Agent wallet setup and commission payments.',
+                  asset: AppAsset.building2,
+                  assetHeight: 84.h,
+                  assetWidth: 93.41.w
+              ),
+              SizedBox(height: 16.h,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomCheckBox(
+                      height: 24,
+                      width: 24,
+                      onchanged: (value){
+                        _accept = value;
+                      }
+                  ),
+                  SizedBox(width: 10.w,),
+                  Expanded(
+                    child: Text(
+                      'I consent to the processing of my personal data for background checks and KYC verification (directly by Hope Gain Limited or her authorised third party) as required by law   I understand that the above is required to confirm the accuracy of the information I provided during signup',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Theme.of(context).colorScheme.textSecondary
+                      ),
                     ),
                   ),
-                ),
-              ],
-            )
+                ],
+              ),
+              SizedBox(height: 22.h,),
+              CustomButton(
+                  buttonText: 'Start Now',
+                  suffixIcon: AppAsset.chevronTopRight,
+                  onPressed: () async{
+                    if(!_accept){
+                      showFlushBar(
+                          context: context,
+                          message: 'Kindly accept the terms to proceed',
+                        success: false
+                      );
+                      return;
+                    }
+                    replaceNavigation(context: context, widget: const CreateAccount(), routeName: NamedRoutes.createAccount);
+                  }
+              ),
 
 
 
-          ],
+            ],
+          ),
         ),
       ),
     );

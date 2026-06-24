@@ -32,7 +32,7 @@ class InactivityListenerViewModel extends ChangeNotifier{
   }
 
   void _onIdle() async{
-    debugPrint('time up::::log out!!!!!');
+    //debugPrint('time up::::log out!!!!!');
     /// Log out the user here
     // NavigationService navigationService = locator<NavigationService>();
     // navigationService.clearAllRoutes(

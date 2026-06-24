@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/constants/named_routes.dart';
+import 'package:winit_agent/core/utilities/navigator.dart';
+import 'package:winit_agent/ui/pages/onboarding/identity_verification/nin/nin_requirement.dart';
 import '../../../../core/constants/app_asset.dart';
 import '../../../../core/constants/app_dimension.dart';
 import '../../../../core/constants/color_path.dart';
@@ -9,10 +12,12 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/custom_painter/dotted_border.dart';
 import '../../widgets/custom_svg.dart';
 import '../../widgets/screen_title.dart';
+import '../bottom_nav.dart';
 
 class OnboardingSuccessful extends StatefulWidget {
   final bool isTemporaryOnboarding;
-  const OnboardingSuccessful({super.key, this.isTemporaryOnboarding = true});
+  final String agentId;
+  const OnboardingSuccessful({super.key, this.isTemporaryOnboarding = true, required this.agentId});
 
   @override
   State<OnboardingSuccessful> createState() => _OnboardingSuccessfulState();
@@ -74,9 +79,9 @@ class _OnboardingSuccessfulState extends State<OnboardingSuccessful> {
                                 ),
                                 SizedBox(height: 6.h,),
                                 Text(
-                                  widget.isTemporaryOnboarding ? '9047472791':'KSF - 0001',
+                                  widget.agentId,
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontSize: 30.sp,
+                                      fontSize: 30.sp,
                                       fontWeight: FontWeight.w800,
                                       color: ColorPath.blueBlue
                                   ),
@@ -137,6 +142,16 @@ class _OnboardingSuccessfulState extends State<OnboardingSuccessful> {
                 CustomButton(
                     buttonText: widget.isTemporaryOnboarding ? 'Continue Onboarding':'Go to Dashboard',
                     onPressed: () async{
+
+                      if(widget.isTemporaryOnboarding){
+                        replaceNavigation(context: context, widget: const NinRequirement(), routeName: NamedRoutes.ninRequirement);
+                        return;
+                      }
+
+                      //completed onboarding ... route user into the app
+                      pushAndClearNavigation(context: context, widget: BottomNav(), routeName: NamedRoutes.bottomNav, clearRoute: NamedRoutes.login);
+
+
 
                     }
                 ),

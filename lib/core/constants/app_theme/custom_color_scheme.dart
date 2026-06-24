@@ -32,4 +32,7 @@ extension CustomColorScheme on ColorScheme {
   Color get textFieldHint => brightness == Brightness.light ? ColorPath.paleGrey : Colors.white;
   Color get textFieldSuffixIcon => textPrimary;
 
+  //search field
+  Color get searchFieldFillColor => brightness == Brightness.light ? ColorPath.galleryGrey : Colors.white;
+
 }

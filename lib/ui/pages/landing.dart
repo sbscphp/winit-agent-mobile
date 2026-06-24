@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_asset.dart';
 import 'package:winit_agent/core/constants/app_dimension.dart';
-import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/view_models/landing_vm.dart';
 import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
@@ -43,7 +42,9 @@ class Landing extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomAssetViewer(asset: AppAsset.landingImage, height: 210.h, width: double.infinity,),
+                        SizedBox(
+                          width: double.infinity,
+                            child: CustomAssetViewer(asset: AppAsset.landingImage, height: 250.h, width: double.infinity,)),
                         SizedBox(height: 83.h,),
                         SizedBox(
                           height: 180.h,
@@ -103,7 +104,7 @@ class Landing extends ConsumerWidget {
                           padding: EdgeInsets.only(left: AppDimension.paddingLeft),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: List.generate(
                                 vm.titles.length,

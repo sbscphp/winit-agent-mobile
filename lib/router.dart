@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:winit_agent/ui/pages/authentication/login.dart';
+import 'package:winit_agent/ui/pages/security_prompt.dart';
+
+import 'core/constants/named_routes.dart';
 
 
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
-    // case NamedRoutes.profile:
-    //   return _getPageRoute(
-    //     routeName: settings.name!,
-    //     viewToShow: const Profile(),
-    //   );
+    case NamedRoutes.securityPrompt:
+      return _getPageRoute(
+        routeName: settings.name!,
+        viewToShow: const SecurityPrompt(
+          appName: 'Winit Agent',
+        ),
+      );
+    case NamedRoutes.login:
+      final bool isExpired = (settings.arguments as bool?) ?? false;
+      return _getPageRoute(
+        routeName: settings.name!,
+        viewToShow: Login(sessionExpired: isExpired,),
+      );
     //todo::add more routes
     default:
       return MaterialPageRoute(

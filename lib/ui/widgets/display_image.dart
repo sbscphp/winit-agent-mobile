@@ -3,9 +3,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/color_path.dart';
+import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 import 'package:winit_agent/ui/widgets/lgbtq_container.dart';
-import 'package:winit_agent/ui/widgets/media_placeholder.dart';
+
 
 class DisplayImage extends StatefulWidget {
   final String? imageUrl;
@@ -13,6 +14,7 @@ class DisplayImage extends StatefulWidget {
   final String lastName;
   final double? size;
   final double? initialsSize;
+  final bool addOverlay;
 
   const DisplayImage({
     super.key,
@@ -20,7 +22,8 @@ class DisplayImage extends StatefulWidget {
     required this.firstName,
     required this.lastName,
     this.initialsSize,
-    this.size
+    this.size,
+    this.addOverlay = false
   });
 
   @override
@@ -68,22 +71,45 @@ class _DisplayImageState extends State<DisplayImage> {
   @override
   Widget build(BuildContext context) {
     return LgbtqContainer(
+      isCircle: true,
       child: Container(
         height: widget.size?.h ?? 80.h,
         width: widget.size?.w ?? 80.w,
-        color: _imageProvider != null
-            ? Theme.of(context).colorScheme.textPrimary
-            : Colors.white,
+        decoration: BoxDecoration(
+            color: _imageProvider != null
+                ? Theme.of(context).colorScheme.textPrimary
+                : Colors.white,
+          shape: BoxShape.circle
+        ),
         child: _imageProvider != null
-            ? Image(
-          image: _imageProvider!,
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) => _noImage(context),
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return const Center(child: MediaPlaceholder());
-          },
+            ?  Stack(
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.transparent,
+              radius: widget.size?.r,
+              backgroundImage: _imageProvider,
+            ),
+            if(widget.addOverlay)Container(
+              height: widget.size?.h ?? 80.h,
+              width: widget.size?.w ?? 80.w,
+              decoration: BoxDecoration(
+                color: Colors.black.withCustomOpacity(0.32),
+                shape: BoxShape.circle
+              ),
+            )
+          ],
         )
+
+
+        // Image(
+        //   image: _imageProvider!,
+        //   fit: BoxFit.cover,
+        //   errorBuilder: (context, error, stackTrace) => _noImage(context),
+        //   loadingBuilder: (context, child, loadingProgress) {
+        //     if (loadingProgress == null) return child;
+        //     return const Center(child: MediaPlaceholder());
+        //   },
+        // )
             : _noImage(context),
       ),
     );

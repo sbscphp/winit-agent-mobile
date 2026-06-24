@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 
 
 class FirebaseMessagingUtils {
@@ -29,7 +27,7 @@ class FirebaseMessagingUtils {
   }
 
   //push notification listeners
-  static pushNotificationListenerInit({required BuildContext context, required WidgetRef ref}) async {
+  static pushNotificationListenerInit({required BuildContext context}) async {
      initializeLocalNotification(context);
     ///subscribe to a topic
     FirebaseMessaging.instance

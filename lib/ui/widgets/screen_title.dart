@@ -7,7 +7,10 @@ class ScreenTitle extends StatelessWidget {
   final String subtitle;
   final double? titleSize;
   final double? subtitleSize;
-  const ScreenTitle({super.key, required this.title, required this.subtitle, this.titleSize, this.subtitleSize});
+  final Color? titleColor;
+  final Color? subtitleColor;
+  final FontWeight? titleFontWeight;
+  const ScreenTitle({super.key, this.subtitleColor, this.titleFontWeight, this.titleColor, required this.title, required this.subtitle, this.titleSize, this.subtitleSize});
 
   @override
   Widget build(BuildContext context) {
@@ -17,18 +20,18 @@ class ScreenTitle extends StatelessWidget {
         Text(
           title,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w800,
+              fontWeight: titleFontWeight ?? FontWeight.w800,
               fontSize: titleSize,
-              color: Theme.of(context).colorScheme.textPrimary
+              color: titleColor ?? Theme.of(context).colorScheme.textPrimary
           ),
         ),
-        SizedBox(height: 4.h,),
-        Text(
+        if(subtitle.isNotEmpty)SizedBox(height: 4.h,),
+        if(subtitle.isNotEmpty)Text(
           subtitle,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w400,
               fontSize: subtitleSize,
-              color: Theme.of(context).colorScheme.textTertiary
+              color: subtitleColor ?? Theme.of(context).colorScheme.textTertiary
           ),
         ),
       ],

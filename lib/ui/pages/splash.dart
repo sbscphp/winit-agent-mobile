@@ -57,10 +57,12 @@ class _SplashState extends State<Splash> {
       //   return;
       // }
       //nav user to onboarding screen
-      replaceNavigation(
+      if(mounted) {
+        replaceNavigation(
           context: context,
           widget: Landing(),
           routeName: NamedRoutes.landing);
+      }
     });
   }
 }

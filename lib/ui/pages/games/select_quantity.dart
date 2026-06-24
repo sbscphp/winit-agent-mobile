@@ -1,0 +1,175 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:winit_agent/core/constants/app_asset.dart';
+import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/data/view_models/games/selected_game_vm.dart';
+import 'package:winit_agent/ui/pages/games/enter_customer_details.dart';
+import 'package:winit_agent/ui/widgets/custom_svg.dart';
+import 'package:winit_agent/ui/widgets/games/game_appbar_title.dart';
+import 'package:winit_agent/ui/widgets/games/game_purchase_dock.dart';
+import 'package:winit_agent/ui/widgets/games/game_purchase_header.dart';
+import '../../../core/constants/app_dimension.dart';
+import '../../../core/constants/color_path.dart';
+import '../../../core/constants/named_routes.dart';
+import '../../../core/utilities/navigator.dart';
+import '../../../core/utilities/utilities.dart';
+import '../../widgets/custom_appbar.dart';
+import '../../widgets/naira_display.dart';
+import '../../widgets/quantity_counter.dart';
+
+
+class SelectQuantity extends ConsumerStatefulWidget {
+  const SelectQuantity({super.key});
+
+  @override
+  ConsumerState<SelectQuantity> createState() => _SelectQuantityState();
+}
+
+class _SelectQuantityState extends ConsumerState<SelectQuantity> {
+
+  bool val = false;
+  // late int quantity;
+  // late double amount;
+  //double referralAmountApplied = 0;
+  //bool referralApplied = false;
+
+  @override
+  void initState() {
+    final vm = ref.read(selectedGameViewModel);
+    vm.initPriceAndQuantity();
+    // quantity = vm.selectedTicket?.number ?? 1;
+    // amount = double.tryParse(vm.selectedTicket?.discountPrice?.toString() ?? '0') ?? 0;
+    //ref.read(paymentViewModel).reset();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = ref.watch(selectedGameViewModel);
+    return Scaffold(
+      appBar: customAppBar(
+        context: context,
+        centerTitle: false,
+        useCustomTitleWidget: true,
+        titleWidget: GameAppbarTitle(),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppDimension.paddingLeft,
+                  vertical: 14.h
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GamePurchaseHeader(
+                      title: 'Select Ticket Quantity',
+                      subtitle: 'Enter ticket unit(s) you want to purchase',
+                      stepValue: 1
+                  ),
+                  SizedBox(height: 32.h,),
+                  QuantityCounter(
+                      value: vm.quantity,
+                      upperLimit: vm.maxCount,
+                      onChanged: (value){
+                        // setState(() {
+                        //   vm.quantity = value ?? 1;
+                        //   vm.calculatePrice();
+                        // });
+                        vm.quantity = value ?? 1;
+                        vm.calculatePrice();
+                      }
+                  ),
+                  SizedBox(height: 16.h,),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Total Price',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).colorScheme.textTertiary
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.h,),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 36.w),
+                      child: NairaDisplay(
+                        amount: vm.amount,
+                        addDecimal: false,
+                        fontSize: 36.sp,
+                        color:Theme.of(context).colorScheme.textPrimary,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10.h,),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 8.h,
+                        horizontal: 8.w
+                      ),
+                      decoration: BoxDecoration(
+                        color: ColorPath.athensGrey,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CustomAssetViewer(asset: AppAsset.alert4),
+                          SizedBox(width: 8.w,),
+                          RichText(
+                            text: TextSpan(
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color:  ColorPath.charcoalBlack,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'One (1) Ticket is ',
+                                ),
+                                TextSpan(
+                                  text: '₦${Utilities.formatAmount(
+                                    amount: vm.discountedPrice,
+                                    addDecimal: false
+                                  )}',
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      color: ColorPath.charcoalBlack
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          )
+
+                        ],
+                      ),
+                    ),
+                  )
+
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 20.h,),
+          GamePurchaseDock(
+              onPressed: (){
+                pushNavigation(context: context, widget: const EnterCustomerDetails(), routeName: NamedRoutes.enterCustomerDetails);
+              }
+          )
+        ],
+      ),
+    );
+  }
+}

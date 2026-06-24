@@ -16,7 +16,7 @@ class CustomDivider extends StatelessWidget {
     return Container(
       height: height?.h ?? 1.h,
       width: double.infinity,
-      color: color ?? ColorPath.athensGrey,
+      color: color ?? ColorPath.athensGrey3,
       margin: equalVerticalSpace ? EdgeInsets.symmetric(vertical: verticalSpace ?? 20.h)
       :EdgeInsets.only(top: verticalSpace ?? 20.h, bottom: bottomMargin?.h ?? 20.h)
     );
