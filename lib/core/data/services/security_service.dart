@@ -23,7 +23,8 @@ class SecurityService {
         // You'll need your release signing hash (Base64) from Google Play/Keystore
         signingCertHashes: [
           'DRr2l8dnWZmyQwGkh3TGhlfqkSd6cx2mXC1oR9mOMfk=', //debug
-          'HGZsLHQfTxq1HsT4ekIuG8Cha52ZJWe7088jVSGuMLw=' //release
+          'J6vcqAgtVLEW2LU3X5RKB6tHZhZ5v41VgSSfF9+KarI=', //release
+          'HGZsLHQfTxq1HsT4ekIuG8Cha52ZJWe7088jVSGuMLw=' //release(playstore)
         ], //debug
       ),
       iosConfig: IOSConfig(

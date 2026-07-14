@@ -24,6 +24,7 @@ import '../../widgets/alert_dialogs/transaction_receipt.dart';
 import '../../widgets/balance_summary_card.dart';
 import '../../widgets/clickable.dart';
 import '../../widgets/custom_appbar.dart';
+import '../../widgets/custom_expansion_tile.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/list_header.dart';
 import '../../widgets/listview_items/transaction_item.dart';
@@ -40,6 +41,8 @@ class Home extends ConsumerStatefulWidget {
 }
 
 class _HomeState extends ConsumerState<Home> {
+
+  bool _isExpanded = false;
 
   @override
   void initState() {
@@ -249,7 +252,7 @@ class _HomeState extends ConsumerState<Home> {
                 );
               }
               return ListView.separated(
-                itemCount: filterTransactionsVm.purchaseTransactions.length,
+                itemCount: filterTransactionsVm.purchaseTransactions.length > 5 ? 5 :  filterTransactionsVm.purchaseTransactions.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
@@ -355,7 +358,7 @@ class _HomeState extends ConsumerState<Home> {
           GridView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              itemCount: 4,
+              itemCount: 2,
               gridDelegate:
               SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -437,7 +440,7 @@ class _HomeState extends ConsumerState<Home> {
                         ),
                         SizedBox(height: 2.h,),
                         NairaDisplay(
-                          amount: salesVm.commissionsBalance,
+                          amount: salesVm.commissionBalance,
                           fontSize: 14.sp,
                           color:ColorPath.hazeGreen,
                           fontWeight: FontWeight.w800,
@@ -447,86 +450,237 @@ class _HomeState extends ConsumerState<Home> {
                   );
                 }
 
-                if(index == 2){
-                  return Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 16.w
+                // if(index == 2){
+                //   return Container(
+                //     padding: EdgeInsets.symmetric(
+                //         horizontal: 16.w
+                //     ),
+                //     decoration: BoxDecoration(
+                //         color: ColorPath.beeBrown,
+                //         borderRadius: BorderRadius.all(Radius.circular(8.r))
+                //     ),
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         FittedBox(
+                //           child: Text(
+                //             'Performance Income',
+                //             style: Theme.of(context)
+                //                 .textTheme
+                //                 .bodySmall
+                //                 ?.copyWith(
+                //                 fontWeight: FontWeight.w400,
+                //                 color: ColorPath.troutGrey
+                //             ),
+                //           ),
+                //         ),
+                //         SizedBox(height: 2.h,),
+                //         NairaDisplay(
+                //           amount: salesVm.bonusBalance,
+                //           fontSize: 14.sp,
+                //           color:ColorPath.piperBrown,
+                //           fontWeight: FontWeight.w800,
+                //         ),
+                //       ],
+                //     ),
+                //   );
+                // }
+                //
+                // return Container(
+                //   padding: EdgeInsets.symmetric(
+                //       horizontal: 16.w
+                //   ),
+                //   decoration: BoxDecoration(
+                //       color: ColorPath.athensGrey2,
+                //       borderRadius: BorderRadius.all(Radius.circular(8.r))
+                //   ),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       FittedBox(
+                //         child: Text(
+                //           '${Utilities.ordinal(salesVm.position)} in $lga',
+                //           style: Theme.of(context)
+                //               .textTheme
+                //               .bodySmall
+                //               ?.copyWith(
+                //               fontWeight: FontWeight.w400,
+                //               color: ColorPath.troutGrey
+                //           ),
+                //         ),
+                //       ),
+                //       SizedBox(height: 2.h,),
+                //       FittedBox(
+                //         child: Text(
+                //           salesVm.ticketsSoldToday == 0 ? 'O Tickets Sold Today':"${Utilities.abbreviateAmount(
+                //               value: salesVm.ticketsSoldToday
+                //           )} ${salesVm.ticketsSoldToday > 1 ? 'Tickets':'Ticket'} Sold Today",
+                //           style: Theme.of(context)
+                //               .textTheme
+                //               .bodyMedium
+                //               ?.copyWith(
+                //               fontWeight: FontWeight.w800,
+                //               color: ColorPath.charcoalBlack
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // );
+              }),
+          SizedBox(height: 16.h,),
+          Container(
+            height: 60.h,
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(
+                horizontal: 16.w
+            ),
+            decoration: BoxDecoration(
+                color: ColorPath.beeBrown,
+                borderRadius: BorderRadius.all(Radius.circular(8.r))
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FittedBox(
+                  child: Text(
+                    'Performance Income',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: ColorPath.troutGrey
                     ),
-                    decoration: BoxDecoration(
-                        color: ColorPath.beeBrown,
-                        borderRadius: BorderRadius.all(Radius.circular(8.r))
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FittedBox(
-                          child: Text(
-                            'Performance Commission',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: ColorPath.troutGrey
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 2.h,),
-                        NairaDisplay(
-                          amount: salesVm.bonusBalance,
-                          fontSize: 14.sp,
-                          color:ColorPath.piperBrown,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ],
-                    ),
-                  );
-                }
-
-                return Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 16.w
                   ),
-                  decoration: BoxDecoration(
-                      color: ColorPath.athensGrey2,
-                      borderRadius: BorderRadius.all(Radius.circular(8.r))
-                  ),
+                ),
+                SizedBox(height: 2.h,),
+                NairaDisplay(
+                  amount: salesVm.bonusBalance,
+                  fontSize: 14.sp,
+                  color:ColorPath.piperBrown,
+                  fontWeight: FontWeight.w800,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16.h,),
+          CustomExpansionTile(
+            bgColor: Colors.transparent,
+            borderColor: ColorPath.athensGrey3,
+            initiallyExpanded: false,
+            onExpansionChanged: (value){
+              _isExpanded = value;
+              setState(() {});
+            },
+            showSuffixIcon: false,
+            primaryChild: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FittedBox(
-                        child: Text(
-                          '${Utilities.ordinal(salesVm.position)} in $lga',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: ColorPath.troutGrey
-                          ),
+                      Text(
+                        'Sales and Ticket Ranking',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).colorScheme.textPrimary
                         ),
                       ),
-                      SizedBox(height: 2.h,),
-                      FittedBox(
-                        child: Text(
-                          salesVm.ticketsSoldToday == 0 ? 'O Tickets Sold Today':"${Utilities.abbreviateAmount(
-                              value: salesVm.ticketsSoldToday
-                          )} ${salesVm.ticketsSoldToday > 1 ? 'Tickets':'Ticket'} Sold Today",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(
-                              fontWeight: FontWeight.w800,
-                              color: ColorPath.charcoalBlack
-                          ),
+                      SizedBox(height: 4.h,),
+                      Text(
+                        'See how you rank amongst agents ',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: Theme.of(context).colorScheme.textSecondary
                         ),
                       ),
+
+
                     ],
                   ),
-                );
-              })
+                ),
+                SizedBox(width: 10.w,),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      _isExpanded ? 'Close':'View',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: _isExpanded ? ColorPath.ribbonRed : Theme.of(context).colorScheme.textPrimary
+                      ),
+                    ),
+                    SizedBox(width: 2.w,),
+                    Icon(_isExpanded ? Icons.keyboard_arrow_up:Icons.keyboard_arrow_down, size: 25, color: _isExpanded ? ColorPath.ribbonRed : Theme.of(context).colorScheme.textPrimary,)
+                  ],
+                )
+              ],
+            ),
+            secondaryChild: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Rank by Sales',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).colorScheme.textSecondary
+                      ),
+                    ),
+                    SizedBox(width: 10.w,),
+                    Text(
+                      '${Utilities.formatAmount(
+                        amount: salesVm.rankBySales.toDouble(),
+                        addDecimal: false
+                      )} of ${Utilities.formatAmount(
+                          amount: salesVm.totalAgentsInRank.toDouble(),
+                          addDecimal: false
+                      )}',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: ColorPath.blueBlue
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8.h,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Rank by Ticket',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).colorScheme.textSecondary
+                      ),
+                    ),
+                    SizedBox(width: 10.w,),
+                    Text(
+                      '${Utilities.formatAmount(
+                          amount: salesVm.rankByTicket.toDouble(),
+                          addDecimal: false
+                      )} of ${Utilities.formatAmount(
+                          amount: salesVm.totalAgentsInRank.toDouble(),
+                          addDecimal: false
+                      )}',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: ColorPath.blueBlue
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
         ],
       );
     }

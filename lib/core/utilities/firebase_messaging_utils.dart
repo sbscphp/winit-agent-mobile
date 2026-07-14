@@ -11,7 +11,7 @@ class FirebaseMessagingUtils {
   static final _localNotification = FlutterLocalNotificationsPlugin();
   static const _androidChannel = AndroidNotificationChannel(
     "1",
-    "winit",
+    "winit_agent",
     importance: Importance.max,
     description: "WinIt would like to send you Notifications",
     showBadge: true,

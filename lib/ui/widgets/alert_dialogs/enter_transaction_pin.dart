@@ -74,6 +74,7 @@ class _EnterTransactionPinState extends ConsumerState<EnterTransactionPin> {
               SizedBox(height: 16.h,),
               CustomTextField(
                 isOtp: true,
+                obscure: true,
                 keyboardType: TextInputType.number,
                 controller: _pin,
                 validator: FieldValidator.validate,

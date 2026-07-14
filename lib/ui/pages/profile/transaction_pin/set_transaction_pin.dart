@@ -162,6 +162,7 @@ class _SetTransactionPinState extends ConsumerState<SetTransactionPin> {
                             padding: EdgeInsets.symmetric(horizontal: 40.w),
                             child: CustomTextField(
                               isOtp: true,
+                              obscure: true,
                               keyboardType: TextInputType.number,
                               controller: _pin,
                               validator: FieldValidator.validate,

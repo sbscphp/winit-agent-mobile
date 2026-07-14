@@ -232,7 +232,7 @@ ${DateFormat.yMMMd().format(date)} ${DateFormat.jms().format(date)}''';
   ///converts time in am/pm
   static String formatTimeAMPM({required DateTime dateTime}) {
     final DateFormat formatter = DateFormat.jm();
-    return formatter.format(dateTime).toLowerCase();
+    return formatter.format(dateTime.toLocal()).toLowerCase();
   }
 
   ///compares two date time

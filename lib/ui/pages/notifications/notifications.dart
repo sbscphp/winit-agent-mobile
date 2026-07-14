@@ -161,6 +161,7 @@ class _NotificationsState extends ConsumerState<Notifications> {
         ),
         child: Builder(
           builder: (context) {
+
             if(notificationFiltersVm.showFilteredList){
 
               if(notificationFiltersVm.state == ViewState.busy){

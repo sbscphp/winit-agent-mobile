@@ -6,8 +6,8 @@ class SalesStat {
   final dynamic ticketsLastPeriodQuantity;
   final dynamic commissionsValue;
   final dynamic bonusValue;
-  final dynamic bonusBalance;
-  final dynamic commissionBalance;
+  //final dynamic bonusBalance;
+  final dynamic commissionsBalance;
   final dynamic commissionsPaidValue;
   final dynamic commissionsUnpaidValue;
   final dynamic commissionsLastPeriodValue;
@@ -17,6 +17,8 @@ class SalesStat {
   final dynamic rankValue;
   final dynamic totalAgentsInRank;
   final String? rankBy;
+  final dynamic rankByTicket;
+  final dynamic rankBySales;
 
   SalesStat({
     this.totalSales,
@@ -35,8 +37,10 @@ class SalesStat {
     this.rankValue,
     this.totalAgentsInRank,
     this.rankBy,
-    this.bonusBalance,
-    this.commissionBalance
+    //this.bonusBalance,
+    this.commissionsBalance,
+    this.rankBySales,
+    this.rankByTicket
   });
 
   factory SalesStat.fromJson(Map<String, dynamic> json) => SalesStat(
@@ -56,14 +60,17 @@ class SalesStat {
     totalAgentsInRank: json["total_agents_in_rank"],
     rankBy: json["rank_by"],
     rankValue: json["rank_value"],
-    bonusBalance: json["bonus_balance"],
-    commissionBalance: json["commission_balance"],
+    //bonusBalance: json["bonus_balance"],
+    commissionsBalance: json["commissions_balance"],
+    rankBySales: json["rank_by_sales"],
+    rankByTicket: json["rank_by_ticket"],
   );
 
   Map<String, dynamic> toJson() => {
     "total_sales": totalSales,
     "total_tickets_sold_quantity": totalTicketsSoldQuantity,
     "period": period,
+    "commissions_balance": commissionsBalance,
     "tickets_last_period_sold_value": ticketsLastPeriodSoldValue,
     "tickets_last_period_quantity": ticketsLastPeriodQuantity,
     "commissions_value": commissionsValue,
@@ -75,6 +82,9 @@ class SalesStat {
     "rank_position": rankPosition,
     "total_agents_in_rank": totalAgentsInRank,
     "rank_by": rankBy,
+    "bonus_value": bonusValue,
     "rank_value": rankValue,
+    "rank_by_sales": rankBySales,
+    "rank_by_ticket": rankByTicket,
   };
 }
