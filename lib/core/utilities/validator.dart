@@ -2,6 +2,7 @@ import 'package:winit_agent/core/constants/app_constants.dart';
 import 'package:winit_agent/core/utilities/utilities.dart';
 
 class EmailValidator {
+
   static String? validateEmail(String? value, {bool isCompulsory = true}) {
     if (value != null) {
       if(value.isEmpty && !isCompulsory){

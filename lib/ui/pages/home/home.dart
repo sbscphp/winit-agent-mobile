@@ -358,7 +358,7 @@ class _HomeState extends ConsumerState<Home> {
           GridView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              itemCount: 2,
+              itemCount: 4,
               gridDelegate:
               SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -428,7 +428,7 @@ class _HomeState extends ConsumerState<Home> {
                       children: [
                         FittedBox(
                           child: Text(
-                            'Commission Balance',
+                            'Performance Income',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
@@ -440,7 +440,8 @@ class _HomeState extends ConsumerState<Home> {
                         ),
                         SizedBox(height: 2.h,),
                         NairaDisplay(
-                          amount: salesVm.commissionBalance,
+                          //amount: salesVm.commissionBalance,
+                          amount: salesVm.bonusBalance,
                           fontSize: 14.sp,
                           color:ColorPath.hazeGreen,
                           fontWeight: FontWeight.w800,
@@ -449,6 +450,79 @@ class _HomeState extends ConsumerState<Home> {
                     ),
                   );
                 }
+
+                if(index == 2){
+                  return  Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16.w
+                    ),
+                    decoration: BoxDecoration(
+                        color: ColorPath.beeBrown,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FittedBox(
+                          child: Text(
+                            'Commission Earned',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: ColorPath.troutGrey
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 2.h,),
+                        NairaDisplay(
+                          amount: salesVm.totalCommissionsEarned,
+                          fontSize: 14.sp,
+                          color:ColorPath.piperBrown,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                return  Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 16.w
+                  ),
+                  decoration: BoxDecoration(
+                      color:ColorPath.athensGrey2,
+                      //color: ColorPath.beeBrown,
+                      borderRadius: BorderRadius.all(Radius.circular(8.r))
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FittedBox(
+                        child: Text(
+                          'Commission Settled',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: ColorPath.troutGrey
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 2.h,),
+                      NairaDisplay(
+                        amount: salesVm.totalCommissionsSettled,
+                        fontSize: 14.sp,
+                        color:Theme.of(context).colorScheme.textPrimary,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ],
+                  ),
+                );
 
                 // if(index == 2){
                 //   return Container(
@@ -530,43 +604,43 @@ class _HomeState extends ConsumerState<Home> {
                 //   ),
                 // );
               }),
-          SizedBox(height: 16.h,),
-          Container(
-            height: 60.h,
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(
-                horizontal: 16.w
-            ),
-            decoration: BoxDecoration(
-                color: ColorPath.beeBrown,
-                borderRadius: BorderRadius.all(Radius.circular(8.r))
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FittedBox(
-                  child: Text(
-                    'Performance Income',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: ColorPath.troutGrey
-                    ),
-                  ),
-                ),
-                SizedBox(height: 2.h,),
-                NairaDisplay(
-                  amount: salesVm.bonusBalance,
-                  fontSize: 14.sp,
-                  color:ColorPath.piperBrown,
-                  fontWeight: FontWeight.w800,
-                ),
-              ],
-            ),
-          ),
+          // SizedBox(height: 16.h,),
+          // Container(
+          //   height: 60.h,
+          //   width: double.infinity,
+          //   padding: EdgeInsets.symmetric(
+          //       horizontal: 16.w
+          //   ),
+          //   decoration: BoxDecoration(
+          //       color: ColorPath.beeBrown,
+          //       borderRadius: BorderRadius.all(Radius.circular(8.r))
+          //   ),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       FittedBox(
+          //         child: Text(
+          //           'Performance Income',
+          //           style: Theme.of(context)
+          //               .textTheme
+          //               .bodySmall
+          //               ?.copyWith(
+          //               fontWeight: FontWeight.w400,
+          //               color: ColorPath.troutGrey
+          //           ),
+          //         ),
+          //       ),
+          //       SizedBox(height: 2.h,),
+          //       NairaDisplay(
+          //         amount: salesVm.bonusBalance,
+          //         fontSize: 14.sp,
+          //         color:ColorPath.piperBrown,
+          //         fontWeight: FontWeight.w800,
+          //       ),
+          //     ],
+          //   ),
+          // ),
           SizedBox(height: 16.h,),
           CustomExpansionTile(
             bgColor: Colors.transparent,

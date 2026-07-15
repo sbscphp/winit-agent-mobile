@@ -154,30 +154,36 @@ class _LoginState extends ConsumerState<Login> {
 
                                    Utilities.hideKeyboard(context);
 
-                                   await vm.login(
-                                       loginChoice: _loginChoice.text,
-                                       pwd: _pwd.text
-                                   );
+                                   final isValidate = _formKey.currentState!.validate();
 
-                                   if(vm.state == ViewState.retrieved){
-
-                                     //init login data in profile vm
-                                     ref.read(profileViewModel).loginData = vm.loginData;
-
-                                     //init bank account details
-                                     ref.read(bankAccountDetailsViewModel).accountInformation = vm.loginData?.user?.accountInformation;
-
-
-                                     //check onboarding step
-                                     handleRouting(vm: vm);
-
-                                   }else{
-                                     showFlushBar(
-                                         context: context,
-                                         message: vm.message,
-                                       success: false
+                                   if(isValidate){
+                                     await vm.login(
+                                         loginChoice: _loginChoice.text,
+                                         pwd: _pwd.text
                                      );
+
+                                     if(vm.state == ViewState.retrieved){
+
+                                       //init login data in profile vm
+                                       ref.read(profileViewModel).loginData = vm.loginData;
+
+                                       //init bank account details
+                                       ref.read(bankAccountDetailsViewModel).accountInformation = vm.loginData?.user?.accountInformation;
+
+
+                                       //check onboarding step
+                                       handleRouting(vm: vm);
+
+                                     }else{
+                                       showFlushBar(
+                                           context: context,
+                                           message: vm.message,
+                                           success: false
+                                       );
+                                     }
                                    }
+
+
 
                                  }
                              ),

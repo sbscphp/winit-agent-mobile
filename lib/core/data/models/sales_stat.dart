@@ -19,6 +19,8 @@ class SalesStat {
   final String? rankBy;
   final dynamic rankByTicket;
   final dynamic rankBySales;
+  final dynamic totalCommissionsEarned;
+  final dynamic totalCommissionsSettled;
 
   SalesStat({
     this.totalSales,
@@ -40,7 +42,9 @@ class SalesStat {
     //this.bonusBalance,
     this.commissionsBalance,
     this.rankBySales,
-    this.rankByTicket
+    this.rankByTicket,
+    this.totalCommissionsEarned,
+    this.totalCommissionsSettled
   });
 
   factory SalesStat.fromJson(Map<String, dynamic> json) => SalesStat(
@@ -64,6 +68,8 @@ class SalesStat {
     commissionsBalance: json["commissions_balance"],
     rankBySales: json["rank_by_sales"],
     rankByTicket: json["rank_by_ticket"],
+    totalCommissionsEarned: json["total_commissions_earned"],
+    totalCommissionsSettled: json["total_commissions_settled"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -85,6 +91,7 @@ class SalesStat {
     "bonus_value": bonusValue,
     "rank_value": rankValue,
     "rank_by_sales": rankBySales,
-    "rank_by_ticket": rankByTicket,
+    "total_commissions_earned": totalCommissionsEarned,
+    "total_commissions_settled": totalCommissionsSettled,
   };
 }
