@@ -55,13 +55,14 @@ class WalletVm extends BaseState{
   }
 
   //withdraw
-  withdraw({required double amount, required String pin}) async {
+  withdraw({required double amount, required String pin, required String? bankAccountId}) async {
     setSecondState(ViewState.busy);
     final details = {
       "amount": amount,
-      "account_id": walletId,
+      "account_id": bankAccountId,
       "transaction_pin": pin
     };
+
     await _walletDp.withdraw(details: details).then((response) async{
       _message = response.message ?? defaultSuccessMessage;
       setSecondState(ViewState.retrieved);

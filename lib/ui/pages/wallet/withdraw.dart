@@ -200,7 +200,8 @@ class _WithdrawState extends ConsumerState<Withdraw> {
 
                                   await vm.withdraw(
                                       amount: amount,
-                                      pin: ref.read(transactionPinViewModel).currentPin ?? ''
+                                      pin: ref.read(transactionPinViewModel).currentPin ?? '',
+                                      bankAccountId: ref.read(bankAccountDetailsViewModel).selectedBankAccount?.uuid
                                   );
 
                                   if(vm.secondState == ViewState.retrieved){
