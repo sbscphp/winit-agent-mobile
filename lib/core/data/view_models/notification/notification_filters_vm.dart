@@ -45,7 +45,7 @@ class NotificationFiltersVm extends BaseState{
 
 
   //fetch filtered results(notifications)
-  fetchFilteredResults({bool firstCall = true, bool refreshUi = true}) async {
+  fetchFilteredResults({required bool hasWallet, bool firstCall = true, bool refreshUi = true}) async {
     if(firstCall){
       pageNumber = 1;
       _showFilteredList = true;
@@ -56,11 +56,13 @@ class NotificationFiltersVm extends BaseState{
     }
 
 
-    int filterIndex = notificationFilterOptions.indexOf(selectedFilter);
+    int filterIndex =  getNotificationFilterOptions(includeWalletNotifications: hasWallet).indexOf(selectedFilter);
+    //notificationFilterOptions.indexOf(selectedFilter);
 
 
     final filters = {
-      'filter_by': filterValues[filterIndex]
+      'filter_by': getNotificationFilterValues(includeWalletNotifications: hasWallet)[filterIndex]
+      //filterValues[filterIndex]
     };
 
     await _notificationsDp.fetchNotifications(
@@ -148,6 +150,30 @@ class NotificationFiltersVm extends BaseState{
     'commission',
     'bonus_income'
   ];
+
+  List<String> getNotificationFilterOptions({
+    bool includeWalletNotifications = true,
+  }) {
+    if (includeWalletNotifications) {
+      return notificationFilterOptions;
+    }
+
+    return notificationFilterOptions
+        .where((item) => item != 'Wallet Notification')
+        .toList();
+  }
+
+  List<String> getNotificationFilterValues({
+    bool includeWalletNotifications = true,
+  }) {
+    if (includeWalletNotifications) {
+      return filterValues;
+    }
+
+    return filterValues
+        .where((item) => item != 'wallet_notification')
+        .toList();
+  }
 
   clearFilters(){
     _showFilteredList = false;

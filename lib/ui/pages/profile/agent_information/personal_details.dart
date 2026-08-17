@@ -54,7 +54,6 @@ class _PersonalDetailsState extends ConsumerState<PersonalDetails> {
   @override
   void initState() {
     final vm = ref.read(profileViewModel);
-    print('phone from vm::::${vm.phone}>>>');
     _phone1.text = vm.phone;
     _email1.text = vm.email;
     if(!widget.isFromOnboarding){

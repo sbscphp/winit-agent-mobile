@@ -72,6 +72,7 @@ class ProfileVm extends BaseState{
 
 
   bool get hasTransactionPin => _user?.hasTransactionPin ?? false;
+  bool get hasWallet => _loginData?.user?.accountInformation?.platformAccount != null;
 
 
 

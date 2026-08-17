@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/view_models/profile/account_closure_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/transaction_pin_vm.dart';
+import 'package:winit_agent/core/data/view_models/utility/config_vm.dart';
 import 'package:winit_agent/ui/pages/authentication/login.dart';
 import 'package:winit_agent/ui/widgets/alert_dialogs/wallet_balance_dialog.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
@@ -38,6 +40,8 @@ class _AccountClosureState extends ConsumerState<AccountClosure> {
   @override
   Widget build(BuildContext context) {
     final vm = ref.watch(accountClosureViewModel);
+    final profileVm = ref.watch(profileViewModel);
+    final configVm = ref.watch(configViewModel);
     return BusyOverlay(
       show: vm.state == ViewState.busy,
       child: Scaffold(
@@ -115,14 +119,66 @@ class _AccountClosureState extends ConsumerState<AccountClosure> {
                       await vm.checkAccountClosureStatus();
                       if(vm.state == ViewState.retrieved){
 
-                        baseDialog(
-                          context: context,
-                          content: CrossFadeWidget(
-                            switchNotifier: switchNotifier,
-                            firstChild: WalletBalanceDialog(
-                              onPressed: ()=>switchNotifier.value = true,
+                        if(profileVm.hasWallet && configVm.isWalletEnabled){
+
+
+                          baseDialog(
+                            context: context,
+                            content: CrossFadeWidget(
+                              switchNotifier: switchNotifier,
+                              firstChild: WalletBalanceDialog(
+                                onPressed: ()=>switchNotifier.value = true,
+                              ),
+                              secondChild: EnterTransactionPin(
+                                  visitingRoute: NamedRoutes.accountClosure,
+                                  title: 'Enter Transaction PIN for Account Closure Validation. ',
+                                  subtitle: 'Enter your four (4) Digit Transaction pin to complete this action',
+                                  buttonText: 'Validate Code',
+                                  onDone: (value)async{
+                                    Future.delayed(const Duration(milliseconds: 50), () async{
+
+                                      await vm.closeAccount(pin: ref.read(transactionPinViewModel).currentPin ?? '');
+                                      if(vm.state == ViewState.retrieved){
+                                        pushAndClearNavigation(
+                                            context: context,
+                                            widget: const Login(),
+                                            routeName: NamedRoutes.login,
+                                            clearRoute: NamedRoutes.landing
+                                        );
+                                      }
+                                      showFlushBar(
+                                          context: context,
+                                          message: vm.message,
+                                          success: vm.state == ViewState.retrieved
+                                      );
+
+                                      // baseDialog(
+                                      //   context: context,
+                                      //   content: ActionCompleted(
+                                      //     title: 'Request Completed',
+                                      //     assetSize: 80,
+                                      //     subtitle:
+                                      //     'Congratulations, your withdrawal request has been successfully completed. A notification will be sent to you when fully processed.',
+                                      //     onPressed: () {
+                                      //       popNavigation(context: context);
+                                      //     },
+                                      //   ),
+                                      // );
+                                    });
+                                  }
+                              ),
                             ),
-                            secondChild: EnterTransactionPin(
+                            onClosed: () {
+                              switchNotifier.value = false;
+                            },
+                          );
+
+
+                        }else{
+
+                          baseDialog(
+                            context: context,
+                            content: EnterTransactionPin(
                                 visitingRoute: NamedRoutes.accountClosure,
                                 title: 'Enter Transaction PIN for Account Closure Validation. ',
                                 subtitle: 'Enter your four (4) Digit Transaction pin to complete this action',
@@ -142,7 +198,7 @@ class _AccountClosureState extends ConsumerState<AccountClosure> {
                                     showFlushBar(
                                         context: context,
                                         message: vm.message,
-                                      success: vm.state == ViewState.retrieved
+                                        success: vm.state == ViewState.retrieved
                                     );
 
                                     // baseDialog(
@@ -160,11 +216,16 @@ class _AccountClosureState extends ConsumerState<AccountClosure> {
                                   });
                                 }
                             ),
-                          ),
-                          onClosed: () {
-                            switchNotifier.value = false;
-                          },
-                        );
+                            onClosed: () {
+                              switchNotifier.value = false;
+                            },
+                          );
+
+                        }
+
+
+
+
 
                       }else{
                         showFlushBar(

@@ -6,6 +6,8 @@ import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/view_models/notification/notification_filters_vm.dart';
 import 'package:winit_agent/core/data/view_models/notification/notification_settings_vm.dart';
 import 'package:winit_agent/core/data/view_models/notification/notifications_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
+import 'package:winit_agent/core/data/view_models/utility/config_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/pages/notifications/notification_settings.dart';
 import 'package:winit_agent/ui/widgets/listview_items/notification_item.dart';
@@ -69,6 +71,8 @@ class _NotificationsState extends ConsumerState<Notifications> {
 
   _filterScrollListener() {
     final vm = ref.read(notificationFiltersViewModel);
+    final profileVm = ref.read(profileViewModel);
+    final configVm = ref.read(configViewModel);
     _filterScrollController.addListener(() {
       if (_filterScrollController.position.pixels ==
           _filterScrollController.position.maxScrollExtent) {
@@ -78,6 +82,7 @@ class _NotificationsState extends ConsumerState<Notifications> {
           if (vm.paginatedState != ViewState.busy && vm.filteredResults.length < vm.totalRecords) {
             //fetch more notifications(filters)
             vm.fetchFilteredResults(
+                hasWallet: profileVm.hasWallet && configVm.isWalletEnabled,
                 firstCall: false
             );
           }
@@ -90,6 +95,8 @@ class _NotificationsState extends ConsumerState<Notifications> {
   Widget build(BuildContext context) {
     final vm = ref.watch(notificationsViewModel);
     final notificationFiltersVm = ref.watch(notificationFiltersViewModel);
+    final profileVm = ref.watch(profileViewModel);
+    final configVm = ref.watch(configViewModel);
     return Scaffold(
       appBar: customAppBar(
           context: context,
@@ -133,12 +140,14 @@ class _NotificationsState extends ConsumerState<Notifications> {
                   content: FilterOptions(
                     label: 'Filter Notification',
                     subtitle: 'Filter notification with ease',
-                    options: notificationFiltersVm.notificationFilterOptions,
+                    options: notificationFiltersVm.getNotificationFilterOptions(includeWalletNotifications: configVm.isWalletEnabled && profileVm.hasWallet),
                     initialValue: notificationFiltersVm.selectedFilter,
                     selectedOption: (value)async{
                       notificationFiltersVm.selectedFilter = value;
                       if(notificationFiltersVm.selectedFilter.toLowerCase() != 'show all'){
-                        await notificationFiltersVm.fetchFilteredResults();
+                        await notificationFiltersVm.fetchFilteredResults(
+                          hasWallet: profileVm.hasWallet && configVm.isWalletEnabled
+                        );
                         showFlushBar(
                             context: context,
                             message: notificationFiltersVm.message,
@@ -187,7 +196,9 @@ class _NotificationsState extends ConsumerState<Notifications> {
                   children: [
                     Expanded(
                       child: RefreshIndicator.adaptive(
-                        onRefresh: () => _refreshNotifications(),
+                        onRefresh: () => _refreshNotifications(
+                          hasWallet: profileVm.hasWallet && configVm.isWalletEnabled
+                        ),
                         backgroundColor: Colors.white,
                         color: Theme.of(context).colorScheme.brandColor,
                         child: ListView.separated(
@@ -219,7 +230,9 @@ class _NotificationsState extends ConsumerState<Notifications> {
                       ErrorState(
                           message: notificationFiltersVm.message,
                           isPaginationType: true,
-                          onPressed: ()=>notificationFiltersVm.fetchFilteredResults(firstCall: false))
+                          onPressed: ()=>notificationFiltersVm.fetchFilteredResults(
+                            hasWallet: profileVm.hasWallet && configVm.isWalletEnabled,
+                              firstCall: false))
                   ],
                 );
               }
@@ -228,7 +241,9 @@ class _NotificationsState extends ConsumerState<Notifications> {
                 return Center(
                   child: ErrorState(
                       message: notificationFiltersVm.message,
-                      onPressed: ()=>notificationFiltersVm.fetchFilteredResults()),
+                      onPressed: ()=>notificationFiltersVm.fetchFilteredResults(
+                        hasWallet: profileVm.hasWallet && configVm.isWalletEnabled
+                      )),
                 );
               }
 
@@ -260,7 +275,9 @@ class _NotificationsState extends ConsumerState<Notifications> {
                   children: [
                     Expanded(
                       child: RefreshIndicator.adaptive(
-                        onRefresh: () => _refreshNotifications(),
+                        onRefresh: () => _refreshNotifications(
+                          hasWallet: profileVm.hasWallet && configVm.isWalletEnabled
+                        ),
                         backgroundColor: Colors.white,
                         color: Theme.of(context).colorScheme.brandColor,
                         child: ListView.separated(
@@ -313,11 +330,13 @@ class _NotificationsState extends ConsumerState<Notifications> {
     );
   }
 
-  Future<void> _refreshNotifications() async {
+  Future<void> _refreshNotifications({required bool hasWallet}) async {
     final vm = ref.read(notificationsViewModel);
     final notificationFilterVm = ref.read(notificationFiltersViewModel);
     if(notificationFilterVm.showFilteredList){
-      notificationFilterVm.fetchFilteredResults(refreshUi: false);
+      notificationFilterVm.fetchFilteredResults(
+        hasWallet: hasWallet,
+          refreshUi: false);
     }else{
       vm.fetchNotifications(refreshUi: false);
     }

@@ -60,7 +60,7 @@ class TransactionFiltersVm extends BaseState{
   }
 
   //fetch filtered results(transactions)
-  fetchFilteredResults({bool firstCall = true, bool refreshUi = true}) async {
+  fetchFilteredResults({required bool hasWallet, bool firstCall = true, bool refreshUi = true}) async {
     if(firstCall){
       pageNumber = 1;
       _showFilteredList = true;
@@ -70,12 +70,12 @@ class TransactionFiltersVm extends BaseState{
       setPaginatedState(ViewState.busy);
     }
 
-
-    int filterIndex = transactionFilterOptions.indexOf(selectedFilter);
-
+    int filterIndex = getTransactionFilterOptions(includeWalletTransactions: hasWallet).indexOf(selectedFilter);
+    //transactionFilterOptions.indexOf(selectedFilter);
 
     final filters = {
-      'filter_by': filterValues[filterIndex]
+      'filter_by': getFilterValues(includeWalletTransactions: hasWallet)[filterIndex]
+      //filterValues[filterIndex]
     };
 
     await _walletDp.fetchWalletTransactions(
@@ -129,9 +129,11 @@ class TransactionFiltersVm extends BaseState{
 
   }
 
-  String title(){
-    int filterIndex = transactionFilterOptions.indexOf(selectedFilter);
-    final refWord = filterValues[filterIndex];
+  String title({required bool hasWallet}){
+    int filterIndex = getTransactionFilterOptions(includeWalletTransactions: hasWallet).indexOf(selectedFilter);
+    //transactionFilterOptions.indexOf(selectedFilter);
+    final refWord = getFilterValues(includeWalletTransactions: hasWallet)[filterIndex];
+    //filterValues[filterIndex];
     switch(refWord.toLowerCase()){
       case 'topup':
         return 'Wallet Top Up';
@@ -165,6 +167,30 @@ class TransactionFiltersVm extends BaseState{
     'withdrawal',
     'bonus'
   ];
+
+  List<String> getTransactionFilterOptions({
+    bool includeWalletTransactions = true,
+  }) {
+    if (includeWalletTransactions) {
+      return transactionFilterOptions;
+    }
+
+    return transactionFilterOptions
+        .where((item) => item != 'Wallet Top Up' && item != 'Fund Withdrawal')
+        .toList();
+  }
+
+  List<String> getFilterValues({
+    bool includeWalletTransactions = true,
+  }) {
+    if (includeWalletTransactions) {
+      return filterValues;
+    }
+
+    return filterValues
+        .where((item) => item != 'topup' && item != 'withdrawal')
+        .toList();
+  }
 
   clearFilters(){
     _showFilteredList = false;

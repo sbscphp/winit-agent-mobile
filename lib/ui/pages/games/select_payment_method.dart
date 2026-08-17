@@ -5,6 +5,8 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/enum/checkout_type.dart';
 import 'package:winit_agent/core/data/view_models/games/selected_game_vm.dart';
 import 'package:winit_agent/core/data/view_models/checkout/payment_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
+import 'package:winit_agent/core/data/view_models/utility/config_vm.dart';
 import 'package:winit_agent/core/data/view_models/wallet/wallet_vm.dart';
 import 'package:winit_agent/ui/pages/games/select_payment_channel.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
@@ -46,6 +48,8 @@ class _SelectPaymentMethodState extends ConsumerState<SelectPaymentMethod> {
   @override
   Widget build(BuildContext context) {
     final vm = ref.watch(paymentViewModel);
+    final profileVm = ref.watch(profileViewModel);
+    final configVm = ref.watch(configViewModel);
     return BusyOverlay(
       show: vm.state == ViewState.busy,
       child: Scaffold(
@@ -73,12 +77,12 @@ class _SelectPaymentMethodState extends ConsumerState<SelectPaymentMethod> {
                       subtitle: 'Select an option for payment',
                       stepValue: 3,
                     ),
-                    SizedBox(height: 32.h,),
-                    ScreenTitle(title: 'Pay With Wallet',
+                    if(profileVm.hasWallet && configVm.isWalletEnabled)SizedBox(height: 32.h,),
+                    if(profileVm.hasWallet && configVm.isWalletEnabled)ScreenTitle(title: 'Pay With Wallet',
                         subtitle: 'Pay with ease with your wallet'
                     ),
-                    SizedBox(height: 16.h,),
-                    Consumer(
+                    if(profileVm.hasWallet && configVm.isWalletEnabled)SizedBox(height: 16.h,),
+                    if(profileVm.hasWallet && configVm.isWalletEnabled)Consumer(
                       builder: (context, ref, child){
                         final wVm = ref.watch(walletVm);
                         return Clickable(

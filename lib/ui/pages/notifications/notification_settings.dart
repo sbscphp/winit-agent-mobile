@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/view_models/notification/notification_settings_vm.dart';
+import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
+import 'package:winit_agent/core/data/view_models/utility/config_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
 import 'package:winit_agent/ui/widgets/app_loader.dart';
 import 'package:winit_agent/ui/widgets/busy_overlay.dart';
@@ -48,6 +50,8 @@ class _NotificationSettingsState extends ConsumerState<NotificationSettings> {
   @override
   Widget build(BuildContext context) {
     final vm = ref.watch(notificationSettingsViewModel);
+    final profileVm = ref.watch(profileViewModel);
+    final configVm = ref.watch(configViewModel);
     return BusyOverlay(
       show: vm.secondState == ViewState.busy,
       child: Scaffold(
@@ -211,8 +215,8 @@ class _NotificationSettingsState extends ConsumerState<NotificationSettings> {
                                   ],
                                 )
                             ),
-                            SizedBox(height: 16.h,),
-                            WinitContainer(
+                            if(profileVm.hasWallet && configVm.isWalletEnabled)SizedBox(height: 16.h,),
+                            if(profileVm.hasWallet && configVm.isWalletEnabled)WinitContainer(
                                 child:Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [

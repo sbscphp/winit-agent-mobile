@@ -18,6 +18,7 @@ import 'core/constants/app_constants.dart';
 import 'core/data/services/geolocator_service.dart';
 import 'core/data/services/remote_config_service.dart';
 import 'core/data/services/security_service.dart';
+import 'core/data/view_models/utility/config_vm.dart';
 import 'core/data/view_models/utility/lga_details_vm.dart';
 import 'core/utilities/firebase_messaging_utils.dart';
 
@@ -56,6 +57,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   void initState() {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(configViewModel).fetchConfig();
       ref.read(lgaDetailsViewModel).fetchLgaDetails();
       ref.read(serviceAgentsViewModel).fetchServiceAgents();
       //ref.read(banksViewModel).fetchBanks();

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
+import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
+import 'package:winit_agent/core/data/view_models/utility/config_vm.dart';
 import 'package:winit_agent/core/data/view_models/wallet/transaction_filters_vm.dart';
 import 'package:winit_agent/core/data/view_models/wallet/wallet_transactions_vm.dart';
 import 'package:winit_agent/ui/widgets/app_loader.dart';
@@ -62,6 +64,8 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
 
   _filterScrollListener() {
     final vm = ref.read(transactionFiltersViewModel);
+    final profileVm = ref.read(profileViewModel);
+    final configVm = ref.read(configViewModel);
     _filterScrollController.addListener(() {
       if (_filterScrollController.position.pixels ==
           _filterScrollController.position.maxScrollExtent) {
@@ -71,6 +75,7 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
           if (vm.paginatedState != ViewState.busy && vm.filteredResults.length < vm.totalRecords) {
             //fetch more transactions(filters)
             vm.fetchFilteredResults(
+                hasWallet: profileVm.hasWallet && configVm.isWalletEnabled,
                 firstCall: false
             );
           }
@@ -83,6 +88,8 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
   Widget build(BuildContext context) {
     final vm = ref.watch(walletTransactionsViewModel);
     final transactionFiltersVm = ref.watch(transactionFiltersViewModel);
+    final profileVm = ref.watch(profileViewModel);
+    final configVm = ref.watch(configViewModel);
 
     return Scaffold(
       appBar: customAppBar(
@@ -98,7 +105,9 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
               ),
               children: [
                 TextSpan(
-                  text: transactionFiltersVm.showFilteredList ? transactionFiltersVm.title():'Wallet Transaction ',
+                  text: transactionFiltersVm.showFilteredList ? transactionFiltersVm.title(
+                    hasWallet: profileVm.hasWallet && configVm.isWalletEnabled
+                  ):'Transaction History',
                 ),
                 TextSpan(
                   text: transactionFiltersVm.showFilteredList ? '(${transactionFiltersVm.totalRecords})':'(${vm.totalRecords})',
@@ -120,12 +129,16 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                   content: FilterOptions(
                       label: 'Filter Transaction',
                       subtitle: 'Filter wallet transactions with ease',
-                    options: transactionFiltersVm.transactionFilterOptions,
+                    options: transactionFiltersVm.getTransactionFilterOptions(
+                      includeWalletTransactions: profileVm.hasWallet && configVm.isWalletEnabled,
+                    ),
                     initialValue: transactionFiltersVm.selectedFilter,
                     selectedOption: (value)async{
                       transactionFiltersVm.selectedFilter = value;
                       if(transactionFiltersVm.selectedFilter.toLowerCase() != 'show all'){
-                        await transactionFiltersVm.fetchFilteredResults();
+                        await transactionFiltersVm.fetchFilteredResults(
+                          hasWallet: configVm.isWalletEnabled && profileVm.hasWallet
+                        );
                         showFlushBar(
                             context: context,
                             message: transactionFiltersVm.message,
@@ -174,7 +187,9 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                   children: [
                     Expanded(
                       child: RefreshIndicator.adaptive(
-                        onRefresh: () => _refreshTransactions(),
+                        onRefresh: () => _refreshTransactions(
+                          hasWallet: profileVm.hasWallet && configVm.isWalletEnabled
+                        ),
                         backgroundColor: Colors.white,
                         color: Theme.of(context).colorScheme.brandColor,
                         child: ListView.separated(
@@ -224,7 +239,9 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                       ErrorState(
                           message: transactionFiltersVm.message,
                           isPaginationType: true,
-                          onPressed: ()=>transactionFiltersVm.fetchFilteredResults(firstCall: false))
+                          onPressed: ()=>transactionFiltersVm.fetchFilteredResults(
+                              hasWallet: configVm.isWalletEnabled && profileVm.hasWallet,
+                              firstCall: false))
                   ],
                 );
               }
@@ -233,7 +250,9 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                 return Center(
                   child: ErrorState(
                       message: transactionFiltersVm.message,
-                      onPressed: ()=>transactionFiltersVm.fetchFilteredResults()),
+                      onPressed: ()=>transactionFiltersVm.fetchFilteredResults(
+                        hasWallet: configVm.isWalletEnabled && profileVm.hasWallet
+                      )),
                 );
               }
 
@@ -265,7 +284,9 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
                   children: [
                     Expanded(
                       child: RefreshIndicator.adaptive(
-                        onRefresh: () => _refreshTransactions(),
+                        onRefresh: () => _refreshTransactions(
+                          hasWallet: configVm.isWalletEnabled && profileVm.hasWallet
+                        ),
                         backgroundColor: Colors.white,
                         color: Theme.of(context).colorScheme.brandColor,
                         child: ListView.separated(
@@ -337,11 +358,13 @@ class _ViewAllTransactionsState extends ConsumerState<ViewAllTransactions> {
     );
   }
 
-  Future<void> _refreshTransactions() async {
+  Future<void> _refreshTransactions({required bool hasWallet}) async {
     final filterTransactionsVm = ref.read(transactionFiltersViewModel);
     final transactionsVm = ref.read(walletTransactionsViewModel);
     if(filterTransactionsVm.showFilteredList){
-      filterTransactionsVm.fetchFilteredResults(refreshUi: false);
+      filterTransactionsVm.fetchFilteredResults(
+        hasWallet: hasWallet,
+          refreshUi: false);
     }else{
       transactionsVm.fetchTransactions(refreshUi: false);
     }

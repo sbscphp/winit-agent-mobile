@@ -5,6 +5,8 @@ import 'package:winit_agent/core/constants/app_dimension.dart';
 import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/constants/named_routes.dart';
 import 'package:winit_agent/core/data/view_models/bottom_nav_view_model.dart';
+import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
+import 'package:winit_agent/core/data/view_models/utility/config_vm.dart';
 import 'package:winit_agent/core/data/view_models/wallet/wallet_transactions_vm.dart';
 import 'package:winit_agent/core/data/view_models/wallet/wallet_vm.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
@@ -60,6 +62,8 @@ class _WalletState extends ConsumerState<Wallet> {
   @override
   Widget build(BuildContext context) {
     final vm = ref.watch(walletVm);
+    final profileVm = ref.watch(profileViewModel);
+    final configVm = ref.watch(configViewModel);
     return Scaffold(
       appBar: customAppBar(
           context: context,
@@ -67,7 +71,8 @@ class _WalletState extends ConsumerState<Wallet> {
           leadingIcon: ProfileImage(),
           title: 'My Wallet',
           actions: [
-            if(vm.state == ViewState.retrieved)ActionIcon(label: 'Quick Actions', asset: AppAsset.walletActions,
+            if(vm.state == ViewState.retrieved && profileVm.hasWallet && configVm.isWalletEnabled)
+              ActionIcon(label: 'Quick Actions', asset: AppAsset.walletActions,
               onPressed: (){
                 baseBottomSheet(
                   context: context,
@@ -102,19 +107,19 @@ class _WalletState extends ConsumerState<Wallet> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    BalanceSummaryCard(
+                    if(profileVm.hasWallet && configVm.isWalletEnabled)BalanceSummaryCard(
                         label: 'Wallet Balance',
                         balance: vm.walletBalance,
                         amountAdded: vm.addedAmount,
                       duration: vm.duration,
                     ),
-                    SizedBox(height: 16.h,),
-                    CopyDetails(
+                    if(profileVm.hasWallet && configVm.isWalletEnabled)SizedBox(height: 16.h,),
+                    if(profileVm.hasWallet && configVm.isWalletEnabled)CopyDetails(
                         label: 'Wallet Account No.',
                         subtitle: vm.walletAccountName,
                         detailToCopy: vm.walletAccountNumber
                     ),
-                    SizedBox(height: 32.h,),
+                    if(profileVm.hasWallet && configVm.isWalletEnabled)SizedBox(height: 32.h,),
                     ListHeader(
                       label: 'Wallet Transaction',
                       subtitle: 'Purchase transaction done via wallet',

@@ -7,6 +7,7 @@ import 'package:winit_agent/core/constants/app_theme/custom_color_scheme.dart';
 import 'package:winit_agent/core/data/view_models/games/all_games_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/profile_vm.dart';
 import 'package:winit_agent/core/data/view_models/profile/sales_stat_vm.dart';
+import 'package:winit_agent/core/data/view_models/utility/config_vm.dart';
 import 'package:winit_agent/core/data/view_models/wallet/transaction_filters_vm.dart';
 import 'package:winit_agent/core/utilities/extensions/color_extensions.dart';
 import 'package:winit_agent/core/utilities/navigator.dart';
@@ -303,6 +304,7 @@ class _HomeState extends ConsumerState<Home> {
   salesStats(BuildContext context){
     final salesVm = ref.watch(salesStatViewModel);
     final lga = ref.read(profileViewModel).lga;
+    final configVm = ref.watch(configViewModel);
 
     if(salesVm.state == ViewState.busy){
       return Column(
@@ -488,41 +490,43 @@ class _HomeState extends ConsumerState<Home> {
                   );
                 }
 
-                return  Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 16.w
-                  ),
-                  decoration: BoxDecoration(
-                      color:ColorPath.athensGrey2,
-                      //color: ColorPath.beeBrown,
-                      borderRadius: BorderRadius.all(Radius.circular(8.r))
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FittedBox(
-                        child: Text(
-                          'Commission Settled',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: ColorPath.troutGrey
+                if(configVm.showCommissionSettledCard){
+                  return  Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16.w
+                    ),
+                    decoration: BoxDecoration(
+                        color:ColorPath.athensGrey2,
+                        //color: ColorPath.beeBrown,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r))
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FittedBox(
+                          child: Text(
+                            'Commission Settled',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: ColorPath.troutGrey
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 2.h,),
-                      NairaDisplay(
-                        amount: salesVm.totalCommissionsSettled,
-                        fontSize: 14.sp,
-                        color:Theme.of(context).colorScheme.textPrimary,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ],
-                  ),
-                );
+                        SizedBox(height: 2.h,),
+                        NairaDisplay(
+                          amount: salesVm.totalCommissionsSettled,
+                          fontSize: 14.sp,
+                          color:Theme.of(context).colorScheme.textPrimary,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ],
+                    ),
+                  );
+                }
 
                 // if(index == 2){
                 //   return Container(

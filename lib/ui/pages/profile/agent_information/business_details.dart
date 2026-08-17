@@ -189,8 +189,9 @@ class _BusinessDetailsState extends ConsumerState<BusinessDetails> {
                         OnboardingTextField(
                           label: 'RC Number',
                           hintText: 'Enter RC Number',
+                          isCompulsory: false,
                           controller: _rc,
-                          validator: FieldValidator.validate,
+                          //validator: FieldValidator.validate,
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             NigerianRCNumberFormatter(),

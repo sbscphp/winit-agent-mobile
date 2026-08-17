@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:winit_agent/core/data/models/bank.dart';
+import 'package:winit_agent/core/data/models/data/config_data.dart';
 import 'package:winit_agent/core/data/models/data/service_agent_data.dart';
 import 'package:winit_agent/core/data/models/lga_details.dart';
 import '../../../constants/api_routes.dart';
@@ -83,6 +84,24 @@ class UtilityDataProvider{
             (data) => data as String,
       );
 
+      completer.complete(result);
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
+  //fetch config
+  Future<ApiResponse<ConfigData>> fetchConfig() async {
+    var completer = Completer<ApiResponse<ConfigData>>();
+    try {
+      Map<String, dynamic> response = await NetworkManager()
+          .networkRequestManager(RequestType.get, ApiRoutes.fetchConfig,
+      );
+      var result = ApiResponse<ConfigData>.fromJson(
+        response,
+            (data) => ConfigData.fromJson(data as Map<String, dynamic>),
+      );
       completer.complete(result);
     } catch (e) {
       completer.completeError(e);
